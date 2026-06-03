@@ -40,11 +40,43 @@ These are the initial building blocks to iterate on:
 
 ## Tech Stack
 
-> Not chosen yet — to be decided in early iterations. Likely a cross-platform framework (e.g. React Native / Expo or Flutter) to ship iOS and Android from one codebase. This section will be updated once the stack is locked in.
+- **React Native** via **Expo** (managed workflow) — one codebase for iOS and Android.
+- **JavaScript** to start (TypeScript is an option we can adopt later).
+- Currently a minimal blank scaffold; structure and libraries will grow as requirements firm up.
 
 ## Getting Started
 
-> Setup instructions will be added once the initial app scaffold and tech stack are in place.
+Prerequisites: [Node.js](https://nodejs.org/) (LTS recommended) and the **Expo Go** app on your phone (or an iOS/Android simulator).
+
+```bash
+# Install dependencies
+npm install
+
+# Start the dev server
+npm start
+```
+
+Then scan the QR code with Expo Go (Android) or the Camera app (iOS), or press `i` / `a` in the terminal to open a simulator. You can also run directly:
+
+```bash
+npm run ios      # iOS simulator (macOS + Xcode)
+npm run android  # Android emulator
+npm run web      # run in a browser
+```
+
+## Project Structure
+
+```
+App.js            # Root component (the starter screen)
+index.js          # Entry point — registers the root component
+app.json          # Expo app config (name, icons, platforms)
+assets/           # Icons and images
+REQUIREMENTS.md   # Living product requirements doc
+```
+
+## Requirements
+
+Product requirements are being captured in [REQUIREMENTS.md](./REQUIREMENTS.md) — a living draft we're actively fleshing out.
 
 ## Status
 

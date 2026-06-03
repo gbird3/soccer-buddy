@@ -40,3 +40,6 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# Compound Engineering local config
+.compound-engineering/*.local.yaml

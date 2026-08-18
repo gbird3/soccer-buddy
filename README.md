@@ -67,11 +67,32 @@ npm run web      # run in a browser
 ## Project Structure
 
 ```
-App.js            # Root component (the starter screen)
-index.js          # Entry point — registers the root component
-app.json          # Expo app config (name, icons, platforms)
-assets/           # Icons and images
-REQUIREMENTS.md   # Living product requirements doc
+App.js                  # Root component — practice screen state machine
+index.js                # Entry point — registers the root component
+app.json                # Expo app config (name, icons, platforms)
+assets/                 # Icons and images
+src/
+  practiceFlow.js       # Screen transitions (home → drill → celebration)
+  screens/              # Home, Drill, Celebration screens
+  components/           # BigButton, ToeTapDemo
+  constants/            # Theme colors/sizes, drill data
+__tests__/              # Jest + React Native Testing Library tests
+REQUIREMENTS.md         # Living product requirements doc
+```
+
+## First Playable Slice
+
+A child can:
+
+1. Open the app and tap **Start!** on the home screen.
+2. Watch a toe-tap demo and practice the move in real life.
+3. Tap **I did it!** when finished (tap-to-complete — no timer or motion detection).
+4. See a celebration and earn a star sticker, then tap **Done** to go home.
+
+Run unit tests:
+
+```bash
+npm test
 ```
 
 ## Requirements
@@ -80,7 +101,7 @@ Product requirements are being captured in [REQUIREMENTS.md](./REQUIREMENTS.md) 
 
 ## Status
 
-🚧 Early development — just getting started. The structure and features described here are a starting direction and will evolve through iteration.
+🚧 Early development — first playable slice is live (home → one drill → celebration/sticker). Parent area, audio, streaks, and multiple drills are not yet implemented.
 
 ## License
 

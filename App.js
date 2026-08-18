@@ -1,36 +1,23 @@
+import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import CelebrationScreen from './src/screens/CelebrationScreen';
+import DrillScreen from './src/screens/DrillScreen';
+import HomeScreen from './src/screens/HomeScreen';
+import { SCREENS, getNextScreen } from './src/practiceFlow';
 
 export default function App() {
+  const [screen, setScreen] = useState(SCREENS.HOME);
+
+  const startPractice = () => setScreen((current) => getNextScreen(current, 'START_PRACTICE'));
+  const completeDrill = () => setScreen((current) => getNextScreen(current, 'COMPLETE_DRILL'));
+  const goHome = () => setScreen(SCREENS.HOME);
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.emoji}>⚽</Text>
-      <Text style={styles.title}>Soccer Buddy</Text>
-      <Text style={styles.subtitle}>Let's practice!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      {screen === SCREENS.HOME && <HomeScreen onStartPractice={startPractice} />}
+      {screen === SCREENS.DRILL && <DrillScreen onCompleteDrill={completeDrill} />}
+      {screen === SCREENS.CELEBRATION && <CelebrationScreen onGoHome={goHome} />}
+      <StatusBar style="light" />
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#0a7d2c',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  emoji: {
-    fontSize: 96,
-  },
-  title: {
-    fontSize: 40,
-    fontWeight: '800',
-    color: '#ffffff',
-    marginTop: 12,
-  },
-  subtitle: {
-    fontSize: 22,
-    color: '#d9f5e1',
-    marginTop: 4,
-  },
-});

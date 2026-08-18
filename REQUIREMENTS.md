@@ -48,7 +48,7 @@ A mobile app that helps a young child (initially **ages 4–6**) practice real-w
 ### 5.2 Drills
 - A small starter library of beginner drills (e.g. toe taps, dribble between cones, pass against a wall, kick a target).
 - Each drill has: name, icon/illustration, demo animation or video, audio cue, and a simple "done" interaction.
-- _(Open question: how do we know a drill is "done" — child taps done, timer, or count?)_
+- **Decision (v1 slice 1):** The child marks a drill complete with a big **"I did it!"** tap. No timer or motion detection in this slice.
 
 ### 5.3 Rewards & Motivation
 - Earn a sticker/badge per completed session or drill.
@@ -81,7 +81,7 @@ A mobile app that helps a young child (initially **ages 4–6**) practice real-w
 
 ## 8. Open Questions
 
-- How does the child mark a drill complete (tap, timer, motion detection)?
+- ~~How does the child mark a drill complete (tap, timer, motion detection)?~~ **Decided:** tap-to-complete ("I did it!") for v1.
 - Single child profile or multiple?
 - Audio: recorded voice vs. text-to-speech? What language(s)?
 - Demo media format and source?
@@ -97,4 +97,18 @@ A mobile app that helps a young child (initially **ages 4–6**) practice real-w
 
 ---
 
-_Next steps: turn the highest-priority open questions into decisions, then narrow v1 down to a buildable first slice (likely: home screen → start daily session → one drill with demo → celebration → sticker)._
+## 10. First Buildable Slice (implemented)
+
+**Flow:** Home → one drill (Toe Taps) → celebration + sticker.
+
+| Step | Screen | Child action |
+|------|--------|--------------|
+| 1 | Home | Tap **Start!** |
+| 2 | Drill | Watch toe-tap demo, practice in real life, tap **I did it!** |
+| 3 | Celebration | See sticker reward, tap **Done** to return home |
+
+**Out of scope for this slice:** parent area, profile, audio, streaks, multiple drills, navigation library.
+
+---
+
+_Next steps: add audio coaching, more drills, streak tracking, and parent area._

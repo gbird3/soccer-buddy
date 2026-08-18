@@ -1,8 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native';
 import BigButton from '../components/BigButton';
 import KickTargetDemo from '../components/KickTargetDemo';
+import SpeakerButton from '../components/SpeakerButton';
 import ToeTapDemo from '../components/ToeTapDemo';
 import { colors, sizes } from '../constants/theme';
+import { useCoachingSpeech } from '../hooks/useCoachingSpeech';
 
 const DEMO_COMPONENTS = {
   'toe-taps': ToeTapDemo,
@@ -11,9 +13,16 @@ const DEMO_COMPONENTS = {
 
 export default function DrillScreen({ drill, onCompleteDrill }) {
   const DemoComponent = DEMO_COMPONENTS[drill.demo];
+  const replayCoaching = useCoachingSpeech(drill.instruction);
 
   return (
     <View style={styles.container} testID="drill-screen">
+      <SpeakerButton
+        testID="replay-coaching-button"
+        onPress={replayCoaching}
+        accessibilityLabel={`Hear again: ${drill.instruction}`}
+      />
+
       <Text style={styles.drillIcon} accessibilityLabel={drill.name}>
         {drill.icon}
       </Text>

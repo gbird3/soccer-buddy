@@ -1,20 +1,27 @@
 import { StyleSheet, Text, View } from 'react-native';
 import BigButton from '../components/BigButton';
+import KickTargetDemo from '../components/KickTargetDemo';
 import ToeTapDemo from '../components/ToeTapDemo';
-import { TOE_TAPS_DRILL } from '../constants/drills';
 import { colors, sizes } from '../constants/theme';
 
-export default function DrillScreen({ onCompleteDrill }) {
+const DEMO_COMPONENTS = {
+  'toe-taps': ToeTapDemo,
+  'kick-target': KickTargetDemo,
+};
+
+export default function DrillScreen({ drill, onCompleteDrill }) {
+  const DemoComponent = DEMO_COMPONENTS[drill.demo];
+
   return (
     <View style={styles.container} testID="drill-screen">
-      <Text style={styles.drillIcon} accessibilityLabel={TOE_TAPS_DRILL.name}>
-        {TOE_TAPS_DRILL.icon}
+      <Text style={styles.drillIcon} accessibilityLabel={drill.name}>
+        {drill.icon}
       </Text>
-      <Text style={styles.drillName}>{TOE_TAPS_DRILL.name}</Text>
+      <Text style={styles.drillName}>{drill.name}</Text>
 
-      <ToeTapDemo />
+      <DemoComponent />
 
-      <Text style={styles.instruction}>{TOE_TAPS_DRILL.instruction}</Text>
+      <Text style={styles.instruction}>{drill.instruction}</Text>
 
       <View style={styles.buttonWrap}>
         <BigButton

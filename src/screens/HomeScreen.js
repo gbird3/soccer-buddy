@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import BigButton from '../components/BigButton';
-import { TOE_TAPS_DRILL } from '../constants/drills';
+import { SESSION_REWARD } from '../constants/drills';
 import { colors, sizes } from '../constants/theme';
 
 export default function HomeScreen({ onStartPractice, streak = 0, practicedToday = false }) {
@@ -26,7 +26,7 @@ export default function HomeScreen({ onStartPractice, streak = 0, practicedToday
           accessibilityLabel="You already practiced today"
         >
           <Text style={styles.practicedSticker} accessibilityElementsHidden importantForAccessibility="no">
-            {TOE_TAPS_DRILL.sticker}
+            {SESSION_REWARD.sticker}
           </Text>
           <Text style={styles.practicedCheck} accessibilityElementsHidden importantForAccessibility="no">
             ✅

@@ -1,3 +1,8 @@
+export const COACHING_LINES = {
+  HOME: "Let's practice!",
+  CELEBRATION: 'Great job! You earned a sticker!',
+};
+
 export const SESSION_REWARD = {
   sticker: '⭐',
   stickerLabel: 'Star Sticker',

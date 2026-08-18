@@ -76,7 +76,9 @@ src/
   streak.js             # Pure streak date math (calendar days, no double-count)
   storage/              # On-device progress persistence (AsyncStorage)
   screens/              # Home, Drill, Celebration screens
-  components/           # BigButton, ToeTapDemo, KickTargetDemo
+  components/          # BigButton, SpeakerButton, ToeTapDemo, KickTargetDemo
+  hooks/               # useCoachingSpeech — auto-speak on mount, replay, cleanup
+  audio/               # On-device TTS via expo-speech (speakCoaching / stopCoaching)
   constants/            # Theme colors/sizes, drill data
 __tests__/              # Jest + React Native Testing Library tests
 REQUIREMENTS.md         # Living product requirements doc
@@ -86,11 +88,13 @@ REQUIREMENTS.md         # Living product requirements doc
 
 A child can:
 
-1. Open the app and tap **Start!** on the home screen.
-2. Complete a two-drill session: **Toe Taps** then **Kick a Target** — each with a looping demo and tap-to-complete.
+1. Open the app and tap **Start!** on the home screen (home speaks "Let's practice!" on appear; tap 🔊 to hear again).
+2. Complete a two-drill session: **Toe Taps** then **Kick a Target** — each with a looping demo, on-device audio coaching, and tap-to-complete.
 3. Tap **I did it!** after each drill (no timer or motion detection).
-4. After both drills, see a celebration and earn one star sticker per session, then tap **Done** to go home.
+4. After both drills, see a celebration and earn one star sticker per session (celebration speaks encouragement), then tap **Done** to go home.
 5. Build a daily streak — finishing the full session once per calendar day counts; the home screen shows 🔥 + streak count, and a badge when today's practice is already done (practice again anytime; streak won't double-count).
+
+**Audio (v1):** On-device text-to-speech via `expo-speech` — English only, auto-speaks once per screen, replayable via a large 🔊 button. No cloud TTS, no recording. Recorded voice talent is a possible later option.
 
 Run unit tests:
 
@@ -104,7 +108,7 @@ Product requirements are being captured in [REQUIREMENTS.md](./REQUIREMENTS.md) 
 
 ## Status
 
-🚧 Early development — two-drill daily session with local streak/sticker persistence. Parent area and audio are not yet implemented.
+🚧 Early development — two-drill daily session with local streak/sticker persistence and on-device audio coaching. Parent area not yet implemented.
 
 ## License
 

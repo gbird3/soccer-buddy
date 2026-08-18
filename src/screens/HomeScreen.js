@@ -1,11 +1,21 @@
 import { StyleSheet, Text, View } from 'react-native';
 import BigButton from '../components/BigButton';
-import { SESSION_REWARD } from '../constants/drills';
+import SpeakerButton from '../components/SpeakerButton';
+import { SESSION_REWARD, COACHING_LINES } from '../constants/drills';
 import { colors, sizes } from '../constants/theme';
+import { useCoachingSpeech } from '../hooks/useCoachingSpeech';
 
 export default function HomeScreen({ onStartPractice, streak = 0, practicedToday = false }) {
+  const replayCoaching = useCoachingSpeech(COACHING_LINES.HOME);
+
   return (
     <View style={styles.container} testID="home-screen">
+      <SpeakerButton
+        testID="replay-coaching-button"
+        onPress={replayCoaching}
+        accessibilityLabel="Hear again: Let's practice"
+      />
+
       <Text style={styles.emoji} accessibilityLabel="Soccer ball">
         ⚽
       </Text>

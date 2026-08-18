@@ -43,6 +43,7 @@ A mobile app that helps a young child (initially **ages 4–6**) practice real-w
 - A single, prominent "Start" entry point on the home screen.
 - A session is a short sequence: warm-up → 2–3 drills → celebration.
 - Each step has a visual demo and audio coaching.
+- **Audio (v1):** On-device text-to-speech (`expo-speech`), English only. Each screen auto-speaks a short coaching line once on appear; a large 🔊 control replays it. Speech stops when leaving the screen. No cloud TTS, no child voice recording. Recorded voice talent remains an open later option.
 - Session length is configurable by the parent _(target ~5 min default)_.
 
 ### 5.2 Drills
@@ -86,7 +87,7 @@ A mobile app that helps a young child (initially **ages 4–6**) practice real-w
 
 - ~~How does the child mark a drill complete (tap, timer, motion detection)?~~ **Decided:** tap-to-complete ("I did it!") for v1.
 - Single child profile or multiple?
-- Audio: recorded voice vs. text-to-speech? What language(s)?
+- ~~Audio: recorded voice vs. text-to-speech? What language(s)?~~ **Decided (v1):** On-device TTS (`expo-speech`), English only, replayable via speaker control. Recorded voice is a later option.
 - Demo media format and source?
 - Local-only data for v1, or cloud sync from the start?
 - Monetization model (free, one-time, subscription) — and how parent gating works?
@@ -134,4 +135,19 @@ A mobile app that helps a young child (initially **ages 4–6**) practice real-w
 
 ---
 
-_Next steps: add audio coaching, more drills, and parent area._
+## 12. On-Device Audio Coaching (implemented)
+
+**Behavior:** Each screen speaks a short encouraging coaching line when it appears; a large 🔊 button replays it. Speech stops on screen exit.
+
+| Screen | Coaching line |
+|--------|---------------|
+| Home | "Let's practice!" |
+| Toe Taps | "Tap the ball with your toes, one foot at a time!" |
+| Kick a Target | "Kick the ball at the target!" |
+| Celebration | "Great job! You earned a sticker!" |
+
+**Tech:** `expo-speech` on-device TTS, English only. Fails silently when speech is unavailable (tests, web). No cloud TTS, no voice recording, no parent mute in this slice.
+
+---
+
+_Next steps: parent area, more drills, recorded voice option._

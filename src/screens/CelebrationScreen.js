@@ -1,11 +1,21 @@
 import { StyleSheet, Text, View } from 'react-native';
 import BigButton from '../components/BigButton';
-import { SESSION_REWARD } from '../constants/drills';
+import SpeakerButton from '../components/SpeakerButton';
+import { SESSION_REWARD, COACHING_LINES } from '../constants/drills';
 import { colors, sizes } from '../constants/theme';
+import { useCoachingSpeech } from '../hooks/useCoachingSpeech';
 
 export default function CelebrationScreen({ onGoHome, streak = 0 }) {
+  const replayCoaching = useCoachingSpeech(COACHING_LINES.CELEBRATION);
+
   return (
     <View style={styles.container} testID="celebration-screen">
+      <SpeakerButton
+        testID="replay-coaching-button"
+        onPress={replayCoaching}
+        accessibilityLabel="Hear again: Great job! You earned a sticker"
+      />
+
       <Text style={styles.confetti} accessibilityElementsHidden importantForAccessibility="no">
         🎉✨🎊
       </Text>

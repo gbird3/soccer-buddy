@@ -3,7 +3,13 @@ import { StatusBar } from 'expo-status-bar';
 import CelebrationScreen from './src/screens/CelebrationScreen';
 import DrillScreen from './src/screens/DrillScreen';
 import HomeScreen from './src/screens/HomeScreen';
-import { SCREENS, getNextScreen } from './src/practiceFlow';
+import { SESSION_DRILLS } from './src/constants/drills';
+import {
+  SCREENS,
+  getNextDrillIndex,
+  getNextScreen,
+  isSessionComplete,
+} from './src/practiceFlow';
 import { loadProgress, saveProgress } from './src/storage/progressStorage';
 import {
   EMPTY_PROGRESS,
@@ -15,6 +21,7 @@ import {
 
 export default function App() {
   const [screen, setScreen] = useState(SCREENS.HOME);
+  const [drillIndex, setDrillIndex] = useState(0);
   const [progress, setProgress] = useState(null);
   const [celebrationStreak, setCelebrationStreak] = useState(0);
 
@@ -22,19 +29,35 @@ export default function App() {
     loadProgress().then(setProgress);
   }, []);
 
-  const startPractice = () => setScreen((current) => getNextScreen(current, 'START_PRACTICE'));
+  const startPractice = () => {
+    setDrillIndex(0);
+    setScreen((current) => getNextScreen(current, 'START_PRACTICE'));
+  };
 
   const completeDrill = useCallback(async () => {
-    const currentProgress = progress ?? { ...EMPTY_PROGRESS };
-    const updatedProgress = recordSessionComplete(currentProgress, toDateKey());
+    const drillCount = SESSION_DRILLS.length;
+    const sessionFinished = isSessionComplete(drillIndex, drillCount);
 
-    setProgress(updatedProgress);
-    setCelebrationStreak(getEffectiveStreak(updatedProgress));
-    await saveProgress(updatedProgress);
-    setScreen((current) => getNextScreen(current, 'COMPLETE_DRILL'));
-  }, [progress]);
+    if (sessionFinished) {
+      const currentProgress = progress ?? { ...EMPTY_PROGRESS };
+      const updatedProgress = recordSessionComplete(currentProgress, toDateKey());
 
-  const goHome = () => setScreen(SCREENS.HOME);
+      setProgress(updatedProgress);
+      setCelebrationStreak(getEffectiveStreak(updatedProgress));
+      await saveProgress(updatedProgress);
+    }
+
+    const nextDrillIndex = getNextDrillIndex(drillIndex, 'COMPLETE_DRILL', drillCount);
+    setDrillIndex(nextDrillIndex);
+    setScreen((current) =>
+      getNextScreen(current, 'COMPLETE_DRILL', { drillIndex, drillCount }),
+    );
+  }, [drillIndex, progress]);
+
+  const goHome = () => {
+    setDrillIndex(0);
+    setScreen(SCREENS.HOME);
+  };
 
   if (progress === null) {
     return null;
@@ -42,6 +65,7 @@ export default function App() {
 
   const streak = getEffectiveStreak(progress);
   const practicedToday = hasPracticedToday(progress);
+  const currentDrill = SESSION_DRILLS[drillIndex];
 
   return (
     <>
@@ -52,7 +76,9 @@ export default function App() {
           practicedToday={practicedToday}
         />
       )}
-      {screen === SCREENS.DRILL && <DrillScreen onCompleteDrill={completeDrill} />}
+      {screen === SCREENS.DRILL && currentDrill && (
+        <DrillScreen drill={currentDrill} onCompleteDrill={completeDrill} />
+      )}
       {screen === SCREENS.CELEBRATION && (
         <CelebrationScreen onGoHome={goHome} streak={celebrationStreak} />
       )}

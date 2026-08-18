@@ -72,11 +72,11 @@ index.js                # Entry point — registers the root component
 app.json                # Expo app config (name, icons, platforms)
 assets/                 # Icons and images
 src/
-  practiceFlow.js       # Screen transitions (home → drill → celebration)
+  practiceFlow.js       # Screen transitions (home → drills → celebration)
   streak.js             # Pure streak date math (calendar days, no double-count)
   storage/              # On-device progress persistence (AsyncStorage)
   screens/              # Home, Drill, Celebration screens
-  components/           # BigButton, ToeTapDemo
+  components/           # BigButton, ToeTapDemo, KickTargetDemo
   constants/            # Theme colors/sizes, drill data
 __tests__/              # Jest + React Native Testing Library tests
 REQUIREMENTS.md         # Living product requirements doc
@@ -87,10 +87,10 @@ REQUIREMENTS.md         # Living product requirements doc
 A child can:
 
 1. Open the app and tap **Start!** on the home screen.
-2. Watch a toe-tap demo and practice the move in real life.
-3. Tap **I did it!** when finished (tap-to-complete — no timer or motion detection).
-4. See a celebration and earn a star sticker, then tap **Done** to go home.
-5. Build a daily streak — finishing once per calendar day counts; the home screen shows 🔥 + streak count, and a badge when today's practice is already done (practice again anytime; streak won't double-count).
+2. Complete a two-drill session: **Toe Taps** then **Kick a Target** — each with a looping demo and tap-to-complete.
+3. Tap **I did it!** after each drill (no timer or motion detection).
+4. After both drills, see a celebration and earn one star sticker per session, then tap **Done** to go home.
+5. Build a daily streak — finishing the full session once per calendar day counts; the home screen shows 🔥 + streak count, and a badge when today's practice is already done (practice again anytime; streak won't double-count).
 
 Run unit tests:
 
@@ -104,7 +104,7 @@ Product requirements are being captured in [REQUIREMENTS.md](./REQUIREMENTS.md) 
 
 ## Status
 
-🚧 Early development — first playable slice plus local streak/sticker persistence. Parent area, audio, and multiple drills are not yet implemented.
+🚧 Early development — two-drill daily session with local streak/sticker persistence. Parent area and audio are not yet implemented.
 
 ## License
 

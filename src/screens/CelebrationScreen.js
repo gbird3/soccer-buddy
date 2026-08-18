@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import BigButton from '../components/BigButton';
-import { TOE_TAPS_DRILL } from '../constants/drills';
+import { SESSION_REWARD } from '../constants/drills';
 import { colors, sizes } from '../constants/theme';
 
 export default function CelebrationScreen({ onGoHome, streak = 0 }) {
@@ -14,10 +14,10 @@ export default function CelebrationScreen({ onGoHome, streak = 0 }) {
       <View
         style={styles.stickerCard}
         testID="sticker-reward"
-        accessibilityLabel={`You earned a ${TOE_TAPS_DRILL.stickerLabel}`}
+        accessibilityLabel={`You earned a ${SESSION_REWARD.stickerLabel}`}
       >
-        <Text style={styles.sticker}>{TOE_TAPS_DRILL.sticker}</Text>
-        <Text style={styles.stickerLabel}>{TOE_TAPS_DRILL.stickerLabel}</Text>
+        <Text style={styles.sticker}>{SESSION_REWARD.sticker}</Text>
+        <Text style={styles.stickerLabel}>{SESSION_REWARD.stickerLabel}</Text>
       </View>
 
       <View style={styles.streakRow} testID="celebration-streak" accessibilityLabel={`${streak} day streak`}>

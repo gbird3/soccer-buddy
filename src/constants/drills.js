@@ -1,8 +1,22 @@
+export const SESSION_REWARD = {
+  sticker: '⭐',
+  stickerLabel: 'Star Sticker',
+};
+
 export const TOE_TAPS_DRILL = {
   id: 'toe-taps',
   name: 'Toe Taps',
   icon: '👟',
-  sticker: '⭐',
-  stickerLabel: 'Star Sticker',
+  demo: 'toe-taps',
   instruction: 'Tap the ball with your toes, one foot at a time!',
 };
+
+export const KICK_TARGET_DRILL = {
+  id: 'kick-target',
+  name: 'Kick a Target',
+  icon: '🎯',
+  demo: 'kick-target',
+  instruction: 'Kick the ball at the target!',
+};
+
+export const SESSION_DRILLS = [TOE_TAPS_DRILL, KICK_TARGET_DRILL];

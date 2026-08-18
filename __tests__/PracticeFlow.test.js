@@ -1,6 +1,13 @@
-import { render, screen, userEvent } from '@testing-library/react-native';
+import { render, screen, userEvent, waitFor } from '@testing-library/react-native';
 import App from '../App';
 import { SCREENS, getNextScreen } from '../src/practiceFlow';
+import { loadProgress, saveProgress } from '../src/storage/progressStorage';
+import { EMPTY_PROGRESS, toDateKey } from '../src/streak';
+
+jest.mock('../src/storage/progressStorage', () => ({
+  loadProgress: jest.fn(),
+  saveProgress: jest.fn(),
+}));
 
 describe('practiceFlow', () => {
   it('moves from home to drill when practice starts', () => {
@@ -23,15 +30,29 @@ describe('practiceFlow', () => {
 });
 
 describe('App practice session flow', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    loadProgress.mockResolvedValue({ ...EMPTY_PROGRESS });
+    saveProgress.mockResolvedValue(undefined);
+  });
+
   it('starts on the home screen', async () => {
     await render(<App />);
-    expect(screen.getByTestId('home-screen')).toBeTruthy();
+
+    await waitFor(() => {
+      expect(screen.getByTestId('home-screen')).toBeTruthy();
+    });
     expect(screen.getByTestId('start-practice-button')).toBeTruthy();
+    expect(screen.getByTestId('streak-display')).toBeTruthy();
   });
 
   it('navigates home → drill → celebration with tap-to-complete', async () => {
     const user = userEvent.setup();
     await render(<App />);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('home-screen')).toBeTruthy();
+    });
 
     await user.press(screen.getByTestId('start-practice-button'));
     expect(screen.getByTestId('drill-screen')).toBeTruthy();
@@ -43,16 +64,63 @@ describe('App practice session flow', () => {
     expect(screen.getByTestId('sticker-reward')).toBeTruthy();
     expect(screen.getByText('Great job!')).toBeTruthy();
     expect(screen.getByText('Star Sticker')).toBeTruthy();
+    expect(screen.getByTestId('celebration-streak')).toHaveTextContent('1', { exact: false });
+    expect(saveProgress).toHaveBeenCalledWith({
+      lastPracticeDate: toDateKey(),
+      streak: 1,
+    });
   });
 
   it('returns to home from celebration', async () => {
     const user = userEvent.setup();
     await render(<App />);
 
+    await waitFor(() => {
+      expect(screen.getByTestId('home-screen')).toBeTruthy();
+    });
+
     await user.press(screen.getByTestId('start-practice-button'));
     await user.press(screen.getByTestId('complete-drill-button'));
     await user.press(screen.getByTestId('go-home-button'));
 
     expect(screen.getByTestId('home-screen')).toBeTruthy();
+  });
+
+  it('shows practiced-today badge after returning home', async () => {
+    const user = userEvent.setup();
+    await render(<App />);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('home-screen')).toBeTruthy();
+    });
+
+    await user.press(screen.getByTestId('start-practice-button'));
+    await user.press(screen.getByTestId('complete-drill-button'));
+    await user.press(screen.getByTestId('go-home-button'));
+
+    expect(screen.getByTestId('practiced-today-badge')).toBeTruthy();
+    expect(screen.getByTestId('streak-display')).toHaveTextContent('1', { exact: false });
+  });
+
+  it('does not increment streak twice on same-day replays', async () => {
+    const todayKey = toDateKey();
+    loadProgress.mockResolvedValue({ lastPracticeDate: todayKey, streak: 3 });
+
+    const user = userEvent.setup();
+    await render(<App />);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('practiced-today-badge')).toBeTruthy();
+    });
+    expect(screen.getByTestId('streak-display')).toHaveTextContent('3', { exact: false });
+
+    await user.press(screen.getByTestId('start-practice-button'));
+    await user.press(screen.getByTestId('complete-drill-button'));
+
+    expect(screen.getByTestId('celebration-streak')).toHaveTextContent('3', { exact: false });
+    expect(saveProgress).toHaveBeenCalledWith({
+      lastPracticeDate: toDateKey(),
+      streak: 3,
+    });
   });
 });

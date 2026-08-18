@@ -52,7 +52,10 @@ A mobile app that helps a young child (initially **ages 4–6**) practice real-w
 
 ### 5.3 Rewards & Motivation
 - Earn a sticker/badge per completed session or drill.
-- Track a daily **streak**.
+- Track a daily **streak** (calendar days with at least one completed session).
+- Streak persists on-device only (AsyncStorage); no accounts or cloud sync in this increment.
+- Completing the session again the same day is allowed but does not increment the streak twice.
+- Home shows current streak (🔥 + number) and a visual badge when today's practice is already done.
 - Positive, celebratory feedback (sound + animation). No "you failed" states.
 
 ### 5.4 Player Profile
@@ -107,8 +110,28 @@ A mobile app that helps a young child (initially **ages 4–6**) practice real-w
 | 2 | Drill | Watch toe-tap demo, practice in real life, tap **I did it!** |
 | 3 | Celebration | See sticker reward, tap **Done** to return home |
 
-**Out of scope for this slice:** parent area, profile, audio, streaks, multiple drills, navigation library.
+**Out of scope for this slice:** parent area, profile, audio, multiple drills, navigation library.
 
 ---
 
-_Next steps: add audio coaching, more drills, streak tracking, and parent area._
+## 11. Local Habit Loop (implemented)
+
+**Flow additions:** completing a session saves progress locally and updates the streak.
+
+| Behavior | Rule |
+|----------|------|
+| First completion ever | Streak = 1, today's sticker earned |
+| Practice yesterday, complete today | Streak increments by 1 |
+| Skip one or more calendar days | Streak resets to 1 on next completion |
+| Second completion same day | Sticker still shown; streak unchanged |
+| Reload app | Progress survives via AsyncStorage |
+
+**Home screen:** 🔥 + streak count; practiced-today badge (⭐✅) when applicable; **Start!** always available.
+
+**Celebration screen:** shows earned sticker and updated streak count.
+
+**Storage:** `@soccer_buddy/progress` JSON in AsyncStorage (`lastPracticeDate`, `streak`). No network, no child PII.
+
+---
+
+_Next steps: add audio coaching, more drills, and parent area._

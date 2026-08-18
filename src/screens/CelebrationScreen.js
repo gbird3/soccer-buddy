@@ -3,7 +3,7 @@ import BigButton from '../components/BigButton';
 import { TOE_TAPS_DRILL } from '../constants/drills';
 import { colors, sizes } from '../constants/theme';
 
-export default function CelebrationScreen({ onGoHome }) {
+export default function CelebrationScreen({ onGoHome, streak = 0 }) {
   return (
     <View style={styles.container} testID="celebration-screen">
       <Text style={styles.confetti} accessibilityElementsHidden importantForAccessibility="no">
@@ -18,6 +18,13 @@ export default function CelebrationScreen({ onGoHome }) {
       >
         <Text style={styles.sticker}>{TOE_TAPS_DRILL.sticker}</Text>
         <Text style={styles.stickerLabel}>{TOE_TAPS_DRILL.stickerLabel}</Text>
+      </View>
+
+      <View style={styles.streakRow} testID="celebration-streak" accessibilityLabel={`${streak} day streak`}>
+        <Text style={styles.streakIcon} accessibilityElementsHidden importantForAccessibility="no">
+          🔥
+        </Text>
+        <Text style={styles.streakNumber}>{streak}</Text>
       </View>
 
       <View style={styles.buttonWrap}>
@@ -75,6 +82,22 @@ const styles = StyleSheet.create({
     fontSize: sizes.subtitle,
     fontWeight: '700',
     color: colors.fieldGreenDark,
+    textAlign: 'center',
+  },
+  streakRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  streakIcon: {
+    fontSize: 40,
+  },
+  streakNumber: {
+    fontSize: 48,
+    fontWeight: '800',
+    color: colors.white,
+    marginLeft: 8,
+    minWidth: 36,
     textAlign: 'center',
   },
   buttonWrap: {

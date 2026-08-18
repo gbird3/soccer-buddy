@@ -73,6 +73,8 @@ app.json                # Expo app config (name, icons, platforms)
 assets/                 # Icons and images
 src/
   practiceFlow.js       # Screen transitions (home → drill → celebration)
+  streak.js             # Pure streak date math (calendar days, no double-count)
+  storage/              # On-device progress persistence (AsyncStorage)
   screens/              # Home, Drill, Celebration screens
   components/           # BigButton, ToeTapDemo
   constants/            # Theme colors/sizes, drill data
@@ -88,6 +90,7 @@ A child can:
 2. Watch a toe-tap demo and practice the move in real life.
 3. Tap **I did it!** when finished (tap-to-complete — no timer or motion detection).
 4. See a celebration and earn a star sticker, then tap **Done** to go home.
+5. Build a daily streak — finishing once per calendar day counts; the home screen shows 🔥 + streak count, and a badge when today's practice is already done (practice again anytime; streak won't double-count).
 
 Run unit tests:
 
@@ -101,7 +104,7 @@ Product requirements are being captured in [REQUIREMENTS.md](./REQUIREMENTS.md) 
 
 ## Status
 
-🚧 Early development — first playable slice is live (home → one drill → celebration/sticker). Parent area, audio, streaks, and multiple drills are not yet implemented.
+🚧 Early development — first playable slice plus local streak/sticker persistence. Parent area, audio, and multiple drills are not yet implemented.
 
 ## License
 

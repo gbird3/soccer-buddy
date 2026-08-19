@@ -1,6 +1,7 @@
 export const EMPTY_PROGRESS = {
   lastPracticeDate: null,
   streak: 0,
+  soundEnabled: true,
 };
 
 export function toDateKey(date = new Date()) {
@@ -42,10 +43,13 @@ export function hasPracticedToday(progress, todayKey = toDateKey()) {
 }
 
 export function recordSessionComplete(progress, todayKey = toDateKey()) {
+  const soundEnabled = progress.soundEnabled !== false;
+
   if (hasPracticedToday(progress, todayKey)) {
     return {
       lastPracticeDate: progress.lastPracticeDate,
       streak: getEffectiveStreak(progress, todayKey),
+      soundEnabled,
     };
   }
 
@@ -62,5 +66,6 @@ export function recordSessionComplete(progress, todayKey = toDateKey()) {
   return {
     lastPracticeDate: todayKey,
     streak: newStreak,
+    soundEnabled,
   };
 }

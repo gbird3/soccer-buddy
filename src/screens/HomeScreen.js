@@ -1,15 +1,25 @@
 import { StyleSheet, Text, View } from 'react-native';
 import BigButton from '../components/BigButton';
+import ParentGateButton from '../components/ParentGateButton';
 import SpeakerButton from '../components/SpeakerButton';
 import { SESSION_REWARD, COACHING_LINES } from '../constants/drills';
 import { colors, sizes } from '../constants/theme';
 import { useCoachingSpeech } from '../hooks/useCoachingSpeech';
 
-export default function HomeScreen({ onStartPractice, streak = 0, practicedToday = false }) {
+export default function HomeScreen({
+  onStartPractice,
+  onOpenParent,
+  streak = 0,
+  practicedToday = false,
+}) {
   const replayCoaching = useCoachingSpeech(COACHING_LINES.HOME);
 
   return (
     <View style={styles.container} testID="home-screen">
+      <View style={styles.parentGateCorner}>
+        <ParentGateButton onUnlock={onOpenParent} />
+      </View>
+
       <SpeakerButton
         testID="replay-coaching-button"
         onPress={replayCoaching}
@@ -117,5 +127,11 @@ const styles = StyleSheet.create({
   },
   buttonWrap: {
     marginTop: 8,
+  },
+  parentGateCorner: {
+    position: 'absolute',
+    top: 48,
+    right: 16,
+    zIndex: 10,
   },
 });

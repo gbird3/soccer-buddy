@@ -63,8 +63,12 @@ A mobile app that helps a young child (initially **ages 4–6**) practice real-w
 - Name, age, avatar. Stored locally _(open question: support multiple kids?)_.
 
 ### 5.5 Parent Area
-- Gated entry (e.g. hold-to-enter or simple math/age gate).
-- Configure session length, sound, and review progress.
+- Gated entry via press-and-hold (~3 seconds) on a small lock control in a corner of Home — not a math quiz, not as large as Start.
+- Inside (v1 slice): review current streak (🔥 + number) and a mute toggle for coaching audio.
+- Mute persists locally in `@soccer_buddy/progress` (`soundEnabled` field). When muted, `speakCoaching`, auto-speak, and replay no-op.
+- Parent screen does not auto-speak.
+- Done/back returns to Home.
+- **Out of scope for this slice:** child name/age/profile, session-length slider, purchases.
 
 ## 6. Non-Functional Requirements (Draft)
 
@@ -131,7 +135,7 @@ A mobile app that helps a young child (initially **ages 4–6**) practice real-w
 
 **Celebration screen:** shows earned sticker and updated streak count.
 
-**Storage:** `@soccer_buddy/progress` JSON in AsyncStorage (`lastPracticeDate`, `streak`). No network, no child PII.
+**Storage:** `@soccer_buddy/progress` JSON in AsyncStorage (`lastPracticeDate`, `streak`, `soundEnabled`). No network, no child PII.
 
 ---
 

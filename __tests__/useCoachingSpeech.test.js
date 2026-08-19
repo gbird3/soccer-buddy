@@ -1,6 +1,7 @@
 import { render, waitFor } from '@testing-library/react-native';
 import { View } from 'react-native';
 import * as Speech from 'expo-speech';
+import { setCoachingEnabled } from '../src/audio/coachingSpeech';
 import { useCoachingSpeech } from '../src/hooks/useCoachingSpeech';
 
 function CoachingHarness({ line }) {
@@ -11,6 +12,7 @@ function CoachingHarness({ line }) {
 describe('useCoachingSpeech', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    setCoachingEnabled(true);
   });
 
   it('speaks the coaching line once on mount', async () => {
@@ -37,6 +39,16 @@ describe('useCoachingSpeech', () => {
 
     await waitFor(() => {
       expect(Speech.stop.mock.calls.length).toBeGreaterThan(stopCallsBeforeUnmount);
+    });
+  });
+
+  it('does not speak on mount when coaching is disabled', async () => {
+    setCoachingEnabled(false);
+
+    await render(<CoachingHarness line="Let's practice!" />);
+
+    await waitFor(() => {
+      expect(Speech.speak).not.toHaveBeenCalled();
     });
   });
 });

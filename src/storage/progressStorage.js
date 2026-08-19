@@ -11,6 +11,7 @@ export function normalizeProgress(data) {
   return {
     lastPracticeDate: typeof data.lastPracticeDate === 'string' ? data.lastPracticeDate : null,
     streak: typeof data.streak === 'number' && data.streak >= 0 ? data.streak : 0,
+    soundEnabled: data.soundEnabled !== false,
   };
 }
 

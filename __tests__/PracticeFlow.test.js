@@ -40,6 +40,12 @@ describe('practiceFlow', () => {
   it('returns home from any screen via GO_HOME', () => {
     expect(getNextScreen(SCREENS.CELEBRATION, 'GO_HOME')).toBe(SCREENS.HOME);
     expect(getNextScreen(SCREENS.DRILL, 'GO_HOME')).toBe(SCREENS.HOME);
+    expect(getNextScreen(SCREENS.PARENT, 'GO_HOME')).toBe(SCREENS.HOME);
+  });
+
+  it('opens the parent area from home', () => {
+    expect(getNextScreen(SCREENS.HOME, 'OPEN_PARENT')).toBe(SCREENS.PARENT);
+    expect(getNextScreen(SCREENS.DRILL, 'OPEN_PARENT')).toBe(SCREENS.DRILL);
   });
 
   it('ignores invalid transitions', () => {
@@ -105,6 +111,7 @@ describe('App practice session flow', () => {
     expect(saveProgress).toHaveBeenCalledWith({
       lastPracticeDate: toDateKey(),
       streak: 1,
+      soundEnabled: true,
     });
   });
 
@@ -178,6 +185,7 @@ describe('App practice session flow', () => {
     expect(saveProgress).toHaveBeenCalledWith({
       lastPracticeDate: toDateKey(),
       streak: 3,
+      soundEnabled: true,
     });
   });
 });

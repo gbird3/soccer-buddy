@@ -2,6 +2,7 @@ export const SCREENS = {
   HOME: 'home',
   DRILL: 'drill',
   CELEBRATION: 'celebration',
+  PARENT: 'parent',
 };
 
 export function getNextScreen(currentScreen, action, { drillIndex = 0, drillCount = 1 } = {}) {
@@ -19,6 +20,9 @@ export function getNextScreen(currentScreen, action, { drillIndex = 0, drillCoun
       return currentScreen;
     case 'GO_HOME':
       return SCREENS.HOME;
+    case 'OPEN_PARENT':
+      if (currentScreen === SCREENS.HOME) return SCREENS.PARENT;
+      return currentScreen;
     default:
       return currentScreen;
   }

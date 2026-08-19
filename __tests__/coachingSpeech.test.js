@@ -1,9 +1,15 @@
 import * as Speech from 'expo-speech';
-import { speakCoaching, stopCoaching } from '../src/audio/coachingSpeech';
+import {
+  isCoachingEnabled,
+  setCoachingEnabled,
+  speakCoaching,
+  stopCoaching,
+} from '../src/audio/coachingSpeech';
 
 describe('coachingSpeech', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    setCoachingEnabled(true);
   });
 
   it('stops any current speech and speaks the coaching line', () => {
@@ -36,5 +42,15 @@ describe('coachingSpeech', () => {
     });
 
     expect(() => stopCoaching()).not.toThrow();
+  });
+
+  it('does not speak when coaching is disabled', () => {
+    setCoachingEnabled(false);
+
+    speakCoaching('Tap the ball!');
+
+    expect(Speech.stop).not.toHaveBeenCalled();
+    expect(Speech.speak).not.toHaveBeenCalled();
+    expect(isCoachingEnabled()).toBe(false);
   });
 });

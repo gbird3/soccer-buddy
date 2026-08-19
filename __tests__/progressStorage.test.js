@@ -21,6 +21,17 @@ describe('normalizeProgress', () => {
     ).toEqual({
       lastPracticeDate: '2026-08-18',
       streak: 3,
+      soundEnabled: true,
+    });
+  });
+
+  it('preserves soundEnabled when muted', () => {
+    expect(
+      normalizeProgress({ lastPracticeDate: '2026-08-18', streak: 3, soundEnabled: false })
+    ).toEqual({
+      lastPracticeDate: '2026-08-18',
+      streak: 3,
+      soundEnabled: false,
     });
   });
 });
@@ -39,7 +50,11 @@ describe('progressStorage', () => {
     const progress = { lastPracticeDate: '2026-08-18', streak: 2 };
 
     await saveProgress(progress);
-    await expect(loadProgress()).resolves.toEqual(progress);
+    await expect(loadProgress()).resolves.toEqual({
+      lastPracticeDate: '2026-08-18',
+      streak: 2,
+      soundEnabled: true,
+    });
     await expect(AsyncStorage.getItem(STORAGE_KEY)).resolves.toBe(JSON.stringify(progress));
   });
 

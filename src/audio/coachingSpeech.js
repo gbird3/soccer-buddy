@@ -1,6 +1,20 @@
 import * as Speech from 'expo-speech';
 
+let coachingEnabled = true;
+
+export function setCoachingEnabled(enabled) {
+  coachingEnabled = enabled !== false;
+}
+
+export function isCoachingEnabled() {
+  return coachingEnabled;
+}
+
 export function speakCoaching(line) {
+  if (!coachingEnabled) {
+    return;
+  }
+
   try {
     Speech.stop();
     Speech.speak(line, {

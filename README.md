@@ -72,11 +72,11 @@ index.js                # Entry point — registers the root component
 app.json                # Expo app config (name, icons, platforms)
 assets/                 # Icons and images
 src/
-  practiceFlow.js       # Screen transitions (home → drills → celebration)
+  practiceFlow.js       # Screen transitions (home → drills → celebration → parent)
   streak.js             # Pure streak date math (calendar days, no double-count)
   storage/              # On-device progress persistence (AsyncStorage)
-  screens/              # Home, Drill, Celebration screens
-  components/          # BigButton, SpeakerButton, ToeTapDemo, KickTargetDemo
+  screens/              # Home, Drill, Celebration, Parent screens
+  components/          # BigButton, SpeakerButton, ParentGateButton, demos
   hooks/               # useCoachingSpeech — auto-speak on mount, replay, cleanup
   audio/               # On-device TTS via expo-speech (speakCoaching / stopCoaching)
   constants/            # Theme colors/sizes, drill data
@@ -94,6 +94,8 @@ A child can:
 4. After both drills, see a celebration and earn one star sticker per session (celebration speaks encouragement), then tap **Done** to go home.
 5. Build a daily streak — finishing the full session once per calendar day counts; the home screen shows 🔥 + streak count, and a badge when today's practice is already done (practice again anytime; streak won't double-count).
 
+**Parent area (v1):** A small 🔒 control in the top-right corner of Home. Parents press and hold for ~3 seconds to enter. Inside: review the current streak and toggle coaching audio on/off. Mute persists on-device; when muted, auto-speak and 🔊 replay are silenced. The parent screen does not auto-speak.
+
 **Audio (v1):** On-device text-to-speech via `expo-speech` — English only, auto-speaks once per screen, replayable via a large 🔊 button. No cloud TTS, no recording. Recorded voice talent is a possible later option.
 
 Run unit tests:
@@ -108,7 +110,7 @@ Product requirements are being captured in [REQUIREMENTS.md](./REQUIREMENTS.md) 
 
 ## Status
 
-🚧 Early development — two-drill daily session with local streak/sticker persistence and on-device audio coaching. Parent area not yet implemented.
+🚧 Early development — two-drill daily session with local streak/sticker persistence, on-device audio coaching, and a parent-gated settings area (streak review + coaching mute).
 
 ## License
 

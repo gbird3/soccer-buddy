@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
+import { setCoachingEnabled } from './src/audio/coachingSpeech';
 import CelebrationScreen from './src/screens/CelebrationScreen';
 import DrillScreen from './src/screens/DrillScreen';
 import HomeScreen from './src/screens/HomeScreen';
+import ParentScreen from './src/screens/ParentScreen';
 import { SESSION_DRILLS } from './src/constants/drills';
 import {
   SCREENS,
@@ -26,12 +28,19 @@ export default function App() {
   const [celebrationStreak, setCelebrationStreak] = useState(0);
 
   useEffect(() => {
-    loadProgress().then(setProgress);
+    loadProgress().then((loaded) => {
+      setProgress(loaded);
+      setCoachingEnabled(loaded.soundEnabled);
+    });
   }, []);
 
   const startPractice = () => {
     setDrillIndex(0);
     setScreen((current) => getNextScreen(current, 'START_PRACTICE'));
+  };
+
+  const openParent = () => {
+    setScreen((current) => getNextScreen(current, 'OPEN_PARENT'));
   };
 
   const completeDrill = useCallback(async () => {
@@ -59,6 +68,15 @@ export default function App() {
     setScreen(SCREENS.HOME);
   };
 
+  const toggleSound = useCallback(async (enabled) => {
+    const currentProgress = progress ?? { ...EMPTY_PROGRESS };
+    const updatedProgress = { ...currentProgress, soundEnabled: enabled };
+
+    setProgress(updatedProgress);
+    setCoachingEnabled(enabled);
+    await saveProgress(updatedProgress);
+  }, [progress]);
+
   if (progress === null) {
     return null;
   }
@@ -66,12 +84,14 @@ export default function App() {
   const streak = getEffectiveStreak(progress);
   const practicedToday = hasPracticedToday(progress);
   const currentDrill = SESSION_DRILLS[drillIndex];
+  const soundEnabled = progress.soundEnabled !== false;
 
   return (
     <>
       {screen === SCREENS.HOME && (
         <HomeScreen
           onStartPractice={startPractice}
+          onOpenParent={openParent}
           streak={streak}
           practicedToday={practicedToday}
         />
@@ -81,6 +101,14 @@ export default function App() {
       )}
       {screen === SCREENS.CELEBRATION && (
         <CelebrationScreen onGoHome={goHome} streak={celebrationStreak} />
+      )}
+      {screen === SCREENS.PARENT && (
+        <ParentScreen
+          streak={streak}
+          soundEnabled={soundEnabled}
+          onToggleSound={toggleSound}
+          onGoHome={goHome}
+        />
       )}
       <StatusBar style="light" />
     </>

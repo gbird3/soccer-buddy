@@ -54,6 +54,7 @@ describe('recordSessionComplete', () => {
     expect(recordSessionComplete(EMPTY_PROGRESS, '2026-08-18')).toEqual({
       lastPracticeDate: '2026-08-18',
       streak: 1,
+      soundEnabled: true,
     });
   });
 
@@ -63,6 +64,7 @@ describe('recordSessionComplete', () => {
     expect(recordSessionComplete(yesterday, '2026-08-18')).toEqual({
       lastPracticeDate: '2026-08-18',
       streak: 4,
+      soundEnabled: true,
     });
   });
 
@@ -72,6 +74,7 @@ describe('recordSessionComplete', () => {
     expect(recordSessionComplete(skipped, '2026-08-18')).toEqual({
       lastPracticeDate: '2026-08-18',
       streak: 1,
+      soundEnabled: true,
     });
   });
 
@@ -81,6 +84,17 @@ describe('recordSessionComplete', () => {
     expect(recordSessionComplete(alreadyToday, '2026-08-18')).toEqual({
       lastPracticeDate: '2026-08-18',
       streak: 4,
+      soundEnabled: true,
+    });
+  });
+
+  it('preserves soundEnabled when recording session completion', () => {
+    const muted = { lastPracticeDate: '2026-08-17', streak: 2, soundEnabled: false };
+
+    expect(recordSessionComplete(muted, '2026-08-18')).toEqual({
+      lastPracticeDate: '2026-08-18',
+      streak: 3,
+      soundEnabled: false,
     });
   });
 });

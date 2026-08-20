@@ -24,4 +24,12 @@ export const KICK_TARGET_DRILL = {
   instruction: 'Kick the ball at the target!',
 };
 
-export const SESSION_DRILLS = [TOE_TAPS_DRILL, KICK_TARGET_DRILL];
+export const FREEZE_DRILL = {
+  id: 'freeze',
+  name: 'Freeze!',
+  icon: '🦶',
+  demo: 'freeze',
+  instruction: 'Roll the ball, then freeze with your foot on top!',
+};
+
+export const SESSION_DRILLS = [TOE_TAPS_DRILL, KICK_TARGET_DRILL, FREEZE_DRILL];

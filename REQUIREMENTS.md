@@ -47,7 +47,7 @@ A mobile app that helps a young child (initially **ages 4–6**) practice real-w
 - Session length is configurable by the parent _(target ~5 min default)_.
 
 ### 5.2 Drills
-- A small starter library of beginner drills (e.g. toe taps, dribble between cones, pass against a wall, kick a target).
+- A small starter library of beginner drills (e.g. toe taps, kick a target, freeze/trap control).
 - Each drill has: name, icon/illustration, demo animation or video, audio cue, and a simple "done" interaction.
 - **Decision (v1 slice 1):** The child marks a drill complete with a big **"I did it!"** tap. No timer or motion detection in this slice.
 
@@ -149,10 +149,13 @@ A mobile app that helps a young child (initially **ages 4–6**) practice real-w
 | Home | "Let's practice!" |
 | Toe Taps | "Tap the ball with your toes, one foot at a time!" |
 | Kick a Target | "Kick the ball at the target!" |
+| Freeze! | "Roll the ball, then freeze with your foot on top!" |
 | Celebration | "Great job! You earned a sticker!" |
 
 **Tech:** `expo-speech` on-device TTS, English only. Fails silently when speech is unavailable (tests, web). No cloud TTS, no voice recording, no parent mute in this slice.
 
 ---
 
-_Next steps: parent area, more drills, recorded voice option._
+_Next steps: parent area polish, more drills, recorded voice option._
+
+**v1 beginner drills (3):** Toe Taps (footwork), Kick a Target (striking), Freeze! (first-touch trap/control).

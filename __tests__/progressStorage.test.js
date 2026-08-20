@@ -63,4 +63,12 @@ describe('progressStorage', () => {
 
     await expect(loadProgress()).resolves.toEqual(EMPTY_PROGRESS);
   });
+
+  it('saveProgress fails silently when storage is unavailable', async () => {
+    AsyncStorage.setItem.mockRejectedValueOnce(new Error('QuotaExceededError'));
+
+    await expect(
+      saveProgress({ lastPracticeDate: '2026-08-18', streak: 1 })
+    ).resolves.toBeUndefined();
+  });
 });

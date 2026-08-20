@@ -29,5 +29,9 @@ export async function loadProgress() {
 }
 
 export async function saveProgress(progress) {
-  await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+  try {
+    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+  } catch {
+    // Storage may be unavailable (private browsing, tests) — fail silently.
+  }
 }

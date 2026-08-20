@@ -62,7 +62,18 @@ Then scan the QR code with Expo Go (Android) or the Camera app (iOS), or press `
 npm run ios      # iOS simulator (macOS + Xcode)
 npm run android  # Android emulator
 npm run web      # run in a browser
+npm run export:web  # static production build (output in dist/)
 ```
+
+## Try it on a phone
+
+**Live preview:** [https://gbird3.github.io/soccer-buddy/](https://gbird3.github.io/soccer-buddy/)
+
+Open that link on your phone's browser to try Soccer Buddy with your kids. This is a **browser preview** for family testing — "Add to Home Screen" works fine, but it is not the same as the native Expo Go / App Store experience.
+
+- **Native iOS/Android** via Expo Go is unchanged (`npm start` and scan the QR code).
+- **No accounts, analytics, or backend** — same local-first app, just exported for the web.
+- Deploys automatically to GitHub Pages when changes merge to `main` (or run the **Deploy web preview to GitHub Pages** workflow manually).
 
 ## Project Structure
 

@@ -74,11 +74,12 @@ A mobile app that helps a young child (initially **ages 4–6**) practice real-w
 
 - **Usability:** Operable by a 4–6 year old; pre-reader-friendly (icons + audio).
 - **Accessibility:** Large tap targets, high contrast, clear audio, reduced-motion option _(TBD)_.
-- **Platforms:** iOS and Android via React Native (Expo, managed workflow).
+- **Platforms:** iOS and Android via React Native (Expo, managed workflow). A **web browser preview** is also published to GitHub Pages for family testing — not a v1 store target.
 - **Offline:** Daily session should work without a network connection _(target)_.
 - **Performance:** Fast cold start; smooth animations on mid-range devices.
 - **Privacy & Safety:** No ads, no third-party tracking of children, no open chat. Comply with child-privacy norms (e.g. COPPA/GDPR-K considerations) _(needs review before launch)_.
 - **Data:** Local-first storage for v1 _(open question: cloud backup/sync later?)_.
+- **Web preview (family testing):** Static export hosted at [https://gbird3.github.io/soccer-buddy/](https://gbird3.github.io/soccer-buddy/) via GitHub Pages. Browser-only distribution for trying the app with kids; native Expo builds remain the primary path. No accounts, analytics, or backend added for web.
 
 ## 7. Content Scope (v1 Draft)
 

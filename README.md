@@ -100,9 +100,9 @@ REQUIREMENTS.md         # Living product requirements doc
 A child can:
 
 1. Open the app and tap **Start!** on the home screen (home speaks "Let's practice!" on appear; tap 🔊 to hear again).
-2. Complete a two-drill session: **Toe Taps** then **Kick a Target** — each with a looping demo, on-device audio coaching, and tap-to-complete.
+2. Complete a three-drill session: **Toe Taps** → **Kick a Target** → **Freeze!** — each with a looping demo, on-device audio coaching, and tap-to-complete.
 3. Tap **I did it!** after each drill (no timer or motion detection).
-4. After both drills, see a celebration and earn one star sticker per session (celebration speaks encouragement), then tap **Done** to go home.
+4. After all three drills, see a celebration and earn one star sticker per session (celebration speaks encouragement), then tap **Done** to go home.
 5. Build a daily streak — finishing the full session once per calendar day counts; the home screen shows 🔥 + streak count, and a badge when today's practice is already done (practice again anytime; streak won't double-count).
 
 **Parent area (v1):** A small 🔒 control in the top-right corner of Home. Parents press and hold for ~3 seconds to enter. Inside: review the current streak and toggle coaching audio on/off. Mute persists on-device; when muted, auto-speak and 🔊 replay are silenced. The parent screen does not auto-speak.
@@ -121,7 +121,7 @@ Product requirements are being captured in [REQUIREMENTS.md](./REQUIREMENTS.md) 
 
 ## Status
 
-🚧 Early development — two-drill daily session with local streak/sticker persistence, on-device audio coaching, and a parent-gated settings area (streak review + coaching mute).
+🚧 Early development — three-drill daily session (Toe Taps, Kick a Target, Freeze!) with local streak/sticker persistence, on-device audio coaching, and a parent-gated settings area (streak review + coaching mute).
 
 ## License
 

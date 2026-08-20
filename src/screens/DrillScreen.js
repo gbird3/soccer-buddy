@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import BigButton from '../components/BigButton';
+import FreezeDemo from '../components/FreezeDemo';
 import KickTargetDemo from '../components/KickTargetDemo';
 import SpeakerButton from '../components/SpeakerButton';
 import ToeTapDemo from '../components/ToeTapDemo';
@@ -9,6 +10,7 @@ import { useCoachingSpeech } from '../hooks/useCoachingSpeech';
 const DEMO_COMPONENTS = {
   'toe-taps': ToeTapDemo,
   'kick-target': KickTargetDemo,
+  freeze: FreezeDemo,
 };
 
 export default function DrillScreen({ drill, onCompleteDrill }) {

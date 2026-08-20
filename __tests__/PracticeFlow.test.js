@@ -56,12 +56,14 @@ describe('practiceFlow', () => {
   it('resets drill index on start and advances on complete', () => {
     expect(getNextDrillIndex(0, 'START_PRACTICE', drillCount)).toBe(0);
     expect(getNextDrillIndex(0, 'COMPLETE_DRILL', drillCount)).toBe(1);
-    expect(getNextDrillIndex(1, 'COMPLETE_DRILL', drillCount)).toBe(1);
+    expect(getNextDrillIndex(1, 'COMPLETE_DRILL', drillCount)).toBe(2);
+    expect(getNextDrillIndex(2, 'COMPLETE_DRILL', drillCount)).toBe(2);
   });
 
   it('knows when the session is complete', () => {
     expect(isSessionComplete(0, drillCount)).toBe(false);
-    expect(isSessionComplete(1, drillCount)).toBe(true);
+    expect(isSessionComplete(1, drillCount)).toBe(false);
+    expect(isSessionComplete(2, drillCount)).toBe(true);
   });
 });
 
@@ -82,7 +84,7 @@ describe('App practice session flow', () => {
     expect(screen.getByTestId('streak-display')).toBeTruthy();
   });
 
-  it('navigates home → toe taps → kick target → celebration with tap-to-complete', async () => {
+  it('navigates home → toe taps → kick target → freeze → celebration with tap-to-complete', async () => {
     const user = userEvent.setup();
     await render(<App />);
 
@@ -99,6 +101,12 @@ describe('App practice session flow', () => {
     expect(screen.getByTestId('drill-screen')).toBeTruthy();
     expect(screen.getByTestId('kick-target-demo')).toBeTruthy();
     expect(screen.getByText('Kick a Target')).toBeTruthy();
+    expect(saveProgress).not.toHaveBeenCalled();
+
+    await user.press(screen.getByTestId('complete-drill-button'));
+    expect(screen.getByTestId('drill-screen')).toBeTruthy();
+    expect(screen.getByTestId('freeze-demo')).toBeTruthy();
+    expect(screen.getByText('Freeze!')).toBeTruthy();
     expect(saveProgress).not.toHaveBeenCalled();
 
     await user.press(screen.getByTestId('complete-drill-button'));
@@ -132,6 +140,24 @@ describe('App practice session flow', () => {
     expect(screen.queryByTestId('celebration-screen')).toBeNull();
   });
 
+  it('does not record streak after only the first two drills', async () => {
+    const user = userEvent.setup();
+    await render(<App />);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('home-screen')).toBeTruthy();
+    });
+
+    await user.press(screen.getByTestId('start-practice-button'));
+    await user.press(screen.getByTestId('complete-drill-button'));
+    await user.press(screen.getByTestId('complete-drill-button'));
+
+    expect(screen.getByTestId('drill-screen')).toBeTruthy();
+    expect(screen.getByText('Freeze!')).toBeTruthy();
+    expect(saveProgress).not.toHaveBeenCalled();
+    expect(screen.queryByTestId('celebration-screen')).toBeNull();
+  });
+
   it('returns to home from celebration', async () => {
     const user = userEvent.setup();
     await render(<App />);
@@ -141,6 +167,7 @@ describe('App practice session flow', () => {
     });
 
     await user.press(screen.getByTestId('start-practice-button'));
+    await user.press(screen.getByTestId('complete-drill-button'));
     await user.press(screen.getByTestId('complete-drill-button'));
     await user.press(screen.getByTestId('complete-drill-button'));
     await user.press(screen.getByTestId('go-home-button'));
@@ -157,6 +184,7 @@ describe('App practice session flow', () => {
     });
 
     await user.press(screen.getByTestId('start-practice-button'));
+    await user.press(screen.getByTestId('complete-drill-button'));
     await user.press(screen.getByTestId('complete-drill-button'));
     await user.press(screen.getByTestId('complete-drill-button'));
     await user.press(screen.getByTestId('go-home-button'));
@@ -178,6 +206,7 @@ describe('App practice session flow', () => {
     expect(screen.getByTestId('streak-display')).toHaveTextContent('3', { exact: false });
 
     await user.press(screen.getByTestId('start-practice-button'));
+    await user.press(screen.getByTestId('complete-drill-button'));
     await user.press(screen.getByTestId('complete-drill-button'));
     await user.press(screen.getByTestId('complete-drill-button'));
 

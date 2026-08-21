@@ -18,7 +18,15 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "name": "Soccer Buddy",
+      "shortName": "Soccer Buddy",
+      "display": "standalone",
+      "themeColor": "#0a7d2c",
+      "backgroundColor": "#fff9e6",
+      "startUrl": ".",
+      "scope": ".",
+      "orientation": "portrait"
     },
     "experiments": {
       "baseUrl": "/soccer-buddy"

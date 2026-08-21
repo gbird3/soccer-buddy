@@ -69,7 +69,17 @@ npm run export:web  # static production build (output in dist/)
 
 **Live preview:** [https://gbird3.github.io/soccer-buddy/](https://gbird3.github.io/soccer-buddy/)
 
-Open that link on your phone's browser to try Soccer Buddy with your kids. This is a **browser preview** for family testing — "Add to Home Screen" works fine, but it is not the same as the native Expo Go / App Store experience.
+Open that link on your phone's browser to try Soccer Buddy with your kids. This is a **browser preview** for family testing — you can install it to your home screen for quick access, but it is not the same as the native Expo Go / App Store experience.
+
+### Add to Home Screen (family testing)
+
+**Android Chrome (primary):**
+1. Open [the live preview](https://gbird3.github.io/soccer-buddy/) in Chrome.
+2. Tap the menu (⋮) → **Install app** or **Add to Home screen**.
+3. Confirm — Soccer Buddy opens standalone with the app icon and field-green theme.
+
+**iOS Safari:**
+1. Open the preview in Safari → Share (□↑) → **Add to Home Screen** → **Add**.
 
 - **Native iOS/Android** via Expo Go is unchanged (`npm start` and scan the QR code).
 - **No accounts, analytics, or backend** — same local-first app, just exported for the web.

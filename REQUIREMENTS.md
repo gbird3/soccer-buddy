@@ -79,7 +79,7 @@ A mobile app that helps a young child (initially **ages 4–6**) practice real-w
 - **Performance:** Fast cold start; smooth animations on mid-range devices.
 - **Privacy & Safety:** No ads, no third-party tracking of children, no open chat. Comply with child-privacy norms (e.g. COPPA/GDPR-K considerations) _(needs review before launch)_.
 - **Data:** Local-first storage for v1 _(open question: cloud backup/sync later?)_.
-- **Web preview (family testing):** Static export hosted at [https://gbird3.github.io/soccer-buddy/](https://gbird3.github.io/soccer-buddy/) via GitHub Pages. Browser-only distribution for trying the app with kids; native Expo builds remain the primary path. No accounts, analytics, or backend added for web.
+- **Web preview (family testing):** Static export hosted at [https://gbird3.github.io/soccer-buddy/](https://gbird3.github.io/soccer-buddy/) via GitHub Pages. Browser-only distribution for trying the app with kids; parents can **Add to Home Screen** (PWA manifest, standalone display, app icon) for quick family testing. Still not a v1 store target. Native Expo builds remain the primary path. No accounts, analytics, or backend added for web.
 
 ## 7. Content Scope (v1 Draft)
 

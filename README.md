@@ -93,11 +93,11 @@ index.js                # Entry point — registers the root component
 app.json                # Expo app config (name, icons, platforms)
 assets/                 # Icons and images
 src/
-  practiceFlow.js       # Screen transitions (home → drills → celebration → parent)
+  practiceFlow.js       # Screen transitions (home → warm-up → drills → celebration → parent)
   streak.js             # Pure streak date math (calendar days, no double-count)
   storage/              # On-device progress persistence (AsyncStorage)
-  screens/              # Home, Drill, Celebration, Parent screens
-  components/          # BigButton, SpeakerButton, ParentGateButton, demos
+  screens/              # Home, WarmUp, Drill, Celebration, Parent screens
+  components/          # BigButton, SpeakerButton, ParentGateButton, demos (incl. WarmUpDemo)
   hooks/               # useCoachingSpeech — auto-speak on mount, replay, cleanup
   audio/               # On-device TTS via expo-speech (speakCoaching / stopCoaching)
   constants/            # Theme colors/sizes, drill data, sticker catalog
@@ -110,10 +110,11 @@ REQUIREMENTS.md         # Living product requirements doc
 A child can:
 
 1. Open the app and tap **Start!** on the home screen (home speaks "Let's practice!" on appear; tap 🔊 to hear again).
-2. Complete a four-drill session: **Toe Taps** → **Kick a Target** → **Freeze!** → **Tick Tock** — each with a looping demo, on-device audio coaching, and tap-to-complete.
-3. Tap **I did it!** after each drill (no timer or motion detection).
-4. After all four drills, see a celebration and earn a distinct sticker per new practice day (celebration speaks encouragement), then tap **Done** to go home.
-5. Build a daily streak — finishing the full session once per calendar day counts; the home screen shows 🔥 + streak count, a row of earned stickers, and a badge when today's practice is already done (practice again anytime; streak and sticker collection won't double-count).
+2. Do a short **Warm-up** — march in place and roll the ball with your feet (looping demo, on-device audio coaching), then tap **Let's go!**
+3. Complete a four-drill session: **Toe Taps** → **Kick a Target** → **Freeze!** → **Tick Tock** — each with a looping demo, on-device audio coaching, and tap-to-complete.
+4. Tap **I did it!** after each drill (no timer or motion detection).
+5. After all four drills, see a celebration and earn a distinct sticker per new practice day (celebration speaks encouragement), then tap **Done** to go home.
+6. Build a daily streak — finishing the full session once per calendar day counts; the home screen shows 🔥 + streak count, a row of earned stickers, and a badge when today's practice is already done (practice again anytime; streak and sticker collection won't double-count).
 
 **Parent area (v1):** A small 🔒 control in the top-right corner of Home. Parents press and hold for ~3 seconds to enter. Inside: a **this-week** calendar (Sun–Sat) showing which days the child practiced, review the current streak, and toggle coaching audio on/off. Mute persists on-device; when muted, auto-speak and 🔊 replay are silenced. The parent screen does not auto-speak.
 
@@ -131,7 +132,7 @@ Product requirements are being captured in [REQUIREMENTS.md](./REQUIREMENTS.md) 
 
 ## Status
 
-🚧 Early development — four-drill daily session (Toe Taps, Kick a Target, Freeze!, Tick Tock) with local streak/sticker persistence, on-device audio coaching, and a parent-gated settings area (week-at-a-glance practice view, streak review + coaching mute).
+🚧 Early development — warm-up plus four-drill daily session (Toe Taps, Kick a Target, Freeze!, Tick Tock) with local streak/sticker persistence, on-device audio coaching, and a parent-gated settings area (week-at-a-glance practice view, streak review + coaching mute).
 
 ## License
 

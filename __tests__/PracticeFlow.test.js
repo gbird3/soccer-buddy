@@ -18,8 +18,12 @@ jest.mock('../src/storage/progressStorage', () => ({
 describe('practiceFlow', () => {
   const drillCount = SESSION_DRILLS.length;
 
-  it('moves from home to drill when practice starts', () => {
-    expect(getNextScreen(SCREENS.HOME, 'START_PRACTICE')).toBe(SCREENS.DRILL);
+  it('moves from home to warm-up when practice starts', () => {
+    expect(getNextScreen(SCREENS.HOME, 'START_PRACTICE')).toBe(SCREENS.WARMUP);
+  });
+
+  it('moves from warm-up to the first drill when warm-up completes', () => {
+    expect(getNextScreen(SCREENS.WARMUP, 'COMPLETE_WARMUP')).toBe(SCREENS.DRILL);
   });
 
   it('stays on drill screen after first drill completes', () => {
@@ -50,6 +54,8 @@ describe('practiceFlow', () => {
 
   it('ignores invalid transitions', () => {
     expect(getNextScreen(SCREENS.HOME, 'COMPLETE_DRILL')).toBe(SCREENS.HOME);
+    expect(getNextScreen(SCREENS.HOME, 'COMPLETE_WARMUP')).toBe(SCREENS.HOME);
+    expect(getNextScreen(SCREENS.WARMUP, 'COMPLETE_DRILL')).toBe(SCREENS.WARMUP);
     expect(getNextScreen(SCREENS.CELEBRATION, 'START_PRACTICE')).toBe(SCREENS.CELEBRATION);
   });
 
@@ -86,7 +92,7 @@ describe('App practice session flow', () => {
     expect(screen.getByTestId('streak-display')).toBeTruthy();
   });
 
-  it('navigates home → toe taps → kick target → freeze → tick tock → celebration with tap-to-complete', async () => {
+  it('navigates home → warm-up → toe taps → kick target → freeze → tick tock → celebration with tap-to-complete', async () => {
     const user = userEvent.setup();
     await render(<App />);
 
@@ -95,9 +101,16 @@ describe('App practice session flow', () => {
     });
 
     await user.press(screen.getByTestId('start-practice-button'));
+    expect(screen.getByTestId('warm-up-screen')).toBeTruthy();
+    expect(screen.getByTestId('warm-up-demo')).toBeTruthy();
+    expect(screen.getByText('Warm-up')).toBeTruthy();
+    expect(saveProgress).not.toHaveBeenCalled();
+
+    await user.press(screen.getByTestId('continue-warm-up-button'));
     expect(screen.getByTestId('drill-screen')).toBeTruthy();
     expect(screen.getByTestId('toe-tap-demo')).toBeTruthy();
     expect(screen.getByText('Toe Taps')).toBeTruthy();
+    expect(saveProgress).not.toHaveBeenCalled();
 
     await user.press(screen.getByTestId('complete-drill-button'));
     expect(screen.getByTestId('drill-screen')).toBeTruthy();
@@ -133,6 +146,38 @@ describe('App practice session flow', () => {
     });
   });
 
+  it('does not save progress while on the warm-up screen', async () => {
+    const user = userEvent.setup();
+    await render(<App />);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('home-screen')).toBeTruthy();
+    });
+
+    await user.press(screen.getByTestId('start-practice-button'));
+
+    expect(screen.getByTestId('warm-up-screen')).toBeTruthy();
+    expect(saveProgress).not.toHaveBeenCalled();
+    expect(screen.queryByTestId('celebration-screen')).toBeNull();
+  });
+
+  it('does not record streak after only the warm-up', async () => {
+    const user = userEvent.setup();
+    await render(<App />);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('home-screen')).toBeTruthy();
+    });
+
+    await user.press(screen.getByTestId('start-practice-button'));
+    await user.press(screen.getByTestId('continue-warm-up-button'));
+
+    expect(screen.getByTestId('drill-screen')).toBeTruthy();
+    expect(screen.getByText('Toe Taps')).toBeTruthy();
+    expect(saveProgress).not.toHaveBeenCalled();
+    expect(screen.queryByTestId('celebration-screen')).toBeNull();
+  });
+
   it('does not record streak after only the first drill', async () => {
     const user = userEvent.setup();
     await render(<App />);
@@ -142,6 +187,7 @@ describe('App practice session flow', () => {
     });
 
     await user.press(screen.getByTestId('start-practice-button'));
+    await user.press(screen.getByTestId('continue-warm-up-button'));
     await user.press(screen.getByTestId('complete-drill-button'));
 
     expect(screen.getByTestId('drill-screen')).toBeTruthy();
@@ -159,6 +205,7 @@ describe('App practice session flow', () => {
     });
 
     await user.press(screen.getByTestId('start-practice-button'));
+    await user.press(screen.getByTestId('continue-warm-up-button'));
     await user.press(screen.getByTestId('complete-drill-button'));
     await user.press(screen.getByTestId('complete-drill-button'));
     await user.press(screen.getByTestId('complete-drill-button'));
@@ -178,6 +225,7 @@ describe('App practice session flow', () => {
     });
 
     await user.press(screen.getByTestId('start-practice-button'));
+    await user.press(screen.getByTestId('continue-warm-up-button'));
     await user.press(screen.getByTestId('complete-drill-button'));
     await user.press(screen.getByTestId('complete-drill-button'));
     await user.press(screen.getByTestId('complete-drill-button'));
@@ -196,6 +244,7 @@ describe('App practice session flow', () => {
     });
 
     await user.press(screen.getByTestId('start-practice-button'));
+    await user.press(screen.getByTestId('continue-warm-up-button'));
     await user.press(screen.getByTestId('complete-drill-button'));
     await user.press(screen.getByTestId('complete-drill-button'));
     await user.press(screen.getByTestId('complete-drill-button'));
@@ -224,6 +273,7 @@ describe('App practice session flow', () => {
     expect(screen.getByTestId('streak-display')).toHaveTextContent('3', { exact: false });
 
     await user.press(screen.getByTestId('start-practice-button'));
+    await user.press(screen.getByTestId('continue-warm-up-button'));
     await user.press(screen.getByTestId('complete-drill-button'));
     await user.press(screen.getByTestId('complete-drill-button'));
     await user.press(screen.getByTestId('complete-drill-button'));

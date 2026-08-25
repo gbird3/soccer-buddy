@@ -1,6 +1,14 @@
 export const COACHING_LINES = {
   HOME: "Let's practice!",
+  WARM_UP: 'March in place to wake up your body, then roll the ball with your feet!',
   CELEBRATION: 'Great job! You earned a sticker!',
+};
+
+export const WARM_UP = {
+  id: 'warm-up',
+  name: 'Warm-up',
+  icon: '🏃',
+  instruction: COACHING_LINES.WARM_UP,
 };
 
 export const TOE_TAPS_DRILL = {

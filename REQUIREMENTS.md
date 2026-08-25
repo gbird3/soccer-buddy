@@ -147,6 +147,7 @@ A mobile app that helps a young child (initially **ages 4–6**) practice real-w
 | Screen | Coaching line |
 |--------|---------------|
 | Home | "Let's practice!" |
+| Warm-up | "March in place to wake up your body, then roll the ball with your feet!" |
 | Toe Taps | "Tap the ball with your toes, one foot at a time!" |
 | Kick a Target | "Kick the ball at the target!" |
 | Freeze! | "Roll the ball, then freeze with your foot on top!" |
@@ -160,5 +161,7 @@ A mobile app that helps a young child (initially **ages 4–6**) practice real-w
 _Next steps: parent area polish, recorded voice option._
 
 **v1 beginner drills (4):** Toe Taps (footwork), Kick a Target (striking), Freeze! (first-touch trap/control), Tick Tock (inside-foot passing).
+
+**Warm-up (v1):** Short playful movement before drills — march in place, then roll the ball with feet. Looping animated demo, on-device audio coaching, tap **Let's go!** to continue. Not a drill: does not count toward streak, stickers, or progress save.
 
 **Parent week view (v1):** Sun–Sat practiced-day marks in the parent area, backed by `practiceDates` in local storage.

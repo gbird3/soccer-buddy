@@ -1,5 +1,6 @@
 export const SCREENS = {
   HOME: 'home',
+  WARMUP: 'warmup',
   DRILL: 'drill',
   CELEBRATION: 'celebration',
   PARENT: 'parent',
@@ -8,7 +9,10 @@ export const SCREENS = {
 export function getNextScreen(currentScreen, action, { drillIndex = 0, drillCount = 1 } = {}) {
   switch (action) {
     case 'START_PRACTICE':
-      if (currentScreen === SCREENS.HOME) return SCREENS.DRILL;
+      if (currentScreen === SCREENS.HOME) return SCREENS.WARMUP;
+      return currentScreen;
+    case 'COMPLETE_WARMUP':
+      if (currentScreen === SCREENS.WARMUP) return SCREENS.DRILL;
       return currentScreen;
     case 'COMPLETE_DRILL':
       if (currentScreen === SCREENS.DRILL) {

@@ -5,6 +5,7 @@ import CelebrationScreen from './src/screens/CelebrationScreen';
 import DrillScreen from './src/screens/DrillScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import ParentScreen from './src/screens/ParentScreen';
+import WarmUpScreen from './src/screens/WarmUpScreen';
 import { SESSION_DRILLS } from './src/constants/drills';
 import {
   SCREENS,
@@ -38,6 +39,10 @@ export default function App() {
   const startPractice = () => {
     setDrillIndex(0);
     setScreen((current) => getNextScreen(current, 'START_PRACTICE'));
+  };
+
+  const completeWarmUp = () => {
+    setScreen((current) => getNextScreen(current, 'COMPLETE_WARMUP'));
   };
 
   const openParent = () => {
@@ -98,6 +103,9 @@ export default function App() {
           practicedToday={practicedToday}
           stickerIds={progress.stickerIds ?? []}
         />
+      )}
+      {screen === SCREENS.WARMUP && (
+        <WarmUpScreen onContinue={completeWarmUp} />
       )}
       {screen === SCREENS.DRILL && currentDrill && (
         <DrillScreen drill={currentDrill} onCompleteDrill={completeDrill} />

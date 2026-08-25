@@ -1,7 +1,7 @@
 import { render, screen, userEvent } from '@testing-library/react-native';
 import * as Speech from 'expo-speech';
 import DrillScreen from '../src/screens/DrillScreen';
-import { TOE_TAPS_DRILL, KICK_TARGET_DRILL, FREEZE_DRILL } from '../src/constants/drills';
+import { TOE_TAPS_DRILL, KICK_TARGET_DRILL, FREEZE_DRILL, TICK_TOCK_DRILL } from '../src/constants/drills';
 
 describe('DrillScreen audio coaching', () => {
   beforeEach(() => {
@@ -38,11 +38,28 @@ describe('DrillScreen audio coaching', () => {
     );
   });
 
+  it('speaks the drill instruction on mount for tick tock', async () => {
+    await render(<DrillScreen drill={TICK_TOCK_DRILL} onCompleteDrill={jest.fn()} />);
+
+    expect(Speech.stop).toHaveBeenCalled();
+    expect(Speech.speak).toHaveBeenCalledWith(
+      TICK_TOCK_DRILL.instruction,
+      expect.objectContaining({ language: 'en' }),
+    );
+  });
+
   it('renders the freeze demo for the freeze drill', async () => {
     await render(<DrillScreen drill={FREEZE_DRILL} onCompleteDrill={jest.fn()} />);
 
     expect(screen.getByTestId('freeze-demo')).toBeTruthy();
     expect(screen.getByText('Freeze!')).toBeTruthy();
+  });
+
+  it('renders the tick tock demo for the tick tock drill', async () => {
+    await render(<DrillScreen drill={TICK_TOCK_DRILL} onCompleteDrill={jest.fn()} />);
+
+    expect(screen.getByTestId('tick-tock-demo')).toBeTruthy();
+    expect(screen.getByText('Tick Tock')).toBeTruthy();
   });
 
   it('replays coaching when the speaker button is pressed', async () => {

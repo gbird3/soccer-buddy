@@ -41,13 +41,13 @@ A mobile app that helps a young child (initially **ages 4–6**) practice real-w
 
 ### 5.1 Daily Session
 - A single, prominent "Start" entry point on the home screen.
-- A session is a short sequence: warm-up → 2–3 drills → celebration.
+- A session is a short sequence: warm-up → four drills → celebration.
 - Each step has a visual demo and audio coaching.
 - **Audio (v1):** On-device text-to-speech (`expo-speech`), English only. Each screen auto-speaks a short coaching line once on appear; a large 🔊 control replays it. Speech stops when leaving the screen. No cloud TTS, no child voice recording. Recorded voice talent remains an open later option.
 - Session length is configurable by the parent _(target ~5 min default)_.
 
 ### 5.2 Drills
-- A small starter library of beginner drills (e.g. toe taps, kick a target, freeze/trap control).
+- A small starter library of beginner drills (e.g. toe taps, kick a target, freeze/trap control, tick tock inside-foot passing).
 - Each drill has: name, icon/illustration, demo animation or video, audio cue, and a simple "done" interaction.
 - **Decision (v1 slice 1):** The child marks a drill complete with a big **"I did it!"** tap. No timer or motion detection in this slice.
 
@@ -150,12 +150,15 @@ A mobile app that helps a young child (initially **ages 4–6**) practice real-w
 | Toe Taps | "Tap the ball with your toes, one foot at a time!" |
 | Kick a Target | "Kick the ball at the target!" |
 | Freeze! | "Roll the ball, then freeze with your foot on top!" |
+| Tick Tock | "Pass the ball from foot to foot, side to side!" |
 | Celebration | "Great job! You earned a sticker!" |
 
 **Tech:** `expo-speech` on-device TTS, English only. Fails silently when speech is unavailable (tests, web). No cloud TTS, no voice recording, no parent mute in this slice.
 
 ---
 
-_Next steps: parent area polish, more drills, recorded voice option._
+_Next steps: parent area polish, recorded voice option._
 
-**v1 beginner drills (3):** Toe Taps (footwork), Kick a Target (striking), Freeze! (first-touch trap/control).
+**v1 beginner drills (4):** Toe Taps (footwork), Kick a Target (striking), Freeze! (first-touch trap/control), Tick Tock (inside-foot passing).
+
+**Parent week view (v1):** Sun–Sat practiced-day marks in the parent area, backed by `practiceDates` in local storage.

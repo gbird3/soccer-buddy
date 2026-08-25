@@ -3,6 +3,7 @@ import BigButton from '../components/BigButton';
 import FreezeDemo from '../components/FreezeDemo';
 import KickTargetDemo from '../components/KickTargetDemo';
 import SpeakerButton from '../components/SpeakerButton';
+import TickTockDemo from '../components/TickTockDemo';
 import ToeTapDemo from '../components/ToeTapDemo';
 import { colors, sizes } from '../constants/theme';
 import { useCoachingSpeech } from '../hooks/useCoachingSpeech';
@@ -11,6 +12,7 @@ const DEMO_COMPONENTS = {
   'toe-taps': ToeTapDemo,
   'kick-target': KickTargetDemo,
   freeze: FreezeDemo,
+  'tick-tock': TickTockDemo,
 };
 
 export default function DrillScreen({ drill, onCompleteDrill }) {

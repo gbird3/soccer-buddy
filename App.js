@@ -105,6 +105,8 @@ export default function App() {
       {screen === SCREENS.PARENT && (
         <ParentScreen
           streak={streak}
+          practiceDates={progress.practiceDates ?? []}
+          todayKey={toDateKey()}
           soundEnabled={soundEnabled}
           onToggleSound={toggleSound}
           onGoHome={goHome}

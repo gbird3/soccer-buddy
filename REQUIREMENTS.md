@@ -64,7 +64,7 @@ A mobile app that helps a young child (initially **ages 4–6**) practice real-w
 
 ### 5.5 Parent Area
 - Gated entry via press-and-hold (~3 seconds) on a small lock control in a corner of Home — not a math quiz, not as large as Start.
-- Inside (v1 slice): review current streak (🔥 + number) and a mute toggle for coaching audio.
+- Inside (v1 slice): **this-week practice view** (Sun–Sat day marks for practiced vs not), review current streak (🔥 + number), and a mute toggle for coaching audio.
 - Mute persists locally in `@soccer_buddy/progress` (`soundEnabled` field). When muted, `speakCoaching`, auto-speak, and replay no-op.
 - Parent screen does not auto-speak.
 - Done/back returns to Home.
@@ -136,7 +136,7 @@ A mobile app that helps a young child (initially **ages 4–6**) practice real-w
 
 **Celebration screen:** shows earned sticker and updated streak count.
 
-**Storage:** `@soccer_buddy/progress` JSON in AsyncStorage (`lastPracticeDate`, `streak`, `soundEnabled`). No network, no child PII.
+**Storage:** `@soccer_buddy/progress` JSON in AsyncStorage (`lastPracticeDate`, `streak`, `soundEnabled`, `practiceDates`). `practiceDates` is a list of `YYYY-MM-DD` keys appended when a session completes (no double-count on same day). Older saves without `practiceDates` backfill from `lastPracticeDate` on load. No network, no child PII.
 
 ---
 

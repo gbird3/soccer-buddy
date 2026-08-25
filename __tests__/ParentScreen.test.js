@@ -2,6 +2,43 @@ import { fireEvent, render, screen, userEvent } from '@testing-library/react-nat
 import ParentScreen from '../src/screens/ParentScreen';
 
 describe('ParentScreen', () => {
+  it('shows the current week with practiced days marked', async () => {
+    await render(
+      <ParentScreen
+        streak={3}
+        practiceDates={['2026-08-17', '2026-08-19']}
+        todayKey="2026-08-20"
+        soundEnabled={true}
+        onToggleSound={jest.fn()}
+        onGoHome={jest.fn()}
+      />,
+    );
+
+    expect(screen.getByTestId('parent-week-view')).toBeTruthy();
+    expect(screen.getByTestId('week-day-practiced-2026-08-17')).toBeTruthy();
+    expect(screen.getByTestId('week-day-practiced-2026-08-19')).toBeTruthy();
+    expect(screen.queryByTestId('week-day-practiced-2026-08-18')).toBeNull();
+    expect(screen.getByTestId('week-day-2026-08-20')).toBeTruthy();
+  });
+
+  it('shows an empty week when there is no practice history', async () => {
+    await render(
+      <ParentScreen
+        streak={0}
+        practiceDates={[]}
+        todayKey="2026-08-20"
+        soundEnabled={true}
+        onToggleSound={jest.fn()}
+        onGoHome={jest.fn()}
+      />,
+    );
+
+    expect(screen.getByTestId('parent-week-view')).toBeTruthy();
+    expect(screen.queryByTestId(/week-day-practiced-/)).toBeNull();
+    expect(screen.getByTestId('week-day-2026-08-16')).toBeTruthy();
+    expect(screen.getByTestId('week-day-2026-08-22')).toBeTruthy();
+  });
+
   it('shows the current streak with a fire icon', async () => {
     await render(
       <ParentScreen

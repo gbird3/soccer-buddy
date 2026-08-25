@@ -2,7 +2,10 @@ export const EMPTY_PROGRESS = {
   lastPracticeDate: null,
   streak: 0,
   soundEnabled: true,
+  practiceDates: [],
 };
+
+const WEEKDAY_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 export function toDateKey(date = new Date()) {
   const d = new Date(date);
@@ -42,14 +45,54 @@ export function hasPracticedToday(progress, todayKey = toDateKey()) {
   return progress.lastPracticeDate === todayKey;
 }
 
+export function addPracticeDate(practiceDates, dateKey) {
+  const dates = Array.isArray(practiceDates) ? [...practiceDates] : [];
+
+  if (!dates.includes(dateKey)) {
+    dates.push(dateKey);
+  }
+
+  return dates;
+}
+
+export function getWeekDateKeys(todayKey = toDateKey()) {
+  const today = new Date(`${todayKey}T12:00:00`);
+  const weekStart = new Date(today);
+  weekStart.setDate(today.getDate() - today.getDay());
+
+  const keys = [];
+  for (let offset = 0; offset < 7; offset += 1) {
+    const day = new Date(weekStart);
+    day.setDate(weekStart.getDate() + offset);
+    keys.push(toDateKey(day));
+  }
+
+  return keys;
+}
+
+export function buildWeekView(practiceDates = [], todayKey = toDateKey()) {
+  const practicedSet = new Set(
+    Array.isArray(practiceDates) ? practiceDates : [],
+  );
+
+  return getWeekDateKeys(todayKey).map((dateKey, index) => ({
+    dateKey,
+    label: WEEKDAY_LABELS[index],
+    practiced: practicedSet.has(dateKey),
+    isToday: dateKey === todayKey,
+  }));
+}
+
 export function recordSessionComplete(progress, todayKey = toDateKey()) {
   const soundEnabled = progress.soundEnabled !== false;
+  const practiceDates = addPracticeDate(progress.practiceDates, todayKey);
 
   if (hasPracticedToday(progress, todayKey)) {
     return {
       lastPracticeDate: progress.lastPracticeDate,
       streak: getEffectiveStreak(progress, todayKey),
       soundEnabled,
+      practiceDates,
     };
   }
 
@@ -67,5 +110,6 @@ export function recordSessionComplete(progress, todayKey = toDateKey()) {
     lastPracticeDate: todayKey,
     streak: newStreak,
     soundEnabled,
+    practiceDates,
   };
 }

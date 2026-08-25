@@ -67,6 +67,7 @@ describe('App parent area', () => {
       lastPracticeDate: null,
       streak: 0,
       soundEnabled: false,
+      practiceDates: [],
     });
 
     await user.press(screen.getByTestId('parent-done-button'));
@@ -88,6 +89,7 @@ describe('App parent area', () => {
       lastPracticeDate: null,
       streak: 0,
       soundEnabled: false,
+      practiceDates: [],
     });
 
     await render(<App />);

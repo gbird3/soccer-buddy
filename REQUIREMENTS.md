@@ -52,11 +52,11 @@ A mobile app that helps a young child (initially **ages 4–6**) practice real-w
 - **Decision (v1 slice 1):** The child marks a drill complete with a big **"I did it!"** tap. No timer or motion detection in this slice.
 
 ### 5.3 Rewards & Motivation
-- Earn a sticker/badge per completed session or drill.
+- Earn a distinct sticker per new practice day (cycles through a small fixed set); collection visible on Home.
 - Track a daily **streak** (calendar days with at least one completed session).
-- Streak persists on-device only (AsyncStorage); no accounts or cloud sync in this increment.
-- Completing the session again the same day is allowed but does not increment the streak twice.
-- Home shows current streak (🔥 + number) and a visual badge when today's practice is already done.
+- Streak and sticker collection persist on-device only (AsyncStorage); no accounts or cloud sync in this increment.
+- Completing the session again the same day is allowed but does not increment the streak or add another sticker.
+- Home shows current streak (🔥 + number), earned sticker row, and a visual badge when today's practice is already done.
 - Positive, celebratory feedback (sound + animation). No "you failed" states.
 
 ### 5.4 Player Profile
@@ -126,17 +126,17 @@ A mobile app that helps a young child (initially **ages 4–6**) practice real-w
 
 | Behavior | Rule |
 |----------|------|
-| First completion ever | Streak = 1, today's sticker earned |
-| Practice yesterday, complete today | Streak increments by 1 |
-| Skip one or more calendar days | Streak resets to 1 on next completion |
-| Second completion same day | Sticker still shown; streak unchanged |
+| First completion ever | Streak = 1, first sticker earned (⭐) |
+| Practice yesterday, complete today | Streak increments by 1; new sticker from catalog |
+| Skip one or more calendar days | Streak resets to 1 on next completion; new sticker still earned |
+| Second completion same day | Same sticker shown; streak and collection unchanged |
 | Reload app | Progress survives via AsyncStorage |
 
-**Home screen:** 🔥 + streak count; practiced-today badge (⭐✅) when applicable; **Start!** always available.
+**Home screen:** 🔥 + streak count; sticker collection row (earned emojis only); practiced-today badge when applicable; **Start!** always available.
 
-**Celebration screen:** shows earned sticker and updated streak count.
+**Celebration screen:** shows today's earned sticker and updated streak count.
 
-**Storage:** `@soccer_buddy/progress` JSON in AsyncStorage (`lastPracticeDate`, `streak`, `soundEnabled`, `practiceDates`). `practiceDates` is a list of `YYYY-MM-DD` keys appended when a session completes (no double-count on same day). Older saves without `practiceDates` backfill from `lastPracticeDate` on load. No network, no child PII.
+**Storage:** `@soccer_buddy/progress` JSON in AsyncStorage (`lastPracticeDate`, `streak`, `soundEnabled`, `practiceDates`, `stickerIds`). `practiceDates` is a list of `YYYY-MM-DD` keys appended when a session completes (no double-count on same day). `stickerIds` appends one id per new practice day, cycling through a fixed catalog of seven stickers. Older saves without `practiceDates` backfill from `lastPracticeDate` on load; saves with `lastPracticeDate` but no `stickerIds` backfill one star. No network, no child PII.
 
 ---
 

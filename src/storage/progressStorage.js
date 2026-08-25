@@ -1,6 +1,18 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { EMPTY_PROGRESS, addPracticeDate } from '../streak';
 
+function normalizeStickerIds(data, lastPracticeDate) {
+  const stickerIds = Array.isArray(data.stickerIds)
+    ? data.stickerIds.filter((id) => typeof id === 'string')
+    : [];
+
+  if (stickerIds.length === 0 && lastPracticeDate) {
+    return ['star'];
+  }
+
+  return stickerIds;
+}
+
 export const STORAGE_KEY = '@soccer_buddy/progress';
 
 function normalizePracticeDates(data, lastPracticeDate) {
@@ -27,6 +39,7 @@ export function normalizeProgress(data) {
     streak: typeof data.streak === 'number' && data.streak >= 0 ? data.streak : 0,
     soundEnabled: data.soundEnabled !== false,
     practiceDates: normalizePracticeDates(data, lastPracticeDate),
+    stickerIds: normalizeStickerIds(data, lastPracticeDate),
   };
 }
 

@@ -42,11 +42,30 @@ describe('HomeScreen streak display', () => {
         onOpenParent={jest.fn()}
         streak={2}
         practicedToday={true}
+        stickerIds={['star', 'ball']}
       />,
     );
 
     expect(screen.getByTestId('practiced-today-badge')).toBeTruthy();
+    expect(screen.getByTestId('practiced-today-badge')).toHaveTextContent('⚽', { exact: false });
     expect(screen.queryByTestId('start-practice-button')).toBeTruthy();
+  });
+
+  it('shows the sticker collection earned so far', async () => {
+    await render(
+      <HomeScreen
+        onStartPractice={jest.fn()}
+        onOpenParent={jest.fn()}
+        streak={2}
+        practicedToday={true}
+        stickerIds={['star', 'ball', 'trophy']}
+      />,
+    );
+
+    const collection = screen.getByTestId('sticker-collection');
+    expect(collection).toHaveTextContent('⭐', { exact: false });
+    expect(collection).toHaveTextContent('⚽', { exact: false });
+    expect(collection).toHaveTextContent('🏆', { exact: false });
   });
 });
 

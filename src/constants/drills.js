@@ -3,11 +3,6 @@ export const COACHING_LINES = {
   CELEBRATION: 'Great job! You earned a sticker!',
 };
 
-export const SESSION_REWARD = {
-  sticker: '⭐',
-  stickerLabel: 'Star Sticker',
-};
-
 export const TOE_TAPS_DRILL = {
   id: 'toe-taps',
   name: 'Toe Taps',

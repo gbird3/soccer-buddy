@@ -68,6 +68,7 @@ describe('App parent area', () => {
       streak: 0,
       soundEnabled: false,
       practiceDates: [],
+      stickerIds: [],
     });
 
     await user.press(screen.getByTestId('parent-done-button'));

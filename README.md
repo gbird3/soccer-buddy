@@ -100,7 +100,7 @@ src/
   components/          # BigButton, SpeakerButton, ParentGateButton, demos
   hooks/               # useCoachingSpeech — auto-speak on mount, replay, cleanup
   audio/               # On-device TTS via expo-speech (speakCoaching / stopCoaching)
-  constants/            # Theme colors/sizes, drill data
+  constants/            # Theme colors/sizes, drill data, sticker catalog
 __tests__/              # Jest + React Native Testing Library tests
 REQUIREMENTS.md         # Living product requirements doc
 ```
@@ -112,8 +112,8 @@ A child can:
 1. Open the app and tap **Start!** on the home screen (home speaks "Let's practice!" on appear; tap 🔊 to hear again).
 2. Complete a four-drill session: **Toe Taps** → **Kick a Target** → **Freeze!** → **Tick Tock** — each with a looping demo, on-device audio coaching, and tap-to-complete.
 3. Tap **I did it!** after each drill (no timer or motion detection).
-4. After all four drills, see a celebration and earn one star sticker per session (celebration speaks encouragement), then tap **Done** to go home.
-5. Build a daily streak — finishing the full session once per calendar day counts; the home screen shows 🔥 + streak count, and a badge when today's practice is already done (practice again anytime; streak won't double-count).
+4. After all four drills, see a celebration and earn a distinct sticker per new practice day (celebration speaks encouragement), then tap **Done** to go home.
+5. Build a daily streak — finishing the full session once per calendar day counts; the home screen shows 🔥 + streak count, a row of earned stickers, and a badge when today's practice is already done (practice again anytime; streak and sticker collection won't double-count).
 
 **Parent area (v1):** A small 🔒 control in the top-right corner of Home. Parents press and hold for ~3 seconds to enter. Inside: a **this-week** calendar (Sun–Sat) showing which days the child practiced, review the current streak, and toggle coaching audio on/off. Mute persists on-device; when muted, auto-speak and 🔊 replay are silenced. The parent screen does not auto-speak.
 

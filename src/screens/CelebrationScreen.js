@@ -1,12 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native';
 import BigButton from '../components/BigButton';
 import SpeakerButton from '../components/SpeakerButton';
-import { SESSION_REWARD, COACHING_LINES } from '../constants/drills';
+import { COACHING_LINES } from '../constants/drills';
+import { getLatestSticker } from '../constants/stickers';
 import { colors, sizes } from '../constants/theme';
 import { useCoachingSpeech } from '../hooks/useCoachingSpeech';
 
-export default function CelebrationScreen({ onGoHome, streak = 0 }) {
+export default function CelebrationScreen({ onGoHome, streak = 0, stickerIds = [] }) {
   const replayCoaching = useCoachingSpeech(COACHING_LINES.CELEBRATION);
+  const sticker = getLatestSticker(stickerIds);
 
   return (
     <View style={styles.container} testID="celebration-screen">
@@ -24,10 +26,10 @@ export default function CelebrationScreen({ onGoHome, streak = 0 }) {
       <View
         style={styles.stickerCard}
         testID="sticker-reward"
-        accessibilityLabel={`You earned a ${SESSION_REWARD.stickerLabel}`}
+        accessibilityLabel={`You earned a ${sticker.label}`}
       >
-        <Text style={styles.sticker}>{SESSION_REWARD.sticker}</Text>
-        <Text style={styles.stickerLabel}>{SESSION_REWARD.stickerLabel}</Text>
+        <Text style={styles.sticker}>{sticker.emoji}</Text>
+        <Text style={styles.stickerLabel}>{sticker.label}</Text>
       </View>
 
       <View style={styles.streakRow} testID="celebration-streak" accessibilityLabel={`${streak} day streak`}>

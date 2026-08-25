@@ -26,6 +26,7 @@ export default function App() {
   const [drillIndex, setDrillIndex] = useState(0);
   const [progress, setProgress] = useState(null);
   const [celebrationStreak, setCelebrationStreak] = useState(0);
+  const [celebrationStickerIds, setCelebrationStickerIds] = useState([]);
 
   useEffect(() => {
     loadProgress().then((loaded) => {
@@ -53,6 +54,7 @@ export default function App() {
 
       setProgress(updatedProgress);
       setCelebrationStreak(getEffectiveStreak(updatedProgress));
+      setCelebrationStickerIds(updatedProgress.stickerIds ?? []);
       await saveProgress(updatedProgress);
     }
 
@@ -94,13 +96,18 @@ export default function App() {
           onOpenParent={openParent}
           streak={streak}
           practicedToday={practicedToday}
+          stickerIds={progress.stickerIds ?? []}
         />
       )}
       {screen === SCREENS.DRILL && currentDrill && (
         <DrillScreen drill={currentDrill} onCompleteDrill={completeDrill} />
       )}
       {screen === SCREENS.CELEBRATION && (
-        <CelebrationScreen onGoHome={goHome} streak={celebrationStreak} />
+        <CelebrationScreen
+          onGoHome={goHome}
+          streak={celebrationStreak}
+          stickerIds={celebrationStickerIds}
+        />
       )}
       {screen === SCREENS.PARENT && (
         <ParentScreen

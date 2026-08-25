@@ -23,6 +23,7 @@ describe('normalizeProgress', () => {
       streak: 3,
       soundEnabled: true,
       practiceDates: ['2026-08-18'],
+      stickerIds: ['star'],
     });
   });
 
@@ -34,6 +35,7 @@ describe('normalizeProgress', () => {
       streak: 3,
       soundEnabled: false,
       practiceDates: ['2026-08-18'],
+      stickerIds: ['star'],
     });
   });
 
@@ -49,6 +51,24 @@ describe('normalizeProgress', () => {
       streak: 2,
       soundEnabled: true,
       practiceDates: ['2026-08-17', '2026-08-18'],
+      stickerIds: ['star'],
+    });
+  });
+
+  it('keeps stored sticker ids', () => {
+    expect(
+      normalizeProgress({
+        lastPracticeDate: '2026-08-18',
+        streak: 2,
+        practiceDates: ['2026-08-17', '2026-08-18'],
+        stickerIds: ['star', 'ball'],
+      })
+    ).toEqual({
+      lastPracticeDate: '2026-08-18',
+      streak: 2,
+      soundEnabled: true,
+      practiceDates: ['2026-08-17', '2026-08-18'],
+      stickerIds: ['star', 'ball'],
     });
   });
 });
@@ -76,6 +96,7 @@ describe('progressStorage', () => {
       streak: 2,
       soundEnabled: true,
       practiceDates: ['2026-08-18'],
+      stickerIds: ['star'],
     });
     await expect(AsyncStorage.getItem(STORAGE_KEY)).resolves.toBe(JSON.stringify(progress));
   });

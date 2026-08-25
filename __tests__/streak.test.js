@@ -131,6 +131,7 @@ describe('recordSessionComplete', () => {
       streak: 1,
       soundEnabled: true,
       practiceDates: ['2026-08-18'],
+      stickerIds: ['star'],
     });
   });
 
@@ -139,6 +140,7 @@ describe('recordSessionComplete', () => {
       lastPracticeDate: '2026-08-17',
       streak: 3,
       practiceDates: ['2026-08-17'],
+      stickerIds: ['star'],
     };
 
     expect(recordSessionComplete(yesterday, '2026-08-18')).toEqual({
@@ -146,6 +148,7 @@ describe('recordSessionComplete', () => {
       streak: 4,
       soundEnabled: true,
       practiceDates: ['2026-08-17', '2026-08-18'],
+      stickerIds: ['star', 'ball'],
     });
   });
 
@@ -154,6 +157,7 @@ describe('recordSessionComplete', () => {
       lastPracticeDate: '2026-08-15',
       streak: 5,
       practiceDates: ['2026-08-15'],
+      stickerIds: ['star'],
     };
 
     expect(recordSessionComplete(skipped, '2026-08-18')).toEqual({
@@ -161,6 +165,7 @@ describe('recordSessionComplete', () => {
       streak: 1,
       soundEnabled: true,
       practiceDates: ['2026-08-15', '2026-08-18'],
+      stickerIds: ['star', 'ball'],
     });
   });
 
@@ -169,6 +174,7 @@ describe('recordSessionComplete', () => {
       lastPracticeDate: '2026-08-18',
       streak: 4,
       practiceDates: ['2026-08-18'],
+      stickerIds: ['star'],
     };
 
     expect(recordSessionComplete(alreadyToday, '2026-08-18')).toEqual({
@@ -176,6 +182,7 @@ describe('recordSessionComplete', () => {
       streak: 4,
       soundEnabled: true,
       practiceDates: ['2026-08-18'],
+      stickerIds: ['star'],
     });
   });
 
@@ -185,6 +192,7 @@ describe('recordSessionComplete', () => {
       streak: 2,
       soundEnabled: false,
       practiceDates: ['2026-08-17'],
+      stickerIds: ['star'],
     };
 
     expect(recordSessionComplete(muted, '2026-08-18')).toEqual({
@@ -192,6 +200,7 @@ describe('recordSessionComplete', () => {
       streak: 3,
       soundEnabled: false,
       practiceDates: ['2026-08-17', '2026-08-18'],
+      stickerIds: ['star', 'ball'],
     });
   });
 });

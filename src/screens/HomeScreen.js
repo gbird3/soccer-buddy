@@ -2,7 +2,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import BigButton from '../components/BigButton';
 import ParentGateButton from '../components/ParentGateButton';
 import SpeakerButton from '../components/SpeakerButton';
-import { SESSION_REWARD, COACHING_LINES } from '../constants/drills';
+import { COACHING_LINES } from '../constants/drills';
+import { getLatestSticker, getStickerById } from '../constants/stickers';
 import { colors, sizes } from '../constants/theme';
 import { useCoachingSpeech } from '../hooks/useCoachingSpeech';
 
@@ -11,8 +12,10 @@ export default function HomeScreen({
   onOpenParent,
   streak = 0,
   practicedToday = false,
+  stickerIds = [],
 }) {
   const replayCoaching = useCoachingSpeech(COACHING_LINES.HOME);
+  const todaySticker = practicedToday ? getLatestSticker(stickerIds) : null;
 
   return (
     <View style={styles.container} testID="home-screen">
@@ -39,14 +42,33 @@ export default function HomeScreen({
         <Text style={styles.streakNumber}>{streak}</Text>
       </View>
 
-      {practicedToday && (
+      {stickerIds.length > 0 && (
+        <View
+          style={styles.stickerCollection}
+          testID="sticker-collection"
+          accessibilityLabel={`${stickerIds.length} stickers collected`}
+        >
+          {stickerIds.map((stickerId, index) => (
+            <Text
+              key={`${stickerId}-${index}`}
+              style={styles.collectionSticker}
+              accessibilityElementsHidden
+              importantForAccessibility="no"
+            >
+              {getStickerById(stickerId).emoji}
+            </Text>
+          ))}
+        </View>
+      )}
+
+      {practicedToday && todaySticker && (
         <View
           style={styles.practicedBadge}
           testID="practiced-today-badge"
           accessibilityLabel="You already practiced today"
         >
           <Text style={styles.practicedSticker} accessibilityElementsHidden importantForAccessibility="no">
-            {SESSION_REWARD.sticker}
+            {todaySticker.emoji}
           </Text>
           <Text style={styles.practicedCheck} accessibilityElementsHidden importantForAccessibility="no">
             ✅
@@ -124,6 +146,24 @@ const styles = StyleSheet.create({
   practicedCheck: {
     fontSize: 28,
     marginLeft: 8,
+  },
+  stickerCollection: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.cream,
+    borderRadius: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    marginBottom: 12,
+    borderWidth: 3,
+    borderColor: colors.yellow,
+    gap: 6,
+    maxWidth: '100%',
+  },
+  collectionSticker: {
+    fontSize: 32,
   },
   buttonWrap: {
     marginTop: 8,

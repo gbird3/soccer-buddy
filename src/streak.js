@@ -1,8 +1,11 @@
+import { stickerForPracticeCount } from './constants/stickers';
+
 export const EMPTY_PROGRESS = {
   lastPracticeDate: null,
   streak: 0,
   soundEnabled: true,
   practiceDates: [],
+  stickerIds: [],
 };
 
 const WEEKDAY_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -83,9 +86,16 @@ export function buildWeekView(practiceDates = [], todayKey = toDateKey()) {
   }));
 }
 
+function normalizeStickerIds(stickerIds) {
+  return Array.isArray(stickerIds)
+    ? stickerIds.filter((id) => typeof id === 'string')
+    : [];
+}
+
 export function recordSessionComplete(progress, todayKey = toDateKey()) {
   const soundEnabled = progress.soundEnabled !== false;
   const practiceDates = addPracticeDate(progress.practiceDates, todayKey);
+  const stickerIds = normalizeStickerIds(progress.stickerIds);
 
   if (hasPracticedToday(progress, todayKey)) {
     return {
@@ -93,6 +103,7 @@ export function recordSessionComplete(progress, todayKey = toDateKey()) {
       streak: getEffectiveStreak(progress, todayKey),
       soundEnabled,
       practiceDates,
+      stickerIds,
     };
   }
 
@@ -106,10 +117,13 @@ export function recordSessionComplete(progress, todayKey = toDateKey()) {
     newStreak = effectiveStreak + 1;
   }
 
+  const newSticker = stickerForPracticeCount(practiceDates.length);
+
   return {
     lastPracticeDate: todayKey,
     streak: newStreak,
     soundEnabled,
     practiceDates,
+    stickerIds: [...stickerIds, newSticker.id],
   };
 }

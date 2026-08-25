@@ -129,6 +129,7 @@ describe('App practice session flow', () => {
       streak: 1,
       soundEnabled: true,
       practiceDates: [toDateKey()],
+      stickerIds: ['star'],
     });
   });
 
@@ -211,6 +212,7 @@ describe('App practice session flow', () => {
       lastPracticeDate: todayKey,
       streak: 3,
       practiceDates: [todayKey],
+      stickerIds: ['star'],
     });
 
     const user = userEvent.setup();
@@ -233,6 +235,7 @@ describe('App practice session flow', () => {
       streak: 3,
       soundEnabled: true,
       practiceDates: [toDateKey()],
+      stickerIds: ['star'],
     });
   });
 });

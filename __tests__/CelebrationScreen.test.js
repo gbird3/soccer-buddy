@@ -3,6 +3,17 @@ import * as Speech from 'expo-speech';
 import CelebrationScreen from '../src/screens/CelebrationScreen';
 import { COACHING_LINES } from '../src/constants/drills';
 
+describe('CelebrationScreen sticker reward', () => {
+  it('shows the latest earned sticker', async () => {
+    await render(
+      <CelebrationScreen onGoHome={jest.fn()} streak={2} stickerIds={['star', 'ball']} />,
+    );
+
+    expect(screen.getByTestId('sticker-reward')).toHaveTextContent('⚽', { exact: false });
+    expect(screen.getByTestId('sticker-reward')).toHaveTextContent('Soccer Ball', { exact: false });
+  });
+});
+
 describe('CelebrationScreen audio coaching', () => {
   beforeEach(() => {
     jest.clearAllMocks();

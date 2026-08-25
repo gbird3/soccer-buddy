@@ -1,16 +1,50 @@
 import { StyleSheet, Switch, Text, View } from 'react-native';
 import BigButton from '../components/BigButton';
 import { colors, sizes } from '../constants/theme';
+import { buildWeekView } from '../streak';
 
 export default function ParentScreen({
   streak = 0,
+  practiceDates = [],
+  todayKey,
   soundEnabled = true,
   onToggleSound,
   onGoHome,
 }) {
+  const weekDays = buildWeekView(practiceDates, todayKey);
+
   return (
     <View style={styles.container} testID="parent-screen">
       <Text style={styles.title}>Parent Area</Text>
+
+      <View style={styles.section}>
+        <Text style={styles.sectionLabel}>This week</Text>
+        <View style={styles.weekRow} testID="parent-week-view">
+          {weekDays.map((day) => (
+            <View key={day.dateKey} style={styles.dayCell} testID={`week-day-${day.dateKey}`}>
+              <Text style={styles.dayLabel}>{day.label}</Text>
+              <View
+                style={[
+                  styles.dayMark,
+                  day.practiced && styles.dayMarkPracticed,
+                  day.isToday && styles.dayMarkToday,
+                ]}
+                accessibilityLabel={
+                  day.practiced
+                    ? `${day.label}, practiced`
+                    : `${day.label}, no practice yet`
+                }
+              >
+                {day.practiced ? (
+                  <Text style={styles.checkmark} testID={`week-day-practiced-${day.dateKey}`}>
+                    ✓
+                  </Text>
+                ) : null}
+              </View>
+            </View>
+          ))}
+        </View>
+      </View>
 
       <View style={styles.section}>
         <Text style={styles.sectionLabel}>Practice streak</Text>
@@ -76,6 +110,45 @@ const styles = StyleSheet.create({
     fontSize: sizes.body,
     color: colors.textLight,
     fontWeight: '600',
+  },
+  weekRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    gap: 8,
+  },
+  dayCell: {
+    alignItems: 'center',
+    gap: 6,
+    minWidth: 36,
+  },
+  dayLabel: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: colors.textLight,
+  },
+  dayMark: {
+    width: sizes.minTapTarget / 2,
+    height: sizes.minTapTarget / 2,
+    borderRadius: sizes.minTapTarget / 4,
+    borderWidth: 2,
+    borderColor: colors.textLight,
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  dayMarkPracticed: {
+    backgroundColor: colors.cream,
+    borderColor: colors.yellow,
+  },
+  dayMarkToday: {
+    borderWidth: 3,
+    borderColor: colors.yellow,
+  },
+  checkmark: {
+    fontSize: 18,
+    fontWeight: '800',
+    color: colors.fieldGreen,
   },
   streakRow: {
     flexDirection: 'row',

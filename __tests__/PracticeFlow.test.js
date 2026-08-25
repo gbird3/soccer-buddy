@@ -120,6 +120,7 @@ describe('App practice session flow', () => {
       lastPracticeDate: toDateKey(),
       streak: 1,
       soundEnabled: true,
+      practiceDates: [toDateKey()],
     });
   });
 
@@ -195,7 +196,11 @@ describe('App practice session flow', () => {
 
   it('does not increment streak twice on same-day replays', async () => {
     const todayKey = toDateKey();
-    loadProgress.mockResolvedValue({ lastPracticeDate: todayKey, streak: 3 });
+    loadProgress.mockResolvedValue({
+      lastPracticeDate: todayKey,
+      streak: 3,
+      practiceDates: [todayKey],
+    });
 
     const user = userEvent.setup();
     await render(<App />);
@@ -215,6 +220,7 @@ describe('App practice session flow', () => {
       lastPracticeDate: toDateKey(),
       streak: 3,
       soundEnabled: true,
+      practiceDates: [toDateKey()],
     });
   });
 });

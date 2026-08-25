@@ -22,6 +22,7 @@ describe('normalizeProgress', () => {
       lastPracticeDate: '2026-08-18',
       streak: 3,
       soundEnabled: true,
+      practiceDates: ['2026-08-18'],
     });
   });
 
@@ -32,6 +33,22 @@ describe('normalizeProgress', () => {
       lastPracticeDate: '2026-08-18',
       streak: 3,
       soundEnabled: false,
+      practiceDates: ['2026-08-18'],
+    });
+  });
+
+  it('keeps stored practice dates and backfills last practice date', () => {
+    expect(
+      normalizeProgress({
+        lastPracticeDate: '2026-08-18',
+        streak: 2,
+        practiceDates: ['2026-08-17', '2026-08-18'],
+      })
+    ).toEqual({
+      lastPracticeDate: '2026-08-18',
+      streak: 2,
+      soundEnabled: true,
+      practiceDates: ['2026-08-17', '2026-08-18'],
     });
   });
 });
@@ -47,13 +64,18 @@ describe('progressStorage', () => {
   });
 
   it('persists and reloads progress', async () => {
-    const progress = { lastPracticeDate: '2026-08-18', streak: 2 };
+    const progress = {
+      lastPracticeDate: '2026-08-18',
+      streak: 2,
+      practiceDates: ['2026-08-18'],
+    };
 
     await saveProgress(progress);
     await expect(loadProgress()).resolves.toEqual({
       lastPracticeDate: '2026-08-18',
       streak: 2,
       soundEnabled: true,
+      practiceDates: ['2026-08-18'],
     });
     await expect(AsyncStorage.getItem(STORAGE_KEY)).resolves.toBe(JSON.stringify(progress));
   });

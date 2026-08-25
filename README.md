@@ -115,7 +115,7 @@ A child can:
 4. After all three drills, see a celebration and earn one star sticker per session (celebration speaks encouragement), then tap **Done** to go home.
 5. Build a daily streak — finishing the full session once per calendar day counts; the home screen shows 🔥 + streak count, and a badge when today's practice is already done (practice again anytime; streak won't double-count).
 
-**Parent area (v1):** A small 🔒 control in the top-right corner of Home. Parents press and hold for ~3 seconds to enter. Inside: review the current streak and toggle coaching audio on/off. Mute persists on-device; when muted, auto-speak and 🔊 replay are silenced. The parent screen does not auto-speak.
+**Parent area (v1):** A small 🔒 control in the top-right corner of Home. Parents press and hold for ~3 seconds to enter. Inside: a **this-week** calendar (Sun–Sat) showing which days the child practiced, review the current streak, and toggle coaching audio on/off. Mute persists on-device; when muted, auto-speak and 🔊 replay are silenced. The parent screen does not auto-speak.
 
 **Audio (v1):** On-device text-to-speech via `expo-speech` — English only, auto-speaks once per screen, replayable via a large 🔊 button. No cloud TTS, no recording. Recorded voice talent is a possible later option.
 
@@ -131,7 +131,7 @@ Product requirements are being captured in [REQUIREMENTS.md](./REQUIREMENTS.md) 
 
 ## Status
 
-🚧 Early development — three-drill daily session (Toe Taps, Kick a Target, Freeze!) with local streak/sticker persistence, on-device audio coaching, and a parent-gated settings area (streak review + coaching mute).
+🚧 Early development — three-drill daily session (Toe Taps, Kick a Target, Freeze!) with local streak/sticker persistence, on-device audio coaching, and a parent-gated settings area (week-at-a-glance practice view, streak review + coaching mute).
 
 ## License
 

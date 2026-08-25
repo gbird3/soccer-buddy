@@ -25,7 +25,7 @@ Make daily soccer practice feel like play. A 5-year-old should be able to open t
 These are the initial building blocks to iterate on:
 
 - **Drills:** Single skills to practice (dribbling, passing against a wall, toe taps, kicking a target).
-- **Daily Session:** A short, curated set of 2–3 drills with a warm-up and a celebration.
+- **Daily Session:** A short, curated set of four drills with a warm-up and a celebration.
 - **Demonstrations:** Short looping animations or videos showing the move.
 - **Rewards & Streaks:** Stickers, badges, and a daily streak to build the habit.
 - **Player Profile:** Name, age, avatar, and progress — kept simple and private.

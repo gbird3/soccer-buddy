@@ -3,6 +3,9 @@ import * as Speech from 'expo-speech';
 import { setCoachingEnabled } from '../src/audio/coachingSpeech';
 import { WARM_UP } from '../src/constants/drills';
 import WarmUpScreen from '../src/screens/WarmUpScreen';
+import { getSessionSteps, getWarmUpStepIndex } from '../src/sessionProgress';
+
+const sessionSteps = getSessionSteps();
 
 describe('WarmUpScreen', () => {
   beforeEach(() => {
@@ -11,16 +14,30 @@ describe('WarmUpScreen', () => {
   });
 
   it('renders the warm-up demo and continue button', async () => {
-    await render(<WarmUpScreen onContinue={jest.fn()} />);
+    await render(
+      <WarmUpScreen
+        currentStepIndex={getWarmUpStepIndex()}
+        sessionSteps={sessionSteps}
+        onContinue={jest.fn()}
+      />,
+    );
 
     expect(screen.getByTestId('warm-up-screen')).toBeTruthy();
+    expect(screen.getByTestId('session-progress')).toBeTruthy();
+    expect(screen.getByLabelText('Step 1 of 5, Warm-up')).toBeTruthy();
     expect(screen.getByTestId('warm-up-demo')).toBeTruthy();
     expect(screen.getByTestId('continue-warm-up-button')).toBeTruthy();
     expect(screen.getByText('Warm-up')).toBeTruthy();
   });
 
   it('speaks the warm-up coaching line on mount', async () => {
-    await render(<WarmUpScreen onContinue={jest.fn()} />);
+    await render(
+      <WarmUpScreen
+        currentStepIndex={getWarmUpStepIndex()}
+        sessionSteps={sessionSteps}
+        onContinue={jest.fn()}
+      />,
+    );
 
     expect(Speech.stop).toHaveBeenCalled();
     expect(Speech.speak).toHaveBeenCalledWith(
@@ -31,7 +48,13 @@ describe('WarmUpScreen', () => {
 
   it('replays coaching when the speaker button is pressed', async () => {
     const user = userEvent.setup();
-    await render(<WarmUpScreen onContinue={jest.fn()} />);
+    await render(
+      <WarmUpScreen
+        currentStepIndex={getWarmUpStepIndex()}
+        sessionSteps={sessionSteps}
+        onContinue={jest.fn()}
+      />,
+    );
 
     jest.clearAllMocks();
 
@@ -47,7 +70,13 @@ describe('WarmUpScreen', () => {
   it('is silent when coaching is muted', async () => {
     setCoachingEnabled(false);
 
-    await render(<WarmUpScreen onContinue={jest.fn()} />);
+    await render(
+      <WarmUpScreen
+        currentStepIndex={getWarmUpStepIndex()}
+        sessionSteps={sessionSteps}
+        onContinue={jest.fn()}
+      />,
+    );
 
     expect(Speech.speak).not.toHaveBeenCalled();
   });
@@ -55,7 +84,13 @@ describe('WarmUpScreen', () => {
   it('calls onContinue when the continue button is pressed', async () => {
     const onContinue = jest.fn();
     const user = userEvent.setup();
-    await render(<WarmUpScreen onContinue={onContinue} />);
+    await render(
+      <WarmUpScreen
+        currentStepIndex={getWarmUpStepIndex()}
+        sessionSteps={sessionSteps}
+        onContinue={onContinue}
+      />,
+    );
 
     await user.press(screen.getByTestId('continue-warm-up-button'));
 

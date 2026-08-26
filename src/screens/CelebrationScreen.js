@@ -3,6 +3,7 @@ import { Animated, StyleSheet, Text, View } from 'react-native';
 import BigButton from '../components/BigButton';
 import CelebrationConfetti from '../components/CelebrationConfetti';
 import SpeakerButton from '../components/SpeakerButton';
+import { useNativeAnimation } from '../animationDriver';
 import { COACHING_LINES } from '../constants/drills';
 import { getLatestSticker } from '../constants/stickers';
 import { colors, sizes } from '../constants/theme';
@@ -11,23 +12,40 @@ import { useCoachingSpeech } from '../hooks/useCoachingSpeech';
 export default function CelebrationScreen({ onGoHome, streak = 0, stickerIds = [] }) {
   const replayCoaching = useCoachingSpeech(COACHING_LINES.CELEBRATION);
   const sticker = getLatestSticker(stickerIds);
-  const stickerScale = useRef(new Animated.Value(0)).current;
-  const stickerRotate = useRef(new Animated.Value(-0.08)).current;
+  const stickerScale = useRef(new Animated.Value(0.2)).current;
+  const stickerRotate = useRef(new Animated.Value(-0.12)).current;
 
   useEffect(() => {
-    const popAnimation = Animated.parallel([
-      Animated.spring(stickerScale, {
-        toValue: 1,
-        friction: 4,
-        tension: 120,
-        useNativeDriver: true,
-      }),
-      Animated.spring(stickerRotate, {
-        toValue: 0,
-        friction: 5,
-        tension: 90,
-        useNativeDriver: true,
-      }),
+    const popAnimation = Animated.sequence([
+      Animated.delay(120),
+      Animated.parallel([
+        Animated.spring(stickerScale, {
+          toValue: 1.12,
+          friction: 4,
+          tension: 160,
+          useNativeDriver: useNativeAnimation,
+        }),
+        Animated.spring(stickerRotate, {
+          toValue: 0.06,
+          friction: 5,
+          tension: 120,
+          useNativeDriver: useNativeAnimation,
+        }),
+      ]),
+      Animated.parallel([
+        Animated.spring(stickerScale, {
+          toValue: 1,
+          friction: 5,
+          tension: 90,
+          useNativeDriver: useNativeAnimation,
+        }),
+        Animated.spring(stickerRotate, {
+          toValue: 0,
+          friction: 6,
+          tension: 80,
+          useNativeDriver: useNativeAnimation,
+        }),
+      ]),
     ]);
 
     popAnimation.start();
@@ -35,8 +53,8 @@ export default function CelebrationScreen({ onGoHome, streak = 0, stickerIds = [
   }, [stickerScale, stickerRotate]);
 
   const stickerSpin = stickerRotate.interpolate({
-    inputRange: [-0.08, 0],
-    outputRange: ['-8deg', '0deg'],
+    inputRange: [-0.12, 0, 0.06],
+    outputRange: ['-12deg', '0deg', '6deg'],
   });
 
   return (

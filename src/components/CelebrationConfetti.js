@@ -5,6 +5,7 @@ import {
   getConfettiParticleConfig,
   polarToOffset,
 } from '../celebrationEffects';
+import { useNativeAnimation } from '../animationDriver';
 
 const PARTICLES = getConfettiParticleConfig();
 
@@ -17,7 +18,7 @@ function ConfettiParticle({ particle }) {
       toValue: 1,
       duration: CONFETTI_BURST_DURATION_MS,
       delay: particle.delayMs,
-      useNativeDriver: true,
+      useNativeDriver: useNativeAnimation,
     });
 
     animation.start();
@@ -33,29 +34,28 @@ function ConfettiParticle({ particle }) {
     outputRange: [0, y + 24],
   });
   const opacity = progress.interpolate({
-    inputRange: [0, 0.15, 0.85, 1],
+    inputRange: [0, 0.12, 0.85, 1],
     outputRange: [0, 1, 1, 0],
   });
   const scale = progress.interpolate({
     inputRange: [0, 0.2, 1],
-    outputRange: [0.2, 1.1, 0.7],
+    outputRange: [0.35, 1.15, 0.75],
   });
 
   return (
-    <Animated.Text
+    <Animated.View
       accessibilityElementsHidden
       importantForAccessibility="no"
       style={[
         styles.particle,
         {
-          fontSize: particle.size,
           opacity,
           transform: [{ translateX }, { translateY }, { scale }],
         },
       ]}
     >
-      {particle.emoji}
-    </Animated.Text>
+      <Text style={[styles.particleEmoji, { fontSize: particle.size }]}>{particle.emoji}</Text>
+    </Animated.View>
   );
 }
 
@@ -81,17 +81,23 @@ const styles = StyleSheet.create({
   overlay: {
     ...StyleSheet.absoluteFillObject,
     alignItems: 'center',
-    justifyContent: 'flex-start',
-    paddingTop: 72,
+    justifyContent: 'center',
+    overflow: 'visible',
     zIndex: 1,
   },
   origin: {
-    width: 0,
-    height: 0,
+    width: 48,
+    height: 48,
     alignItems: 'center',
     justifyContent: 'center',
+    overflow: 'visible',
   },
   particle: {
     position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  particleEmoji: {
+    textAlign: 'center',
   },
 });

@@ -1,5 +1,7 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { useEffect, useRef } from 'react';
+import { Animated, StyleSheet, Text, View } from 'react-native';
 import BigButton from '../components/BigButton';
+import CelebrationConfetti from '../components/CelebrationConfetti';
 import SpeakerButton from '../components/SpeakerButton';
 import { COACHING_LINES } from '../constants/drills';
 import { getLatestSticker } from '../constants/stickers';
@@ -9,9 +11,38 @@ import { useCoachingSpeech } from '../hooks/useCoachingSpeech';
 export default function CelebrationScreen({ onGoHome, streak = 0, stickerIds = [] }) {
   const replayCoaching = useCoachingSpeech(COACHING_LINES.CELEBRATION);
   const sticker = getLatestSticker(stickerIds);
+  const stickerScale = useRef(new Animated.Value(0)).current;
+  const stickerRotate = useRef(new Animated.Value(-0.08)).current;
+
+  useEffect(() => {
+    const popAnimation = Animated.parallel([
+      Animated.spring(stickerScale, {
+        toValue: 1,
+        friction: 4,
+        tension: 120,
+        useNativeDriver: true,
+      }),
+      Animated.spring(stickerRotate, {
+        toValue: 0,
+        friction: 5,
+        tension: 90,
+        useNativeDriver: true,
+      }),
+    ]);
+
+    popAnimation.start();
+    return () => popAnimation.stop();
+  }, [stickerScale, stickerRotate]);
+
+  const stickerSpin = stickerRotate.interpolate({
+    inputRange: [-0.08, 0],
+    outputRange: ['-8deg', '0deg'],
+  });
 
   return (
     <View style={styles.container} testID="celebration-screen">
+      <CelebrationConfetti />
+
       <SpeakerButton
         testID="replay-coaching-button"
         onPress={replayCoaching}
@@ -23,14 +54,24 @@ export default function CelebrationScreen({ onGoHome, streak = 0, stickerIds = [
       </Text>
       <Text style={styles.cheer}>Great job!</Text>
 
-      <View
-        style={styles.stickerCard}
-        testID="sticker-reward"
-        accessibilityLabel={`You earned a ${sticker.label}`}
+      <Animated.View
+        style={[
+          styles.stickerCard,
+          {
+            transform: [{ scale: stickerScale }, { rotate: stickerSpin }],
+          },
+        ]}
+        testID="sticker-pop-animation"
       >
-        <Text style={styles.sticker}>{sticker.emoji}</Text>
-        <Text style={styles.stickerLabel}>{sticker.label}</Text>
-      </View>
+        <View
+          style={styles.stickerCardInner}
+          testID="sticker-reward"
+          accessibilityLabel={`You earned a ${sticker.label}`}
+        >
+          <Text style={styles.sticker}>{sticker.emoji}</Text>
+          <Text style={styles.stickerLabel}>{sticker.label}</Text>
+        </View>
+      </Animated.View>
 
       <View style={styles.streakRow} testID="celebration-streak" accessibilityLabel={`${streak} day streak`}>
         <Text style={styles.streakIcon} accessibilityElementsHidden importantForAccessibility="no">
@@ -72,6 +113,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   stickerCard: {
+    zIndex: 2,
+  },
+  stickerCardInner: {
     backgroundColor: colors.white,
     borderRadius: 28,
     borderWidth: 4,

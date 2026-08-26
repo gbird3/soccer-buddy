@@ -59,6 +59,7 @@ A mobile app that helps a young child (initially **ages 4–6**) practice real-w
 - Completing the session again the same day is allowed but does not increment the streak or add another sticker.
 - Home shows current streak (🔥 + number), earned sticker row, and a visual badge when today's practice is already done.
 - Positive, celebratory feedback (sound + animation). No "you failed" states.
+- **Celebration polish (v1):** On session complete, a brief confetti/sparkle burst and a bouncy sticker pop entrance replay each visit; streak and sticker save rules are unchanged on same-day replays.
 
 ### 5.4 Player Profile
 - Name, age, avatar. Stored locally _(open question: support multiple kids?)_.
@@ -135,7 +136,7 @@ A mobile app that helps a young child (initially **ages 4–6**) practice real-w
 
 **Home screen:** 🔥 + streak count; sticker collection row (earned emojis only); practiced-today badge when applicable; **Start!** always available.
 
-**Celebration screen:** shows today's earned sticker and updated streak count.
+**Celebration screen:** shows today's earned sticker and updated streak count, with a short confetti burst and sticker pop/bounce animation (encouragement-only; animations replay on same-day revisit without changing streak or sticker saves).
 
 **Storage:** `@soccer_buddy/progress` JSON in AsyncStorage (`lastPracticeDate`, `streak`, `soundEnabled`, `practiceDates`, `stickerIds`). `practiceDates` is a list of `YYYY-MM-DD` keys appended when a session completes (no double-count on same day). `stickerIds` appends one id per new practice day, cycling through a fixed catalog of seven stickers. Older saves without `practiceDates` backfill from `lastPracticeDate` on load; saves with `lastPracticeDate` but no `stickerIds` backfill one star. No network, no child PII.
 

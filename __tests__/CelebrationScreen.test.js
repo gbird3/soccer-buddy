@@ -14,6 +14,24 @@ describe('CelebrationScreen sticker reward', () => {
   });
 });
 
+describe('CelebrationScreen celebration polish', () => {
+  it('renders confetti burst and sticker pop animation targets', async () => {
+    await render(<CelebrationScreen onGoHome={jest.fn()} streak={3} stickerIds={['trophy']} />);
+
+    expect(
+      screen.getByTestId('celebration-confetti', { includeHiddenElements: true }),
+    ).toBeTruthy();
+    expect(screen.getByTestId('sticker-pop-animation')).toBeTruthy();
+  });
+
+  it('still shows streak and done button alongside animations', async () => {
+    await render(<CelebrationScreen onGoHome={jest.fn()} streak={5} stickerIds={['star']} />);
+
+    expect(screen.getByTestId('celebration-streak')).toHaveTextContent('5', { exact: false });
+    expect(screen.getByTestId('go-home-button')).toBeTruthy();
+  });
+});
+
 describe('CelebrationScreen audio coaching', () => {
   beforeEach(() => {
     jest.clearAllMocks();

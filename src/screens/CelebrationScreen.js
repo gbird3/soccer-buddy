@@ -1,5 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import BigButton from '../components/BigButton';
+import CelebrationConfetti from '../components/CelebrationConfetti';
+import CelebrationStickerPop from '../components/CelebrationStickerPop';
 import SpeakerButton from '../components/SpeakerButton';
 import { COACHING_LINES } from '../constants/drills';
 import { getLatestSticker } from '../constants/stickers';
@@ -12,6 +14,8 @@ export default function CelebrationScreen({ onGoHome, streak = 0, stickerIds = [
 
   return (
     <View style={styles.container} testID="celebration-screen">
+      <CelebrationConfetti />
+
       <SpeakerButton
         testID="replay-coaching-button"
         onPress={replayCoaching}
@@ -23,14 +27,16 @@ export default function CelebrationScreen({ onGoHome, streak = 0, stickerIds = [
       </Text>
       <Text style={styles.cheer}>Great job!</Text>
 
-      <View
-        style={styles.stickerCard}
-        testID="sticker-reward"
-        accessibilityLabel={`You earned a ${sticker.label}`}
-      >
-        <Text style={styles.sticker}>{sticker.emoji}</Text>
-        <Text style={styles.stickerLabel}>{sticker.label}</Text>
-      </View>
+      <CelebrationStickerPop testID="sticker-pop-animation">
+        <View
+          style={styles.stickerCardInner}
+          testID="sticker-reward"
+          accessibilityLabel={`You earned a ${sticker.label}`}
+        >
+          <Text style={styles.sticker}>{sticker.emoji}</Text>
+          <Text style={styles.stickerLabel}>{sticker.label}</Text>
+        </View>
+      </CelebrationStickerPop>
 
       <View style={styles.streakRow} testID="celebration-streak" accessibilityLabel={`${streak} day streak`}>
         <Text style={styles.streakIcon} accessibilityElementsHidden importantForAccessibility="no">
@@ -71,7 +77,7 @@ const styles = StyleSheet.create({
     color: colors.white,
     textAlign: 'center',
   },
-  stickerCard: {
+  stickerCardInner: {
     backgroundColor: colors.white,
     borderRadius: 28,
     borderWidth: 4,

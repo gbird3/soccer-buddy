@@ -1,9 +1,8 @@
-import { useEffect, useRef } from 'react';
-import { Animated, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import BigButton from '../components/BigButton';
 import CelebrationConfetti from '../components/CelebrationConfetti';
+import CelebrationStickerPop from '../components/CelebrationStickerPop';
 import SpeakerButton from '../components/SpeakerButton';
-import { useNativeAnimation } from '../animationDriver';
 import { COACHING_LINES } from '../constants/drills';
 import { getLatestSticker } from '../constants/stickers';
 import { colors, sizes } from '../constants/theme';
@@ -12,50 +11,6 @@ import { useCoachingSpeech } from '../hooks/useCoachingSpeech';
 export default function CelebrationScreen({ onGoHome, streak = 0, stickerIds = [] }) {
   const replayCoaching = useCoachingSpeech(COACHING_LINES.CELEBRATION);
   const sticker = getLatestSticker(stickerIds);
-  const stickerScale = useRef(new Animated.Value(0.2)).current;
-  const stickerRotate = useRef(new Animated.Value(-0.12)).current;
-
-  useEffect(() => {
-    const popAnimation = Animated.sequence([
-      Animated.delay(120),
-      Animated.parallel([
-        Animated.spring(stickerScale, {
-          toValue: 1.12,
-          friction: 4,
-          tension: 160,
-          useNativeDriver: useNativeAnimation,
-        }),
-        Animated.spring(stickerRotate, {
-          toValue: 0.06,
-          friction: 5,
-          tension: 120,
-          useNativeDriver: useNativeAnimation,
-        }),
-      ]),
-      Animated.parallel([
-        Animated.spring(stickerScale, {
-          toValue: 1,
-          friction: 5,
-          tension: 90,
-          useNativeDriver: useNativeAnimation,
-        }),
-        Animated.spring(stickerRotate, {
-          toValue: 0,
-          friction: 6,
-          tension: 80,
-          useNativeDriver: useNativeAnimation,
-        }),
-      ]),
-    ]);
-
-    popAnimation.start();
-    return () => popAnimation.stop();
-  }, [stickerScale, stickerRotate]);
-
-  const stickerSpin = stickerRotate.interpolate({
-    inputRange: [-0.12, 0, 0.06],
-    outputRange: ['-12deg', '0deg', '6deg'],
-  });
 
   return (
     <View style={styles.container} testID="celebration-screen">
@@ -72,15 +27,7 @@ export default function CelebrationScreen({ onGoHome, streak = 0, stickerIds = [
       </Text>
       <Text style={styles.cheer}>Great job!</Text>
 
-      <Animated.View
-        style={[
-          styles.stickerCard,
-          {
-            transform: [{ scale: stickerScale }, { rotate: stickerSpin }],
-          },
-        ]}
-        testID="sticker-pop-animation"
-      >
+      <CelebrationStickerPop testID="sticker-pop-animation">
         <View
           style={styles.stickerCardInner}
           testID="sticker-reward"
@@ -89,7 +36,7 @@ export default function CelebrationScreen({ onGoHome, streak = 0, stickerIds = [
           <Text style={styles.sticker}>{sticker.emoji}</Text>
           <Text style={styles.stickerLabel}>{sticker.label}</Text>
         </View>
-      </Animated.View>
+      </CelebrationStickerPop>
 
       <View style={styles.streakRow} testID="celebration-streak" accessibilityLabel={`${streak} day streak`}>
         <Text style={styles.streakIcon} accessibilityElementsHidden importantForAccessibility="no">
@@ -129,9 +76,6 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     color: colors.white,
     textAlign: 'center',
-  },
-  stickerCard: {
-    zIndex: 2,
   },
   stickerCardInner: {
     backgroundColor: colors.white,

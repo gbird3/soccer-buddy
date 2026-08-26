@@ -90,6 +90,7 @@ describe('App practice session flow', () => {
     });
     expect(screen.getByTestId('start-practice-button')).toBeTruthy();
     expect(screen.getByTestId('streak-display')).toBeTruthy();
+    expect(screen.queryByTestId('session-progress')).toBeNull();
   });
 
   it('navigates home → warm-up → toe taps → kick target → freeze → tick tock → celebration with tap-to-complete', async () => {
@@ -102,12 +103,15 @@ describe('App practice session flow', () => {
 
     await user.press(screen.getByTestId('start-practice-button'));
     expect(screen.getByTestId('warm-up-screen')).toBeTruthy();
+    expect(screen.getByTestId('session-progress')).toBeTruthy();
+    expect(screen.getByLabelText('Step 1 of 5, Warm-up')).toBeTruthy();
     expect(screen.getByTestId('warm-up-demo')).toBeTruthy();
     expect(screen.getByText('Warm-up')).toBeTruthy();
     expect(saveProgress).not.toHaveBeenCalled();
 
     await user.press(screen.getByTestId('continue-warm-up-button'));
     expect(screen.getByTestId('drill-screen')).toBeTruthy();
+    expect(screen.getByLabelText('Step 2 of 5, Toe Taps')).toBeTruthy();
     expect(screen.getByTestId('toe-tap-demo')).toBeTruthy();
     expect(screen.getByText('Toe Taps')).toBeTruthy();
     expect(saveProgress).not.toHaveBeenCalled();
@@ -132,6 +136,7 @@ describe('App practice session flow', () => {
 
     await user.press(screen.getByTestId('complete-drill-button'));
     expect(screen.getByTestId('celebration-screen')).toBeTruthy();
+    expect(screen.queryByTestId('session-progress')).toBeNull();
     expect(screen.getByTestId('sticker-reward')).toBeTruthy();
     expect(screen.getByText('Great job!')).toBeTruthy();
     expect(screen.getByText('Star Sticker')).toBeTruthy();

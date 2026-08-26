@@ -8,6 +8,11 @@ import ParentScreen from './src/screens/ParentScreen';
 import WarmUpScreen from './src/screens/WarmUpScreen';
 import { SESSION_DRILLS } from './src/constants/drills';
 import {
+  getDrillStepIndex,
+  getSessionSteps,
+  getWarmUpStepIndex,
+} from './src/sessionProgress';
+import {
   SCREENS,
   getNextDrillIndex,
   getNextScreen,
@@ -92,6 +97,7 @@ export default function App() {
   const practicedToday = hasPracticedToday(progress);
   const currentDrill = SESSION_DRILLS[drillIndex];
   const soundEnabled = progress.soundEnabled !== false;
+  const sessionSteps = getSessionSteps(SESSION_DRILLS.length);
 
   return (
     <>
@@ -105,10 +111,19 @@ export default function App() {
         />
       )}
       {screen === SCREENS.WARMUP && (
-        <WarmUpScreen onContinue={completeWarmUp} />
+        <WarmUpScreen
+          currentStepIndex={getWarmUpStepIndex()}
+          sessionSteps={sessionSteps}
+          onContinue={completeWarmUp}
+        />
       )}
       {screen === SCREENS.DRILL && currentDrill && (
-        <DrillScreen drill={currentDrill} onCompleteDrill={completeDrill} />
+        <DrillScreen
+          drill={currentDrill}
+          currentStepIndex={getDrillStepIndex(drillIndex)}
+          sessionSteps={sessionSteps}
+          onCompleteDrill={completeDrill}
+        />
       )}
       {screen === SCREENS.CELEBRATION && (
         <CelebrationScreen

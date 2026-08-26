@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import BigButton from '../components/BigButton';
+import SessionProgress from '../components/SessionProgress';
 import FreezeDemo from '../components/FreezeDemo';
 import KickTargetDemo from '../components/KickTargetDemo';
 import SpeakerButton from '../components/SpeakerButton';
@@ -15,12 +16,19 @@ const DEMO_COMPONENTS = {
   'tick-tock': TickTockDemo,
 };
 
-export default function DrillScreen({ drill, onCompleteDrill }) {
+export default function DrillScreen({
+  drill,
+  currentStepIndex,
+  sessionSteps,
+  onCompleteDrill,
+}) {
   const DemoComponent = DEMO_COMPONENTS[drill.demo];
   const replayCoaching = useCoachingSpeech(drill.instruction);
 
   return (
     <View style={styles.container} testID="drill-screen">
+      <SessionProgress currentStepIndex={currentStepIndex} steps={sessionSteps} />
+
       <SpeakerButton
         testID="replay-coaching-button"
         onPress={replayCoaching}

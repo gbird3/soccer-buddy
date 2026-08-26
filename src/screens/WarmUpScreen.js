@@ -1,16 +1,19 @@
 import { StyleSheet, Text, View } from 'react-native';
 import BigButton from '../components/BigButton';
+import SessionProgress from '../components/SessionProgress';
 import SpeakerButton from '../components/SpeakerButton';
 import WarmUpDemo from '../components/WarmUpDemo';
 import { WARM_UP } from '../constants/drills';
 import { colors, sizes } from '../constants/theme';
 import { useCoachingSpeech } from '../hooks/useCoachingSpeech';
 
-export default function WarmUpScreen({ onContinue }) {
+export default function WarmUpScreen({ currentStepIndex, sessionSteps, onContinue }) {
   const replayCoaching = useCoachingSpeech(WARM_UP.instruction);
 
   return (
     <View style={styles.container} testID="warm-up-screen">
+      <SessionProgress currentStepIndex={currentStepIndex} steps={sessionSteps} />
+
       <SpeakerButton
         testID="replay-coaching-button"
         onPress={replayCoaching}

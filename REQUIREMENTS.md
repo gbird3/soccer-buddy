@@ -42,6 +42,7 @@ A mobile app that helps a young child (initially **ages 4–6**) practice real-w
 ### 5.1 Daily Session
 - A single, prominent "Start" entry point on the home screen.
 - A session is a short sequence: warm-up → four drills → celebration.
+- **In-session progress (v1):** Warm-up and drill screens show five large step icons (warm-up + four drills). The current step is highlighted; completed steps are filled. Orientation only — does not affect streak, stickers, or save. Not shown on home, parent, or celebration.
 - Each step has a visual demo and audio coaching.
 - **Audio (v1):** On-device text-to-speech (`expo-speech`), English only. Each screen auto-speaks a short coaching line once on appear; a large 🔊 control replays it. Speech stops when leaving the screen. No cloud TTS, no child voice recording. Recorded voice talent remains an open later option.
 - Session length is configurable by the parent _(target ~5 min default)_.

@@ -110,7 +110,7 @@ REQUIREMENTS.md         # Living product requirements doc
 A child can:
 
 1. Open the app and tap **Start!** on the home screen (home speaks "Let's practice!" on appear; tap 🔊 to hear again).
-2. Do a short **Warm-up** — march in place and roll the ball with your feet (looping demo, on-device audio coaching), then tap **Let's go!**
+2. Do a short **Warm-up** — march in place and roll the ball with your feet (looping demo, on-device audio coaching), then tap **Let's go!** During warm-up and each drill, a row of five step icons (🏃 👟 🎯 🦶 ⏱️) shows where they are in today's practice — no reading required.
 3. Complete a four-drill session: **Toe Taps** → **Kick a Target** → **Freeze!** → **Tick Tock** — each with a looping demo, on-device audio coaching, and tap-to-complete.
 4. Tap **I did it!** after each drill (no timer or motion detection).
 5. After all four drills, see a celebration and earn a distinct sticker per new practice day (celebration speaks encouragement), then tap **Done** to go home.

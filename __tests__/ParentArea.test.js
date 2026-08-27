@@ -41,6 +41,46 @@ describe('App parent area', () => {
     }, { timeout: 500 });
   });
 
+  it('enters the parent area after holding the gate on home', async () => {
+    await render(<App />);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('home-screen')).toBeTruthy();
+    });
+
+    fireEvent(screen.getByTestId('parent-gate-button'), 'pressIn');
+    await waitFor(() => {
+      expect(screen.getByTestId('parent-screen')).toBeTruthy();
+    }, { timeout: 500 });
+
+    expect(screen.getByTestId('parent-first-open-card')).toBeTruthy();
+    expect(screen.getByText('Hand the phone to your kid, tap Start.')).toBeTruthy();
+  });
+
+  it('hides the first-open card when practice history exists', async () => {
+    loadProgress.mockResolvedValue({
+      lastPracticeDate: '2026-08-19',
+      streak: 1,
+      soundEnabled: true,
+      practiceDates: ['2026-08-19'],
+      stickerIds: ['sticker-1'],
+    });
+
+    await render(<App />);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('home-screen')).toBeTruthy();
+    });
+
+    fireEvent(screen.getByTestId('parent-gate-button'), 'pressIn');
+    await waitFor(() => {
+      expect(screen.getByTestId('parent-screen')).toBeTruthy();
+    }, { timeout: 500 });
+
+    expect(screen.queryByTestId('parent-first-open-card')).toBeNull();
+    expect(screen.getByTestId('parent-week-view')).toBeTruthy();
+  });
+
   it('persists mute and silences coaching on home', async () => {
     const user = userEvent.setup();
     await render(<App />);

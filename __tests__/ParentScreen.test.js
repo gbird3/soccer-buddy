@@ -2,6 +2,41 @@ import { fireEvent, render, screen, userEvent } from '@testing-library/react-nat
 import ParentScreen from '../src/screens/ParentScreen';
 
 describe('ParentScreen', () => {
+  it('shows the first-open coaching card when no practice history exists', async () => {
+    await render(
+      <ParentScreen
+        streak={0}
+        practiceDates={[]}
+        todayKey="2026-08-20"
+        soundEnabled={true}
+        onToggleSound={jest.fn()}
+        onGoHome={jest.fn()}
+      />,
+    );
+
+    expect(screen.getByTestId('parent-first-open-card')).toBeTruthy();
+    expect(screen.getByText('Hand the phone to your kid, tap Start.')).toBeTruthy();
+    expect(
+      screen.getByText('The big Start button is on the home screen. That\'s all they need.'),
+    ).toBeTruthy();
+  });
+
+  it('hides the first-open coaching card after at least one practice day', async () => {
+    await render(
+      <ParentScreen
+        streak={1}
+        practiceDates={['2026-08-19']}
+        todayKey="2026-08-20"
+        soundEnabled={true}
+        onToggleSound={jest.fn()}
+        onGoHome={jest.fn()}
+      />,
+    );
+
+    expect(screen.queryByTestId('parent-first-open-card')).toBeNull();
+    expect(screen.queryByText('Hand the phone to your kid, tap Start.')).toBeNull();
+  });
+
   it('shows the current week with practiced days marked', async () => {
     await render(
       <ParentScreen

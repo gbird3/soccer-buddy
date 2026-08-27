@@ -117,7 +117,7 @@ A child can:
 5. After all four drills, see a playful celebration — a brief confetti burst, a bouncy sticker pop, and encouragement audio — and earn a distinct sticker per new practice day, then tap **Done** to go home.
 6. Build a daily streak — finishing the full session once per calendar day counts; the home screen softly shows 🔥 + streak count, a row of earned stickers, and a badge when today's practice is already done without competing with the big **Start!** button (practice again anytime; streak and sticker collection won't double-count).
 
-**Parent area (v1):** A small 🔒 control in the top-right corner of Home. Parents press and hold for ~3 seconds to enter. Inside: a **this-week** calendar (Sun–Sat) showing which days the child practiced, review the current streak, and toggle coaching audio on/off. Mute persists on-device; when muted, auto-speak and 🔊 replay are silenced. The parent screen does not auto-speak.
+**Parent area (v1):** A small 🔒 control in the top-right corner of Home. Parents press and hold for ~3 seconds to enter. On first open (before any practice day is recorded), a prominent coaching card appears: **"Hand the phone to your kid, tap Start."** — hidden after the first completed session. Inside: a **this-week** calendar (Sun–Sat) showing which days the child practiced, review the current streak, and toggle coaching audio on/off. Mute persists on-device; when muted, auto-speak and 🔊 replay are silenced. The parent screen does not auto-speak.
 
 **Audio (v1):** On-device text-to-speech via `expo-speech` — English only, auto-speaks once per screen, replayable via a large 🔊 button. No cloud TTS, no recording. Recorded voice talent is a possible later option.
 
@@ -133,7 +133,7 @@ Product requirements are being captured in [REQUIREMENTS.md](./REQUIREMENTS.md) 
 
 ## Status
 
-🚧 Early development — warm-up plus four-drill daily session (Toe Taps, Kick a Target, Freeze!, Tick Tock) with local streak/sticker persistence, on-device audio coaching, and a parent-gated settings area (week-at-a-glance practice view, streak review + coaching mute).
+🚧 Early development — warm-up plus four-drill daily session (Toe Taps, Kick a Target, Freeze!, Tick Tock) with local streak/sticker persistence, on-device audio coaching, and a parent-gated settings area (first-open coaching card, week-at-a-glance practice view, streak review + coaching mute).
 
 ## License
 

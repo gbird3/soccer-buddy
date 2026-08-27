@@ -1,4 +1,4 @@
-import { StyleSheet, Switch, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
 import BigButton from '../components/BigButton';
 import { colors, sizes } from '../constants/theme';
 import { buildWeekView } from '../streak';
@@ -12,10 +12,35 @@ export default function ParentScreen({
   onGoHome,
 }) {
   const weekDays = buildWeekView(practiceDates, todayKey);
+  const hasPracticed = practiceDates.length > 0;
 
   return (
-    <View style={styles.container} testID="parent-screen">
+    <ScrollView
+      style={styles.scroll}
+      contentContainerStyle={styles.container}
+      testID="parent-screen"
+    >
       <Text style={styles.title}>Parent Area</Text>
+
+      {!hasPracticed ? (
+        <View
+          style={styles.firstOpenCard}
+          testID="parent-first-open-card"
+          accessibilityLabel="Hand the phone to your kid, tap Start."
+        >
+          <Text style={styles.firstOpenHeadline}>
+            Hand the phone to your kid, tap Start.
+          </Text>
+          <Text style={styles.firstOpenSupporting}>
+            The big Start button is on the home screen. That's all they need.
+          </Text>
+          <View style={styles.firstOpenIcons} accessibilityElementsHidden importantForAccessibility="no">
+            <Text style={styles.firstOpenEmoji}>📱</Text>
+            <Text style={styles.firstOpenEmoji}>👧</Text>
+            <Text style={styles.firstOpenEmoji}>▶️</Text>
+          </View>
+        </View>
+      ) : null}
 
       <View style={styles.section}>
         <Text style={styles.sectionLabel}>This week</Text>
@@ -84,18 +109,53 @@ export default function ParentScreen({
           onPress={onGoHome}
         />
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  scroll: {
     flex: 1,
     backgroundColor: colors.fieldGreenDark,
+  },
+  container: {
+    flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 24,
-    gap: 32,
+    paddingVertical: 24,
+    gap: 24,
+  },
+  firstOpenCard: {
+    width: '100%',
+    backgroundColor: colors.cream,
+    borderRadius: 16,
+    borderWidth: 3,
+    borderColor: colors.yellow,
+    padding: 20,
+    alignItems: 'center',
+    gap: 12,
+  },
+  firstOpenHeadline: {
+    fontSize: sizes.subtitle,
+    fontWeight: '800',
+    color: colors.fieldGreenDark,
+    textAlign: 'center',
+  },
+  firstOpenSupporting: {
+    fontSize: sizes.body,
+    fontWeight: '600',
+    color: colors.fieldGreen,
+    textAlign: 'center',
+  },
+  firstOpenIcons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 16,
+  },
+  firstOpenEmoji: {
+    fontSize: 36,
   },
   title: {
     fontSize: sizes.title,

@@ -40,7 +40,7 @@ A mobile app that helps a young child (initially **ages 4–6**) practice real-w
 ## 5. Functional Requirements (Draft)
 
 ### 5.1 Daily Session
-- A single, prominent "Start" entry point on the home screen.
+- A single, prominent "Start" entry point on the home screen — kid-first layout: playful mascot centerpiece, almost no chrome, and a hero **Start!** button dominating the lower half on first open.
 - A session is a short sequence: warm-up → four drills → celebration.
 - **In-session progress (v1):** Warm-up and drill screens show five large step icons (warm-up + four drills). The current step is highlighted; completed steps are filled. Orientation only — does not affect streak, stickers, or save. Not shown on home, parent, or celebration.
 - Each step has a visual demo and audio coaching.
@@ -57,7 +57,7 @@ A mobile app that helps a young child (initially **ages 4–6**) practice real-w
 - Track a daily **streak** (calendar days with at least one completed session).
 - Streak and sticker collection persist on-device only (AsyncStorage); no accounts or cloud sync in this increment.
 - Completing the session again the same day is allowed but does not increment the streak or add another sticker.
-- Home shows current streak (🔥 + number), earned sticker row, and a visual badge when today's practice is already done.
+- Home shows current streak (🔥 + number), earned sticker row, and a visual badge when today's practice is already done — kept small and soft so they do not compete with **Start!**.
 - Positive, celebratory feedback (sound + animation). No "you failed" states.
 - **Celebration polish (v1):** On session complete, a brief confetti/sparkle burst and a bouncy sticker pop entrance replay each visit; streak and sticker save rules are unchanged on same-day replays.
 
@@ -134,7 +134,7 @@ A mobile app that helps a young child (initially **ages 4–6**) practice real-w
 | Second completion same day | Same sticker shown; streak and collection unchanged |
 | Reload app | Progress survives via AsyncStorage |
 
-**Home screen:** 🔥 + streak count; sticker collection row (earned emojis only); practiced-today badge when applicable; **Start!** always available.
+**Home screen:** playful mascot + ball centerpiece; soft 🔥 + streak count, sticker collection row (earned emojis only), and practiced-today badge when applicable; hero **Start!** dominates the lower half and is always available.
 
 **Celebration screen:** shows today's earned sticker and updated streak count, with a short confetti burst and sticker pop/bounce animation (encouragement-only; animations replay on same-day revisit without changing streak or sticker saves).
 

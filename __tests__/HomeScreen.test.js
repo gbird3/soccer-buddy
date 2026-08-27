@@ -3,6 +3,42 @@ import * as Speech from 'expo-speech';
 import HomeScreen from '../src/screens/HomeScreen';
 import { COACHING_LINES } from '../src/constants/drills';
 
+describe('HomeScreen kid-first layout', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('shows a playful mascot centerpiece and hero start zone', async () => {
+    await render(
+      <HomeScreen
+        onStartPractice={jest.fn()}
+        onOpenParent={jest.fn()}
+        streak={0}
+        practicedToday={false}
+      />,
+    );
+
+    expect(screen.getByTestId('home-mascot')).toBeTruthy();
+    expect(screen.getByTestId('home-start-zone')).toBeTruthy();
+    expect(screen.getByLabelText("Start today's practice")).toBeTruthy();
+    expect(screen.queryByText('Soccer Buddy')).toBeNull();
+  });
+
+  it('keeps coaching subtitle and speaker for first-open audio', async () => {
+    await render(
+      <HomeScreen
+        onStartPractice={jest.fn()}
+        onOpenParent={jest.fn()}
+        streak={0}
+        practicedToday={false}
+      />,
+    );
+
+    expect(screen.getByText("Let's practice!")).toBeTruthy();
+    expect(screen.getByTestId('replay-coaching-button')).toBeTruthy();
+  });
+});
+
 describe('HomeScreen streak display', () => {
   beforeEach(() => {
     jest.clearAllMocks();

@@ -13,9 +13,12 @@ export const colors = {
 export const sizes = {
   minTapTarget: 72,
   bigButtonHeight: 88,
+  heroButtonHeight: 128,
   emojiHero: 96,
+  emojiMascot: 120,
   emojiLarge: 72,
   title: 40,
   subtitle: 24,
+  heroButtonLabel: 32,
   body: 20,
 };

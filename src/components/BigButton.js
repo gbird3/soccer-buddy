@@ -8,6 +8,7 @@ export default function BigButton({
   testID,
   accessibilityLabel,
   variant = 'primary',
+  hero = false,
 }) {
   const isPrimary = variant === 'primary';
 
@@ -19,13 +20,20 @@ export default function BigButton({
       onPress={onPress}
       style={({ pressed }) => [
         styles.button,
+        hero && styles.heroButton,
         isPrimary ? styles.primary : styles.secondary,
         pressed && styles.pressed,
       ]}
     >
-      <View style={styles.content}>
-        {icon ? <Text style={styles.icon}>{icon}</Text> : null}
-        <Text style={[styles.label, isPrimary ? styles.primaryLabel : styles.secondaryLabel]}>
+      <View style={[styles.content, hero && styles.heroContent]}>
+        {icon ? <Text style={[styles.icon, hero && styles.heroIcon]}>{icon}</Text> : null}
+        <Text
+          style={[
+            styles.label,
+            hero && styles.heroLabel,
+            isPrimary ? styles.primaryLabel : styles.secondaryLabel,
+          ]}
+        >
           {label}
         </Text>
       </View>
@@ -43,6 +51,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 4,
+  },
+  heroButton: {
+    minHeight: sizes.heroButtonHeight,
+    minWidth: '100%',
+    borderRadius: 32,
+    paddingHorizontal: 40,
+    paddingVertical: 24,
+    borderWidth: 5,
   },
   primary: {
     backgroundColor: colors.yellow,
@@ -67,13 +83,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 12,
   },
+  heroContent: {
+    flexDirection: 'column',
+    gap: 8,
+  },
   icon: {
     fontSize: 36,
+  },
+  heroIcon: {
+    fontSize: 48,
   },
   label: {
     fontSize: sizes.subtitle,
     fontWeight: '800',
     textAlign: 'center',
+  },
+  heroLabel: {
+    fontSize: sizes.heroButtonLabel,
   },
   primaryLabel: {
     color: colors.fieldGreenDark,

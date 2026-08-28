@@ -41,8 +41,8 @@ A mobile app that helps a young child (initially **ages 4–6**) practice real-w
 
 ### 5.1 Daily Session
 - A single, prominent "Start" entry point on the home screen — kid-first layout: playful mascot centerpiece, almost no chrome, and a hero **Start!** button dominating the lower half on first open.
-- A session is a short sequence: warm-up → four drills → celebration.
-- **In-session progress (v1):** Warm-up and drill screens show five large step icons (warm-up + four drills). The current step is highlighted; completed steps are filled. Orientation only — does not affect streak, stickers, or save. Not shown on home, parent, or celebration.
+- A session is a short sequence: warm-up → two drills (Toe Taps, Kick a Target) → celebration.
+- **In-session progress (v1):** Warm-up and drill screens show three large step icons (warm-up + two drills). The current step is highlighted; completed steps are filled. Orientation only — does not affect streak, stickers, or save. Not shown on home, parent, or celebration.
 - Each step has a visual demo and audio coaching.
 - **Audio (v1):** On-device text-to-speech (`expo-speech`), English only. Each screen auto-speaks a short coaching line once on appear; a large 🔊 control replays it. Speech stops when leaving the screen. No cloud TTS, no child voice recording. Recorded voice talent remains an open later option.
 - Session length is configurable by the parent _(target ~5 min default)_.
@@ -163,7 +163,7 @@ A mobile app that helps a young child (initially **ages 4–6**) practice real-w
 
 _Next steps: parent area polish, recorded voice option._
 
-**v1 beginner drills (4):** Toe Taps (footwork), Kick a Target (striking), Freeze! (first-touch trap/control), Tick Tock (inside-foot passing).
+**v1 beginner drills (4):** Toe Taps (footwork), Kick a Target (striking), Freeze! (first-touch trap/control), Tick Tock (inside-foot passing). All four remain in the catalog with demos and tests; the **default playable session** uses only Toe Taps and Kick a Target.
 
 **Warm-up (v1):** Short playful movement before drills — march in place, then roll the ball with feet. Looping animated demo, on-device audio coaching, tap **Let's go!** to continue. Not a drill: does not count toward streak, stickers, or progress save.
 

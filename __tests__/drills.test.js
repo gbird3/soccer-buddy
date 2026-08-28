@@ -1,4 +1,5 @@
 import {
+  ALL_DRILLS,
   FREEZE_DRILL,
   KICK_TARGET_DRILL,
   SESSION_DRILLS,
@@ -6,10 +7,10 @@ import {
   TOE_TAPS_DRILL,
 } from '../src/constants/drills';
 
-describe('SESSION_DRILLS catalog', () => {
-  it('includes four beginner drills in session order', () => {
-    expect(SESSION_DRILLS).toHaveLength(4);
-    expect(SESSION_DRILLS).toEqual([
+describe('ALL_DRILLS catalog', () => {
+  it('includes four beginner drills in catalog order', () => {
+    expect(ALL_DRILLS).toHaveLength(4);
+    expect(ALL_DRILLS).toEqual([
       TOE_TAPS_DRILL,
       KICK_TARGET_DRILL,
       FREEZE_DRILL,
@@ -35,5 +36,12 @@ describe('SESSION_DRILLS catalog', () => {
       demo: 'tick-tock',
       instruction: 'Pass the ball from foot to foot, side to side!',
     });
+  });
+});
+
+describe('SESSION_DRILLS default session', () => {
+  it('plays the first two beginner drills in the default short session', () => {
+    expect(SESSION_DRILLS).toHaveLength(2);
+    expect(SESSION_DRILLS).toEqual([TOE_TAPS_DRILL, KICK_TARGET_DRILL]);
   });
 });

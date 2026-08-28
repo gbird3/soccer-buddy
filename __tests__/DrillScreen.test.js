@@ -129,7 +129,7 @@ describe('DrillScreen audio coaching', () => {
     );
   });
 
-  it('shows session progress for toe taps as step 2 of 5', async () => {
+  it('shows session progress for toe taps as step 2 of 3', async () => {
     await render(
       <DrillScreen
         drill={TOE_TAPS_DRILL}
@@ -140,27 +140,27 @@ describe('DrillScreen audio coaching', () => {
     );
 
     expect(screen.getByTestId('session-progress')).toBeTruthy();
-    expect(screen.getByLabelText('Step 2 of 5, Toe Taps')).toBeTruthy();
+    expect(screen.getByLabelText('Step 2 of 3, Toe Taps')).toBeTruthy();
     expect(screen.getByTestId('session-progress-step-0')).toHaveStyle({
       backgroundColor: '#ffd700',
     });
   });
 
-  it('shows session progress for tick tock as step 5 of 5', async () => {
+  it('shows session progress for kick target as step 3 of 3', async () => {
     await render(
       <DrillScreen
-        drill={TICK_TOCK_DRILL}
-        currentStepIndex={getDrillStepIndex(3)}
+        drill={KICK_TARGET_DRILL}
+        currentStepIndex={getDrillStepIndex(1)}
         sessionSteps={sessionSteps}
         onCompleteDrill={jest.fn()}
       />,
     );
 
-    expect(screen.getByLabelText('Step 5 of 5, Tick Tock')).toBeTruthy();
-    expect(screen.getByTestId('session-progress-step-3')).toHaveStyle({
+    expect(screen.getByLabelText('Step 3 of 3, Kick a Target')).toBeTruthy();
+    expect(screen.getByTestId('session-progress-step-1')).toHaveStyle({
       backgroundColor: '#ffd700',
     });
-    expect(screen.getByTestId('session-progress-step-4')).toHaveStyle({
+    expect(screen.getByTestId('session-progress-step-2')).toHaveStyle({
       backgroundColor: '#fff9e6',
     });
   });

@@ -43,9 +43,12 @@ export const TICK_TOCK_DRILL = {
   instruction: 'Pass the ball from foot to foot, side to side!',
 };
 
-export const SESSION_DRILLS = [
+export const ALL_DRILLS = [
   TOE_TAPS_DRILL,
   KICK_TARGET_DRILL,
   FREEZE_DRILL,
   TICK_TOCK_DRILL,
 ];
+
+/** Default playable session: first two beginner drills (warm-up + 2 drills + celebration). */
+export const SESSION_DRILLS = [TOE_TAPS_DRILL, KICK_TARGET_DRILL];

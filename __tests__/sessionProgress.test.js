@@ -11,33 +11,29 @@ describe('sessionProgress', () => {
   const drillCount = SESSION_DRILLS.length;
 
   it('counts warm-up plus drills as total steps', () => {
-    expect(getSessionStepCount(drillCount)).toBe(5);
+    expect(getSessionStepCount(drillCount)).toBe(3);
   });
 
-  it('places warm-up at step index 0 (step 1 of 5)', () => {
+  it('places warm-up at step index 0 (step 1 of 3)', () => {
     expect(getWarmUpStepIndex()).toBe(0);
     expect(getStepAccessibilityLabel(0, getSessionSteps(drillCount))).toBe(
-      'Step 1 of 5, Warm-up',
+      'Step 1 of 3, Warm-up',
     );
   });
 
-  it('maps each drill to steps 2 through 5', () => {
+  it('maps each default-session drill to steps 2 and 3', () => {
     expect(getDrillStepIndex(0)).toBe(1);
     expect(getDrillStepIndex(1)).toBe(2);
-    expect(getDrillStepIndex(2)).toBe(3);
-    expect(getDrillStepIndex(3)).toBe(4);
 
     const steps = getSessionSteps(drillCount);
-    expect(getStepAccessibilityLabel(1, steps)).toBe('Step 2 of 5, Toe Taps');
-    expect(getStepAccessibilityLabel(2, steps)).toBe('Step 3 of 5, Kick a Target');
-    expect(getStepAccessibilityLabel(3, steps)).toBe('Step 4 of 5, Freeze!');
-    expect(getStepAccessibilityLabel(4, steps)).toBe('Step 5 of 5, Tick Tock');
+    expect(getStepAccessibilityLabel(1, steps)).toBe('Step 2 of 3, Toe Taps');
+    expect(getStepAccessibilityLabel(2, steps)).toBe('Step 3 of 3, Kick a Target');
   });
 
-  it('builds session steps from warm-up then drills in order', () => {
+  it('builds session steps from warm-up then default drills in order', () => {
     const steps = getSessionSteps(drillCount);
 
-    expect(steps).toHaveLength(5);
+    expect(steps).toHaveLength(3);
     expect(steps[0]).toEqual({
       id: WARM_UP.id,
       name: WARM_UP.name,

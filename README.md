@@ -25,7 +25,7 @@ Make daily soccer practice feel like play. A 5-year-old should be able to open t
 These are the initial building blocks to iterate on:
 
 - **Drills:** Single skills to practice (dribbling, passing against a wall, toe taps, kicking a target).
-- **Daily Session:** A short, curated set of four drills with a warm-up and a celebration.
+- **Daily Session:** A short, curated set of two drills with a warm-up and a celebration (Freeze! and Tick Tock remain in the beginner catalog).
 - **Demonstrations:** Short looping animations or videos showing the move.
 - **Rewards & Streaks:** Stickers, badges, and a daily streak to build the habit.
 - **Player Profile:** Name, age, avatar, and progress — kept simple and private.
@@ -111,10 +111,10 @@ REQUIREMENTS.md         # Living product requirements doc
 A child can:
 
 1. Open the app and land on a **kid-first home** — a playful mascot with a big soccer ball, soft streak/sticker hints up top, and a huge **Start!** button that dominates the lower half (home speaks "Let's practice!" on appear; tap 🔊 to hear again).
-2. Do a short **Warm-up** — march in place and roll the ball with your feet (looping demo, on-device audio coaching), then tap **Let's go!** During warm-up and each drill, a row of five step icons (🏃 👟 🎯 🦶 ⏱️) shows where they are in today's practice — no reading required.
-3. Complete a four-drill session: **Toe Taps** → **Kick a Target** → **Freeze!** → **Tick Tock** — each with a looping demo, on-device audio coaching, and tap-to-complete.
+2. Do a short **Warm-up** — march in place and roll the ball with your feet (looping demo, on-device audio coaching), then tap **Let's go!** During warm-up and each drill, a row of three step icons (🏃 👟 🎯) shows where they are in today's practice — no reading required.
+3. Complete a two-drill session: **Toe Taps** → **Kick a Target** — each with a looping demo, on-device audio coaching, and tap-to-complete.
 4. Tap **I did it!** after each drill (no timer or motion detection).
-5. After all four drills, see a playful celebration — a brief confetti burst, a bouncy sticker pop, and encouragement audio — and earn a distinct sticker per new practice day, then tap **Done** to go home.
+5. After both drills, see a playful celebration — a brief confetti burst, a bouncy sticker pop, and encouragement audio — and earn a distinct sticker per new practice day, then tap **Done** to go home.
 6. Build a daily streak — finishing the full session once per calendar day counts; the home screen softly shows 🔥 + streak count, a row of earned stickers, and a badge when today's practice is already done without competing with the big **Start!** button (practice again anytime; streak and sticker collection won't double-count).
 
 **Parent area (v1):** A small 🔒 control in the top-right corner of Home. Parents press and hold for ~3 seconds to enter. On first open (before any practice day is recorded), a prominent coaching card appears: **"Hand the phone to your kid, tap Start."** — hidden after the first completed session. Inside: a **this-week** calendar (Sun–Sat) showing which days the child practiced, review the current streak, and toggle coaching audio on/off. Mute persists on-device; when muted, auto-speak and 🔊 replay are silenced. The parent screen does not auto-speak.
@@ -133,7 +133,7 @@ Product requirements are being captured in [REQUIREMENTS.md](./REQUIREMENTS.md) 
 
 ## Status
 
-🚧 Early development — warm-up plus four-drill daily session (Toe Taps, Kick a Target, Freeze!, Tick Tock) with local streak/sticker persistence, on-device audio coaching, and a parent-gated settings area (first-open coaching card, week-at-a-glance practice view, streak review + coaching mute).
+🚧 Early development — warm-up plus two-drill default session (Toe Taps, Kick a Target) with four beginner drills in the catalog (Freeze! and Tick Tock are not in the default short session), local streak/sticker persistence, on-device audio coaching, and a parent-gated settings area (first-open coaching card, week-at-a-glance practice view, streak review + coaching mute).
 
 ## License
 

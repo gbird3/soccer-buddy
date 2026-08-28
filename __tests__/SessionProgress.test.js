@@ -5,11 +5,11 @@ import { getSessionSteps } from '../src/sessionProgress';
 describe('SessionProgress', () => {
   const steps = getSessionSteps();
 
-  it('shows warm-up as the current step on step 1 of 5', async () => {
+  it('shows warm-up as the current step on step 1 of 3', async () => {
     await render(<SessionProgress currentStepIndex={0} steps={steps} />);
 
     expect(screen.getByTestId('session-progress')).toBeTruthy();
-    expect(screen.getByLabelText('Step 1 of 5, Warm-up')).toBeTruthy();
+    expect(screen.getByLabelText('Step 1 of 3, Warm-up')).toBeTruthy();
     expect(screen.getByTestId('session-progress-step-0')).toHaveStyle({
       backgroundColor: '#fff9e6',
     });
@@ -18,10 +18,10 @@ describe('SessionProgress', () => {
     });
   });
 
-  it('marks earlier steps complete and highlights Toe Taps on step 2 of 5', async () => {
+  it('marks earlier steps complete and highlights Toe Taps on step 2 of 3', async () => {
     await render(<SessionProgress currentStepIndex={1} steps={steps} />);
 
-    expect(screen.getByLabelText('Step 2 of 5, Toe Taps')).toBeTruthy();
+    expect(screen.getByLabelText('Step 2 of 3, Toe Taps')).toBeTruthy();
     expect(screen.getByTestId('session-progress-step-0')).toHaveStyle({
       backgroundColor: '#ffd700',
     });
@@ -34,16 +34,16 @@ describe('SessionProgress', () => {
   });
 
   it('marks prior steps complete on the final drill step', async () => {
-    await render(<SessionProgress currentStepIndex={4} steps={steps} />);
+    await render(<SessionProgress currentStepIndex={2} steps={steps} />);
 
-    expect(screen.getByLabelText('Step 5 of 5, Tick Tock')).toBeTruthy();
+    expect(screen.getByLabelText('Step 3 of 3, Kick a Target')).toBeTruthy();
     expect(screen.getByTestId('session-progress-step-0')).toHaveStyle({
       backgroundColor: '#ffd700',
     });
-    expect(screen.getByTestId('session-progress-step-3')).toHaveStyle({
+    expect(screen.getByTestId('session-progress-step-1')).toHaveStyle({
       backgroundColor: '#ffd700',
     });
-    expect(screen.getByTestId('session-progress-step-4')).toHaveStyle({
+    expect(screen.getByTestId('session-progress-step-2')).toHaveStyle({
       backgroundColor: '#fff9e6',
     });
   });

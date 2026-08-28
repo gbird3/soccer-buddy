@@ -24,7 +24,7 @@ describe('WarmUpScreen', () => {
 
     expect(screen.getByTestId('warm-up-screen')).toBeTruthy();
     expect(screen.getByTestId('session-progress')).toBeTruthy();
-    expect(screen.getByLabelText('Step 1 of 5, Warm-up')).toBeTruthy();
+    expect(screen.getByLabelText('Step 1 of 3, Warm-up')).toBeTruthy();
     expect(screen.getByTestId('warm-up-demo')).toBeTruthy();
     expect(screen.getByTestId('continue-warm-up-button')).toBeTruthy();
     expect(screen.getByText('Warm-up')).toBeTruthy();

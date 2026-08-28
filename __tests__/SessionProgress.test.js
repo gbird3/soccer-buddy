@@ -1,9 +1,10 @@
 import { render, screen } from '@testing-library/react-native';
 import SessionProgress from '../src/components/SessionProgress';
+import { SESSION_DRILL_PAIR_A } from '../src/constants/drills';
 import { getSessionSteps } from '../src/sessionProgress';
 
 describe('SessionProgress', () => {
-  const steps = getSessionSteps();
+  const steps = getSessionSteps(SESSION_DRILL_PAIR_A);
 
   it('shows warm-up as the current step on step 1 of 3', async () => {
     await render(<SessionProgress currentStepIndex={0} steps={steps} />);

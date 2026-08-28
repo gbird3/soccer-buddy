@@ -1,10 +1,10 @@
 import { render, screen, userEvent } from '@testing-library/react-native';
 import * as Speech from 'expo-speech';
 import DrillScreen from '../src/screens/DrillScreen';
-import { TOE_TAPS_DRILL, KICK_TARGET_DRILL, FREEZE_DRILL, TICK_TOCK_DRILL } from '../src/constants/drills';
+import { TOE_TAPS_DRILL, KICK_TARGET_DRILL, FREEZE_DRILL, TICK_TOCK_DRILL, SESSION_DRILL_PAIR_A } from '../src/constants/drills';
 import { getDrillStepIndex, getSessionSteps } from '../src/sessionProgress';
 
-const sessionSteps = getSessionSteps();
+const sessionSteps = getSessionSteps(SESSION_DRILL_PAIR_A);
 
 describe('DrillScreen audio coaching', () => {
   beforeEach(() => {

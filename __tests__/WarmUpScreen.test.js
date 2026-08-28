@@ -1,11 +1,11 @@
 import { render, screen, userEvent } from '@testing-library/react-native';
 import * as Speech from 'expo-speech';
 import { setCoachingEnabled } from '../src/audio/coachingSpeech';
-import { WARM_UP } from '../src/constants/drills';
+import { WARM_UP, SESSION_DRILL_PAIR_A } from '../src/constants/drills';
 import WarmUpScreen from '../src/screens/WarmUpScreen';
 import { getSessionSteps, getWarmUpStepIndex } from '../src/sessionProgress';
 
-const sessionSteps = getSessionSteps();
+const sessionSteps = getSessionSteps(SESSION_DRILL_PAIR_A);
 
 describe('WarmUpScreen', () => {
   beforeEach(() => {

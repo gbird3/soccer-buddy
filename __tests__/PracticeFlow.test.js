@@ -1,6 +1,9 @@
 import { render, screen, userEvent, waitFor } from '@testing-library/react-native';
 import App from '../App';
-import { SESSION_DRILLS } from '../src/constants/drills';
+import {
+  SESSION_DRILL_PAIR_A,
+  SESSION_DRILL_PAIR_B,
+} from '../src/constants/drills';
 import {
   SCREENS,
   getNextDrillIndex,
@@ -15,8 +18,18 @@ jest.mock('../src/storage/progressStorage', () => ({
   saveProgress: jest.fn(),
 }));
 
+jest.mock('../src/constants/drills', () => {
+  const actual = jest.requireActual('../src/constants/drills');
+  return {
+    ...actual,
+    getSessionDrills: jest.fn(actual.getSessionDrills),
+  };
+});
+
+import { getSessionDrills } from '../src/constants/drills';
+
 describe('practiceFlow', () => {
-  const drillCount = SESSION_DRILLS.length;
+  const drillCount = SESSION_DRILL_PAIR_A.length;
 
   it('moves from home to warm-up when practice starts', () => {
     expect(getNextScreen(SCREENS.HOME, 'START_PRACTICE')).toBe(SCREENS.WARMUP);
@@ -76,6 +89,7 @@ describe('App practice session flow', () => {
     jest.clearAllMocks();
     loadProgress.mockResolvedValue({ ...EMPTY_PROGRESS });
     saveProgress.mockResolvedValue(undefined);
+    getSessionDrills.mockImplementation(() => SESSION_DRILL_PAIR_A);
   });
 
   it('starts on the home screen', async () => {
@@ -251,5 +265,64 @@ describe('App practice session flow', () => {
       practiceDates: [toDateKey()],
       stickerIds: ['star'],
     });
+  });
+});
+
+describe('App practice session flow — Pair B drills', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    loadProgress.mockResolvedValue({ ...EMPTY_PROGRESS });
+    saveProgress.mockResolvedValue(undefined);
+    getSessionDrills.mockImplementation(() => SESSION_DRILL_PAIR_B);
+  });
+
+  it('navigates home → warm-up → freeze → tick tock → celebration with progress dots for Pair B', async () => {
+    const user = userEvent.setup();
+    await render(<App />);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('home-screen')).toBeTruthy();
+    });
+
+    await user.press(screen.getByTestId('start-practice-button'));
+    expect(screen.getByTestId('warm-up-screen')).toBeTruthy();
+    expect(screen.getByLabelText('Step 1 of 3, Warm-up')).toBeTruthy();
+    expect(saveProgress).not.toHaveBeenCalled();
+
+    await user.press(screen.getByTestId('continue-warm-up-button'));
+    expect(screen.getByTestId('drill-screen')).toBeTruthy();
+    expect(screen.getByLabelText('Step 2 of 3, Freeze!')).toBeTruthy();
+    expect(screen.getByTestId('freeze-demo')).toBeTruthy();
+    expect(screen.getByText('Freeze!')).toBeTruthy();
+    expect(saveProgress).not.toHaveBeenCalled();
+
+    await user.press(screen.getByTestId('complete-drill-button'));
+    expect(screen.getByTestId('drill-screen')).toBeTruthy();
+    expect(screen.getByLabelText('Step 3 of 3, Tick Tock')).toBeTruthy();
+    expect(screen.getByTestId('tick-tock-demo')).toBeTruthy();
+    expect(screen.getByText('Tick Tock')).toBeTruthy();
+    expect(saveProgress).not.toHaveBeenCalled();
+
+    await user.press(screen.getByTestId('complete-drill-button'));
+    expect(screen.getByTestId('celebration-screen')).toBeTruthy();
+    expect(screen.getByTestId('sticker-reward')).toBeTruthy();
+    expect(saveProgress).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not save streak until the second Pair B drill completes', async () => {
+    const user = userEvent.setup();
+    await render(<App />);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('home-screen')).toBeTruthy();
+    });
+
+    await user.press(screen.getByTestId('start-practice-button'));
+    await user.press(screen.getByTestId('continue-warm-up-button'));
+    await user.press(screen.getByTestId('complete-drill-button'));
+
+    expect(screen.getByText('Tick Tock')).toBeTruthy();
+    expect(saveProgress).not.toHaveBeenCalled();
+    expect(screen.queryByTestId('celebration-screen')).toBeNull();
   });
 });

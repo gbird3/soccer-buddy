@@ -1,7 +1,10 @@
 import {
   ALL_DRILLS,
   FREEZE_DRILL,
+  getSessionDrills,
   KICK_TARGET_DRILL,
+  SESSION_DRILL_PAIR_A,
+  SESSION_DRILL_PAIR_B,
   SESSION_DRILLS,
   TICK_TOCK_DRILL,
   TOE_TAPS_DRILL,
@@ -39,9 +42,60 @@ describe('ALL_DRILLS catalog', () => {
   });
 });
 
-describe('SESSION_DRILLS default session', () => {
-  it('plays the first two beginner drills in the default short session', () => {
+describe('getSessionDrills', () => {
+  it('returns the same pair for the same local date', () => {
+    const date = new Date('2026-08-29T09:00:00');
+    expect(getSessionDrills(date)).toEqual(getSessionDrills(date));
+  });
+
+  it('returns different pairs on consecutive local calendar days', () => {
+    const friday = new Date('2026-08-28T23:59:00');
+    const saturday = new Date('2026-08-29T00:01:00');
+    expect(getSessionDrills(friday)).not.toEqual(getSessionDrills(saturday));
+  });
+
+  it('always returns exactly two drills from ALL_DRILLS', () => {
+    const dates = [
+      new Date('2026-08-28T12:00:00'),
+      new Date('2026-08-29T12:00:00'),
+      new Date('2026-08-31T12:00:00'),
+      new Date('2026-09-01T12:00:00'),
+    ];
+
+    for (const date of dates) {
+      const drills = getSessionDrills(date);
+      expect(drills).toHaveLength(2);
+      drills.forEach((drill) => {
+        expect(ALL_DRILLS).toContainEqual(drill);
+      });
+    }
+  });
+
+  it('never mixes drills across pairs', () => {
+    const pairADates = [new Date('2026-08-29T12:00:00'), new Date('2026-08-31T12:00:00')];
+    const pairBDates = [new Date('2026-08-28T12:00:00'), new Date('2026-09-01T12:00:00')];
+
+    pairADates.forEach((date) => {
+      expect(getSessionDrills(date)).toEqual(SESSION_DRILL_PAIR_A);
+    });
+    pairBDates.forEach((date) => {
+      expect(getSessionDrills(date)).toEqual(SESSION_DRILL_PAIR_B);
+    });
+  });
+
+  it('alternates pairs across a month boundary', () => {
+    const aug31 = new Date('2026-08-31T12:00:00');
+    const sep1 = new Date('2026-09-01T12:00:00');
+
+    expect(getSessionDrills(aug31)).toEqual(SESSION_DRILL_PAIR_A);
+    expect(getSessionDrills(sep1)).toEqual(SESSION_DRILL_PAIR_B);
+    expect(getSessionDrills(aug31)).not.toEqual(getSessionDrills(sep1));
+  });
+});
+
+describe('SESSION_DRILLS compatibility alias', () => {
+  it('matches getSessionDrills() for today', () => {
+    expect(SESSION_DRILLS).toEqual(getSessionDrills());
     expect(SESSION_DRILLS).toHaveLength(2);
-    expect(SESSION_DRILLS).toEqual([TOE_TAPS_DRILL, KICK_TARGET_DRILL]);
   });
 });

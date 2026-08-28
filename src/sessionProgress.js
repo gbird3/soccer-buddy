@@ -1,7 +1,7 @@
 import { SESSION_DRILLS, WARM_UP } from './constants/drills';
 
-export function getSessionStepCount(drillCount = SESSION_DRILLS.length) {
-  return 1 + drillCount;
+export function getSessionStepCount(sessionDrills = SESSION_DRILLS) {
+  return 1 + sessionDrills.length;
 }
 
 export function getWarmUpStepIndex() {
@@ -12,10 +12,10 @@ export function getDrillStepIndex(drillIndex) {
   return 1 + drillIndex;
 }
 
-export function getSessionSteps(drillCount = SESSION_DRILLS.length) {
+export function getSessionSteps(sessionDrills = SESSION_DRILLS) {
   return [
     { id: WARM_UP.id, name: WARM_UP.name, icon: WARM_UP.icon },
-    ...SESSION_DRILLS.slice(0, drillCount).map((drill) => ({
+    ...sessionDrills.map((drill) => ({
       id: drill.id,
       name: drill.name,
       icon: drill.icon,

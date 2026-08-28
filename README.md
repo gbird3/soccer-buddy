@@ -25,7 +25,7 @@ Make daily soccer practice feel like play. A 5-year-old should be able to open t
 These are the initial building blocks to iterate on:
 
 - **Drills:** Single skills to practice (dribbling, passing against a wall, toe taps, kicking a target).
-- **Daily Session:** A short, curated set of two drills with a warm-up and a celebration (Freeze! and Tick Tock remain in the beginner catalog).
+- **Daily Session:** A short, curated set of two drills with a warm-up and a celebration. The two drills rotate by local calendar day (Pair A: Toe Taps + Kick a Target; Pair B: Freeze! + Tick Tock) so tomorrow's session is different from today's.
 - **Demonstrations:** Short looping animations or videos showing the move.
 - **Rewards & Streaks:** Stickers, badges, and a daily streak to build the habit.
 - **Player Profile:** Name, age, avatar, and progress — kept simple and private.
@@ -111,8 +111,8 @@ REQUIREMENTS.md         # Living product requirements doc
 A child can:
 
 1. Open the app and land on a **kid-first home** — a playful mascot with a big soccer ball, soft streak/sticker hints up top, and a huge **Start!** button that dominates the lower half (home speaks "Let's practice!" on appear; tap 🔊 to hear again).
-2. Do a short **Warm-up** — march in place and roll the ball with your feet (looping demo, on-device audio coaching), then tap **Let's go!** During warm-up and each drill, a row of three step icons (🏃 👟 🎯) shows where they are in today's practice — no reading required.
-3. Complete a two-drill session: **Toe Taps** → **Kick a Target** — each with a looping demo, on-device audio coaching, and tap-to-complete.
+2. Do a short **Warm-up** — march in place and roll the ball with your feet (looping demo, on-device audio coaching), then tap **Let's go!** During warm-up and each drill, a row of three step icons (warm-up + today's two drills) shows where they are in today's practice — no reading required.
+3. Complete a two-drill session drawn from the beginner catalog — **Toe Taps** + **Kick a Target** on even local days, **Freeze!** + **Tick Tock** on odd local days — each with a looping demo, on-device audio coaching, and tap-to-complete.
 4. Tap **I did it!** after each drill (no timer or motion detection).
 5. After both drills, see a playful celebration — a brief confetti burst, a bouncy sticker pop, and encouragement audio — and earn a distinct sticker per new practice day, then tap **Done** to go home.
 6. Build a daily streak — finishing the full session once per calendar day counts; the home screen softly shows 🔥 + streak count, a row of earned stickers, and a badge when today's practice is already done without competing with the big **Start!** button (practice again anytime; streak and sticker collection won't double-count).
@@ -133,7 +133,7 @@ Product requirements are being captured in [REQUIREMENTS.md](./REQUIREMENTS.md) 
 
 ## Status
 
-🚧 Early development — warm-up plus two-drill default session (Toe Taps, Kick a Target) with four beginner drills in the catalog (Freeze! and Tick Tock are not in the default short session), local streak/sticker persistence, on-device audio coaching, and a parent-gated settings area (first-open coaching card, week-at-a-glance practice view, streak review + coaching mute).
+🚧 Early development — warm-up plus two-drill daily session that rotates by local calendar day (Pair A: Toe Taps + Kick a Target; Pair B: Freeze! + Tick Tock), four beginner drills in the catalog, local streak/sticker persistence, on-device audio coaching, and a parent-gated settings area (first-open coaching card, week-at-a-glance practice view, streak review + coaching mute).
 
 ## License
 

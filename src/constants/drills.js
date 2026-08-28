@@ -1,3 +1,5 @@
+import { toDateKey } from '../streak';
+
 export const COACHING_LINES = {
   HOME: "Let's practice!",
   WARM_UP: 'March in place to wake up your body, then roll the ball with your feet!',
@@ -50,5 +52,28 @@ export const ALL_DRILLS = [
   TICK_TOCK_DRILL,
 ];
 
-/** Default playable session: first two beginner drills (warm-up + 2 drills + celebration). */
-export const SESSION_DRILLS = [TOE_TAPS_DRILL, KICK_TARGET_DRILL];
+/** Pair A: first two beginner drills (catalog order). */
+export const SESSION_DRILL_PAIR_A = [TOE_TAPS_DRILL, KICK_TARGET_DRILL];
+
+/** Pair B: trap/control + footwork drills (catalog order). */
+export const SESSION_DRILL_PAIR_B = [FREEZE_DRILL, TICK_TOCK_DRILL];
+
+const MS_PER_DAY = 86400000;
+
+function epochDayNumber(dateKey) {
+  const date = new Date(`${dateKey}T12:00:00`);
+  return Math.floor(date.getTime() / MS_PER_DAY);
+}
+
+/**
+ * Returns today's two playable drills based on the device's local calendar day.
+ * Even epoch days → Pair A; odd → Pair B. Adjacent local days always alternate pairs.
+ */
+export function getSessionDrills(date = new Date()) {
+  const dateKey = toDateKey(date);
+  const dayNumber = epochDayNumber(dateKey);
+  return dayNumber % 2 === 0 ? SESSION_DRILL_PAIR_A : SESSION_DRILL_PAIR_B;
+}
+
+/** Compatibility alias: today's playable drill pair (warm-up + 2 drills + celebration). */
+export const SESSION_DRILLS = getSessionDrills();

@@ -6,7 +6,7 @@ import DrillScreen from './src/screens/DrillScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import ParentScreen from './src/screens/ParentScreen';
 import WarmUpScreen from './src/screens/WarmUpScreen';
-import { SESSION_DRILLS } from './src/constants/drills';
+import { getSessionDrills } from './src/constants/drills';
 import {
   getDrillStepIndex,
   getSessionSteps,
@@ -55,7 +55,8 @@ export default function App() {
   };
 
   const completeDrill = useCallback(async () => {
-    const drillCount = SESSION_DRILLS.length;
+    const sessionDrills = getSessionDrills();
+    const drillCount = sessionDrills.length;
     const sessionFinished = isSessionComplete(drillIndex, drillCount);
 
     if (sessionFinished) {
@@ -95,9 +96,10 @@ export default function App() {
 
   const streak = getEffectiveStreak(progress);
   const practicedToday = hasPracticedToday(progress);
-  const currentDrill = SESSION_DRILLS[drillIndex];
+  const sessionDrills = getSessionDrills();
+  const currentDrill = sessionDrills[drillIndex];
   const soundEnabled = progress.soundEnabled !== false;
-  const sessionSteps = getSessionSteps(SESSION_DRILLS.length);
+  const sessionSteps = getSessionSteps(sessionDrills);
 
   return (
     <>

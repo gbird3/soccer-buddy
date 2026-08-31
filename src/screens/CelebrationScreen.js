@@ -1,8 +1,10 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { useEffect, useRef } from 'react';
+import { Animated, StyleSheet, Text, View } from 'react-native';
 import BigButton from '../components/BigButton';
 import CelebrationConfetti from '../components/CelebrationConfetti';
 import CelebrationStickerPop from '../components/CelebrationStickerPop';
 import SpeakerButton from '../components/SpeakerButton';
+import { useNativeAnimation } from '../animationDriver';
 import { COACHING_LINES } from '../constants/drills';
 import { getLatestSticker } from '../constants/stickers';
 import { colors, sizes } from '../constants/theme';
@@ -11,6 +13,21 @@ import { useCoachingSpeech } from '../hooks/useCoachingSpeech';
 export default function CelebrationScreen({ onGoHome, streak = 0, stickerIds = [] }) {
   const replayCoaching = useCoachingSpeech(COACHING_LINES.CELEBRATION);
   const sticker = getLatestSticker(stickerIds);
+  const comeBackOpacity = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const fadeIn = Animated.sequence([
+      Animated.delay(700),
+      Animated.timing(comeBackOpacity, {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: useNativeAnimation,
+      }),
+    ]);
+
+    fadeIn.start();
+    return () => fadeIn.stop();
+  }, [comeBackOpacity]);
 
   return (
     <View style={styles.container} testID="celebration-screen">
@@ -19,7 +36,7 @@ export default function CelebrationScreen({ onGoHome, streak = 0, stickerIds = [
       <SpeakerButton
         testID="replay-coaching-button"
         onPress={replayCoaching}
-        accessibilityLabel="Hear again: Great job! You earned a sticker"
+        accessibilityLabel="Hear again: Great job! You earned a sticker! See you tomorrow!"
       />
 
       <Text style={styles.confetti} accessibilityElementsHidden importantForAccessibility="no">
@@ -37,6 +54,17 @@ export default function CelebrationScreen({ onGoHome, streak = 0, stickerIds = [
           <Text style={styles.stickerLabel}>{sticker.label}</Text>
         </View>
       </CelebrationStickerPop>
+
+      <Animated.View
+        style={[styles.comeBackHook, { opacity: comeBackOpacity }]}
+        testID="come-back-hook"
+        accessibilityLabel="See you tomorrow"
+      >
+        <Text style={styles.comeBackEmoji} accessibilityElementsHidden importantForAccessibility="no">
+          👋
+        </Text>
+        <Text style={styles.comeBackText}>See you tomorrow!</Text>
+      </Animated.View>
 
       <View style={styles.streakRow} testID="celebration-streak" accessibilityLabel={`${streak} day streak`}>
         <Text style={styles.streakIcon} accessibilityElementsHidden importantForAccessibility="no">
@@ -100,6 +128,19 @@ const styles = StyleSheet.create({
     fontSize: sizes.subtitle,
     fontWeight: '700',
     color: colors.fieldGreenDark,
+    textAlign: 'center',
+  },
+  comeBackHook: {
+    alignItems: 'center',
+    gap: 4,
+  },
+  comeBackEmoji: {
+    fontSize: 40,
+  },
+  comeBackText: {
+    fontSize: sizes.subtitle,
+    fontWeight: '700',
+    color: colors.white,
     textAlign: 'center',
   },
   streakRow: {

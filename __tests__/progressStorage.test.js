@@ -22,6 +22,7 @@ describe('normalizeProgress', () => {
       lastPracticeDate: '2026-08-18',
       streak: 3,
       soundEnabled: true,
+      sessionLength: 'short',
       practiceDates: ['2026-08-18'],
       stickerIds: ['star'],
     });
@@ -34,6 +35,7 @@ describe('normalizeProgress', () => {
       lastPracticeDate: '2026-08-18',
       streak: 3,
       soundEnabled: false,
+      sessionLength: 'short',
       practiceDates: ['2026-08-18'],
       stickerIds: ['star'],
     });
@@ -50,6 +52,7 @@ describe('normalizeProgress', () => {
       lastPracticeDate: '2026-08-18',
       streak: 2,
       soundEnabled: true,
+      sessionLength: 'short',
       practiceDates: ['2026-08-17', '2026-08-18'],
       stickerIds: ['star'],
     });
@@ -67,9 +70,16 @@ describe('normalizeProgress', () => {
       lastPracticeDate: '2026-08-18',
       streak: 2,
       soundEnabled: true,
+      sessionLength: 'short',
       practiceDates: ['2026-08-17', '2026-08-18'],
       stickerIds: ['star', 'ball'],
     });
+  });
+
+  it('defaults sessionLength to short when missing or invalid', () => {
+    expect(normalizeProgress({ lastPracticeDate: '2026-08-18', streak: 1 }).sessionLength).toBe('short');
+    expect(normalizeProgress({ lastPracticeDate: '2026-08-18', streak: 1, sessionLength: 'bogus' }).sessionLength).toBe('short');
+    expect(normalizeProgress({ lastPracticeDate: '2026-08-18', streak: 1, sessionLength: 'full' }).sessionLength).toBe('full');
   });
 });
 
@@ -95,6 +105,7 @@ describe('progressStorage', () => {
       lastPracticeDate: '2026-08-18',
       streak: 2,
       soundEnabled: true,
+      sessionLength: 'short',
       practiceDates: ['2026-08-18'],
       stickerIds: ['star'],
     });

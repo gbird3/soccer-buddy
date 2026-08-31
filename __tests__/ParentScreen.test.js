@@ -10,6 +10,8 @@ describe('ParentScreen', () => {
         todayKey="2026-08-20"
         soundEnabled={true}
         onToggleSound={jest.fn()}
+        sessionLength="short"
+        onToggleSessionLength={jest.fn()}
         onGoHome={jest.fn()}
       />,
     );
@@ -29,6 +31,8 @@ describe('ParentScreen', () => {
         todayKey="2026-08-20"
         soundEnabled={true}
         onToggleSound={jest.fn()}
+        sessionLength="short"
+        onToggleSessionLength={jest.fn()}
         onGoHome={jest.fn()}
       />,
     );
@@ -45,6 +49,8 @@ describe('ParentScreen', () => {
         todayKey="2026-08-20"
         soundEnabled={true}
         onToggleSound={jest.fn()}
+        sessionLength="short"
+        onToggleSessionLength={jest.fn()}
         onGoHome={jest.fn()}
       />,
     );
@@ -64,6 +70,8 @@ describe('ParentScreen', () => {
         todayKey="2026-08-20"
         soundEnabled={true}
         onToggleSound={jest.fn()}
+        sessionLength="short"
+        onToggleSessionLength={jest.fn()}
         onGoHome={jest.fn()}
       />,
     );
@@ -80,6 +88,8 @@ describe('ParentScreen', () => {
         streak={7}
         soundEnabled={true}
         onToggleSound={jest.fn()}
+        sessionLength="short"
+        onToggleSessionLength={jest.fn()}
         onGoHome={jest.fn()}
       />,
     );
@@ -94,6 +104,8 @@ describe('ParentScreen', () => {
         streak={2}
         soundEnabled={true}
         onToggleSound={jest.fn()}
+        sessionLength="short"
+        onToggleSessionLength={jest.fn()}
         onGoHome={jest.fn()}
       />,
     );
@@ -130,7 +142,7 @@ describe('ParentScreen', () => {
     expect(onToggleSound).toHaveBeenCalledWith(false);
   });
 
-  it('returns home when Done is pressed', async () => {
+  it('calls onGoHome when Done is pressed', async () => {
     const onGoHome = jest.fn();
     const user = userEvent.setup();
     await render(
@@ -145,5 +157,68 @@ describe('ParentScreen', () => {
     await user.press(screen.getByTestId('parent-done-button'));
 
     expect(onGoHome).toHaveBeenCalledTimes(1);
+  });
+
+  it('defaults to short session with the full-session switch off', async () => {
+    await render(
+      <ParentScreen
+        streak={1}
+        soundEnabled={true}
+        onToggleSound={jest.fn()}
+        sessionLength="short"
+        onToggleSessionLength={jest.fn()}
+        onGoHome={jest.fn()}
+      />,
+    );
+
+    expect(screen.getByText('Short session — warm-up plus today\'s two drills')).toBeTruthy();
+    expect(screen.getByTestId('full-session-switch').props.value).toBe(false);
+  });
+
+  it('reflects full session when the switch is on', async () => {
+    const { rerender } = await render(
+      <ParentScreen
+        streak={1}
+        soundEnabled={true}
+        onToggleSound={jest.fn()}
+        sessionLength="short"
+        onToggleSessionLength={jest.fn()}
+        onGoHome={jest.fn()}
+      />,
+    );
+
+    expect(screen.getByTestId('full-session-switch').props.value).toBe(false);
+
+    await rerender(
+      <ParentScreen
+        streak={1}
+        soundEnabled={true}
+        onToggleSound={jest.fn()}
+        sessionLength="full"
+        onToggleSessionLength={jest.fn()}
+        onGoHome={jest.fn()}
+      />,
+    );
+
+    expect(screen.getByText('Full session — warm-up plus all four drills')).toBeTruthy();
+    expect(screen.getByTestId('full-session-switch').props.value).toBe(true);
+  });
+
+  it('calls onToggleSessionLength when the full-session switch changes', async () => {
+    const onToggleSessionLength = jest.fn();
+    await render(
+      <ParentScreen
+        streak={1}
+        soundEnabled={true}
+        onToggleSound={jest.fn()}
+        sessionLength="short"
+        onToggleSessionLength={onToggleSessionLength}
+        onGoHome={jest.fn()}
+      />,
+    );
+
+    fireEvent(screen.getByTestId('full-session-switch'), 'valueChange', true);
+
+    expect(onToggleSessionLength).toHaveBeenCalledWith('full');
   });
 });

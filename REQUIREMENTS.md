@@ -67,11 +67,12 @@ A mobile app that helps a young child (initially **ages 4–6**) practice real-w
 ### 5.5 Parent Area
 - Gated entry via press-and-hold (~3 seconds) on a small lock control in a corner of Home — not a math quiz, not as large as Start.
 - **First-open coaching card (v1):** When `practiceDates` is empty (family has not completed a session yet), show a prominent cream/yellow card above the week view: headline **"Hand the phone to your kid, tap Start."** with a short supporting line. Hidden after the first practice day is recorded — derived from existing progress, no dismiss flag.
-- Inside (v1 slice): **this-week practice view** (Sun–Sat day marks for practiced vs not), review current streak (🔥 + number), and a mute toggle for coaching audio.
+- Inside (v1 slice): **this-week practice view** (Sun–Sat day marks for practiced vs not), review current streak (🔥 + number), a **short vs full session** toggle (default short), and a mute toggle for coaching audio.
+- Session length persists locally in `@soccer_buddy/progress` (`sessionLength`: `'short'` | `'full'`). Short = warm-up + today's rotating two-drill pair; full = warm-up + all four beginner drills in catalog order. Missing/invalid values default to short. Completing either length counts as one practice day.
 - Mute persists locally in `@soccer_buddy/progress` (`soundEnabled` field). When muted, `speakCoaching`, auto-speak, and replay no-op.
 - Parent screen does not auto-speak.
 - Done/back returns to Home.
-- **Out of scope for this slice:** child name/age/profile, session-length slider, purchases.
+- **Out of scope for this slice:** child name/age/profile, purchases.
 
 ## 6. Non-Functional Requirements (Draft)
 

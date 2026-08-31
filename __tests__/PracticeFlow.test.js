@@ -22,11 +22,11 @@ jest.mock('../src/constants/drills', () => {
   const actual = jest.requireActual('../src/constants/drills');
   return {
     ...actual,
-    getSessionDrills: jest.fn(actual.getSessionDrills),
+    getPlayableSessionDrills: jest.fn(actual.getPlayableSessionDrills),
   };
 });
 
-import { getSessionDrills } from '../src/constants/drills';
+import { getPlayableSessionDrills } from '../src/constants/drills';
 
 describe('practiceFlow', () => {
   const drillCount = SESSION_DRILL_PAIR_A.length;
@@ -89,7 +89,7 @@ describe('App practice session flow', () => {
     jest.clearAllMocks();
     loadProgress.mockResolvedValue({ ...EMPTY_PROGRESS });
     saveProgress.mockResolvedValue(undefined);
-    getSessionDrills.mockImplementation(() => SESSION_DRILL_PAIR_A);
+    getPlayableSessionDrills.mockImplementation(() => SESSION_DRILL_PAIR_A);
   });
 
   it('starts on the home screen', async () => {
@@ -145,6 +145,7 @@ describe('App practice session flow', () => {
       lastPracticeDate: toDateKey(),
       streak: 1,
       soundEnabled: true,
+      sessionLength: 'short',
       practiceDates: [toDateKey()],
       stickerIds: ['star'],
     });
@@ -262,9 +263,48 @@ describe('App practice session flow', () => {
       lastPracticeDate: toDateKey(),
       streak: 3,
       soundEnabled: true,
+      sessionLength: 'short',
       practiceDates: [toDateKey()],
       stickerIds: ['star'],
     });
+  });
+});
+
+describe('App practice session flow — full session', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    loadProgress.mockResolvedValue({ ...EMPTY_PROGRESS, sessionLength: 'full' });
+    saveProgress.mockResolvedValue(undefined);
+    const actual = jest.requireActual('../src/constants/drills');
+    getPlayableSessionDrills.mockImplementation(actual.getPlayableSessionDrills);
+  });
+
+  it('shows five progress steps during a full session', async () => {
+    const user = userEvent.setup();
+    await render(<App />);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('home-screen')).toBeTruthy();
+    });
+
+    await user.press(screen.getByTestId('start-practice-button'));
+    expect(screen.getByLabelText('Step 1 of 5, Warm-up')).toBeTruthy();
+
+    await user.press(screen.getByTestId('continue-warm-up-button'));
+    expect(screen.getByLabelText('Step 2 of 5, Toe Taps')).toBeTruthy();
+
+    await user.press(screen.getByTestId('complete-drill-button'));
+    expect(screen.getByLabelText('Step 3 of 5, Kick a Target')).toBeTruthy();
+
+    await user.press(screen.getByTestId('complete-drill-button'));
+    expect(screen.getByLabelText('Step 4 of 5, Freeze!')).toBeTruthy();
+
+    await user.press(screen.getByTestId('complete-drill-button'));
+    expect(screen.getByLabelText('Step 5 of 5, Tick Tock')).toBeTruthy();
+
+    await user.press(screen.getByTestId('complete-drill-button'));
+    expect(screen.getByTestId('celebration-screen')).toBeTruthy();
+    expect(saveProgress).toHaveBeenCalledTimes(1);
   });
 });
 
@@ -273,7 +313,7 @@ describe('App practice session flow — Pair B drills', () => {
     jest.clearAllMocks();
     loadProgress.mockResolvedValue({ ...EMPTY_PROGRESS });
     saveProgress.mockResolvedValue(undefined);
-    getSessionDrills.mockImplementation(() => SESSION_DRILL_PAIR_B);
+    getPlayableSessionDrills.mockImplementation(() => SESSION_DRILL_PAIR_B);
   });
 
   it('navigates home → warm-up → freeze → tick tock → celebration with progress dots for Pair B', async () => {

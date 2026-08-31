@@ -6,7 +6,7 @@ import DrillScreen from './src/screens/DrillScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import ParentScreen from './src/screens/ParentScreen';
 import WarmUpScreen from './src/screens/WarmUpScreen';
-import { getSessionDrills } from './src/constants/drills';
+import { getPlayableSessionDrills } from './src/constants/drills';
 import {
   getDrillStepIndex,
   getSessionSteps,
@@ -55,12 +55,12 @@ export default function App() {
   };
 
   const completeDrill = useCallback(async () => {
-    const sessionDrills = getSessionDrills();
+    const currentProgress = progress ?? { ...EMPTY_PROGRESS };
+    const sessionDrills = getPlayableSessionDrills(currentProgress.sessionLength);
     const drillCount = sessionDrills.length;
     const sessionFinished = isSessionComplete(drillIndex, drillCount);
 
     if (sessionFinished) {
-      const currentProgress = progress ?? { ...EMPTY_PROGRESS };
       const updatedProgress = recordSessionComplete(currentProgress, toDateKey());
 
       setProgress(updatedProgress);
@@ -90,13 +90,22 @@ export default function App() {
     await saveProgress(updatedProgress);
   }, [progress]);
 
+  const toggleSessionLength = useCallback(async (sessionLength) => {
+    const currentProgress = progress ?? { ...EMPTY_PROGRESS };
+    const updatedProgress = { ...currentProgress, sessionLength };
+
+    setProgress(updatedProgress);
+    await saveProgress(updatedProgress);
+  }, [progress]);
+
   if (progress === null) {
     return null;
   }
 
   const streak = getEffectiveStreak(progress);
   const practicedToday = hasPracticedToday(progress);
-  const sessionDrills = getSessionDrills();
+  const sessionLength = progress.sessionLength === 'full' ? 'full' : 'short';
+  const sessionDrills = getPlayableSessionDrills(sessionLength);
   const currentDrill = sessionDrills[drillIndex];
   const soundEnabled = progress.soundEnabled !== false;
   const sessionSteps = getSessionSteps(sessionDrills);
@@ -141,6 +150,8 @@ export default function App() {
           todayKey={toDateKey()}
           soundEnabled={soundEnabled}
           onToggleSound={toggleSound}
+          sessionLength={sessionLength}
+          onToggleSessionLength={toggleSessionLength}
           onGoHome={goHome}
         />
       )}

@@ -130,6 +130,7 @@ describe('recordSessionComplete', () => {
       lastPracticeDate: '2026-08-18',
       streak: 1,
       soundEnabled: true,
+      sessionLength: 'short',
       practiceDates: ['2026-08-18'],
       stickerIds: ['star'],
     });
@@ -147,6 +148,7 @@ describe('recordSessionComplete', () => {
       lastPracticeDate: '2026-08-18',
       streak: 4,
       soundEnabled: true,
+      sessionLength: 'short',
       practiceDates: ['2026-08-17', '2026-08-18'],
       stickerIds: ['star', 'ball'],
     });
@@ -164,6 +166,7 @@ describe('recordSessionComplete', () => {
       lastPracticeDate: '2026-08-18',
       streak: 1,
       soundEnabled: true,
+      sessionLength: 'short',
       practiceDates: ['2026-08-15', '2026-08-18'],
       stickerIds: ['star', 'ball'],
     });
@@ -181,6 +184,7 @@ describe('recordSessionComplete', () => {
       lastPracticeDate: '2026-08-18',
       streak: 4,
       soundEnabled: true,
+      sessionLength: 'short',
       practiceDates: ['2026-08-18'],
       stickerIds: ['star'],
     });
@@ -199,8 +203,25 @@ describe('recordSessionComplete', () => {
       lastPracticeDate: '2026-08-18',
       streak: 3,
       soundEnabled: false,
+      sessionLength: 'short',
       practiceDates: ['2026-08-17', '2026-08-18'],
       stickerIds: ['star', 'ball'],
+    });
+  });
+
+  it('preserves sessionLength when recording session completion', () => {
+    const fullSession = {
+      ...EMPTY_PROGRESS,
+      sessionLength: 'full',
+    };
+
+    expect(recordSessionComplete(fullSession, '2026-08-18')).toEqual({
+      lastPracticeDate: '2026-08-18',
+      streak: 1,
+      soundEnabled: true,
+      sessionLength: 'full',
+      practiceDates: ['2026-08-18'],
+      stickerIds: ['star'],
     });
   });
 });

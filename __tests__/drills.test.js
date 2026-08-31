@@ -2,6 +2,7 @@ import {
   ALL_DRILLS,
   FREEZE_DRILL,
   getSessionDrills,
+  getPlayableSessionDrills,
   KICK_TARGET_DRILL,
   SESSION_DRILL_PAIR_A,
   SESSION_DRILL_PAIR_B,
@@ -90,6 +91,24 @@ describe('getSessionDrills', () => {
     expect(getSessionDrills(aug31)).toEqual(SESSION_DRILL_PAIR_A);
     expect(getSessionDrills(sep1)).toEqual(SESSION_DRILL_PAIR_B);
     expect(getSessionDrills(aug31)).not.toEqual(getSessionDrills(sep1));
+  });
+});
+
+describe('getPlayableSessionDrills', () => {
+  it('returns the rotating pair for short sessions', () => {
+    const date = new Date('2026-08-31T12:00:00');
+    expect(getPlayableSessionDrills('short', date)).toEqual(getSessionDrills(date));
+    expect(getPlayableSessionDrills(undefined, date)).toEqual(getSessionDrills(date));
+  });
+
+  it('returns all drills in catalog order for full sessions', () => {
+    expect(getPlayableSessionDrills('full')).toEqual(ALL_DRILLS);
+    expect(getPlayableSessionDrills('full')).toHaveLength(4);
+  });
+
+  it('treats invalid session length as short', () => {
+    const date = new Date('2026-08-31T12:00:00');
+    expect(getPlayableSessionDrills('bogus', date)).toEqual(getSessionDrills(date));
   });
 });
 

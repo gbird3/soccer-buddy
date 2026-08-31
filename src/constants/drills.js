@@ -77,3 +77,15 @@ export function getSessionDrills(date = new Date()) {
 
 /** Compatibility alias: today's playable drill pair (warm-up + 2 drills + celebration). */
 export const SESSION_DRILLS = getSessionDrills();
+
+/**
+ * Returns playable drills for a session based on parent length preference.
+ * Short (default): today's rotating two-drill pair. Full: all beginner drills in catalog order.
+ */
+export function getPlayableSessionDrills(sessionLength = 'short', date = new Date()) {
+  if (sessionLength === 'full') {
+    return ALL_DRILLS;
+  }
+
+  return getSessionDrills(date);
+}

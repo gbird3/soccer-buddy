@@ -9,8 +9,11 @@ export default function ParentScreen({
   todayKey,
   soundEnabled = true,
   onToggleSound,
+  sessionLength = 'short',
+  onToggleSessionLength,
   onGoHome,
 }) {
+  const isFullSession = sessionLength === 'full';
   const weekDays = buildWeekView(practiceDates, todayKey);
   const hasPracticed = practiceDates.length > 0;
 
@@ -79,6 +82,26 @@ export default function ParentScreen({
           </Text>
           <Text style={styles.streakNumber}>{streak}</Text>
         </View>
+      </View>
+
+      <View style={styles.section}>
+        <View style={styles.toggleRow}>
+          <Text style={styles.toggleLabel}>Full session</Text>
+          <Switch
+            testID="full-session-switch"
+            accessibilityLabel="Full session"
+            accessibilityRole="switch"
+            value={isFullSession}
+            onValueChange={(enabled) => onToggleSessionLength(enabled ? 'full' : 'short')}
+            trackColor={{ false: '#767577', true: colors.yellow }}
+            thumbColor={isFullSession ? colors.white : '#f4f3f4'}
+          />
+        </View>
+        <Text style={styles.toggleHint}>
+          {isFullSession
+            ? 'Full session — warm-up plus all four drills'
+            : 'Short session — warm-up plus today\'s two drills'}
+        </Text>
       </View>
 
       <View style={styles.section}>

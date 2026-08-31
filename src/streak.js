@@ -4,6 +4,7 @@ export const EMPTY_PROGRESS = {
   lastPracticeDate: null,
   streak: 0,
   soundEnabled: true,
+  sessionLength: 'short',
   practiceDates: [],
   stickerIds: [],
 };
@@ -92,8 +93,13 @@ function normalizeStickerIds(stickerIds) {
     : [];
 }
 
+function normalizeSessionLength(sessionLength) {
+  return sessionLength === 'full' ? 'full' : 'short';
+}
+
 export function recordSessionComplete(progress, todayKey = toDateKey()) {
   const soundEnabled = progress.soundEnabled !== false;
+  const sessionLength = normalizeSessionLength(progress.sessionLength);
   const practiceDates = addPracticeDate(progress.practiceDates, todayKey);
   const stickerIds = normalizeStickerIds(progress.stickerIds);
 
@@ -102,6 +108,7 @@ export function recordSessionComplete(progress, todayKey = toDateKey()) {
       lastPracticeDate: progress.lastPracticeDate,
       streak: getEffectiveStreak(progress, todayKey),
       soundEnabled,
+      sessionLength,
       practiceDates,
       stickerIds,
     };
@@ -123,6 +130,7 @@ export function recordSessionComplete(progress, todayKey = toDateKey()) {
     lastPracticeDate: todayKey,
     streak: newStreak,
     soundEnabled,
+    sessionLength,
     practiceDates,
     stickerIds: [...stickerIds, newSticker.id],
   };

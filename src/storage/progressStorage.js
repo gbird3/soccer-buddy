@@ -15,6 +15,10 @@ function normalizeStickerIds(data, lastPracticeDate) {
 
 export const STORAGE_KEY = '@soccer_buddy/progress';
 
+function normalizeSessionLength(sessionLength) {
+  return sessionLength === 'full' ? 'full' : 'short';
+}
+
 function normalizePracticeDates(data, lastPracticeDate) {
   const rawDates = Array.isArray(data.practiceDates)
     ? data.practiceDates.filter((dateKey) => typeof dateKey === 'string')
@@ -38,6 +42,7 @@ export function normalizeProgress(data) {
     lastPracticeDate,
     streak: typeof data.streak === 'number' && data.streak >= 0 ? data.streak : 0,
     soundEnabled: data.soundEnabled !== false,
+    sessionLength: normalizeSessionLength(data.sessionLength),
     practiceDates: normalizePracticeDates(data, lastPracticeDate),
     stickerIds: normalizeStickerIds(data, lastPracticeDate),
   };

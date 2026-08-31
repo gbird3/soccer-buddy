@@ -107,6 +107,7 @@ describe('App parent area', () => {
       lastPracticeDate: null,
       streak: 0,
       soundEnabled: false,
+      sessionLength: 'short',
       practiceDates: [],
       stickerIds: [],
     });
@@ -140,6 +141,30 @@ describe('App parent area', () => {
     });
 
     expect(Speech.speak).not.toHaveBeenCalled();
+  });
+
+  it('persists full session length from the parent area', async () => {
+    await render(<App />);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('home-screen')).toBeTruthy();
+    });
+
+    fireEvent(screen.getByTestId('parent-gate-button'), 'pressIn');
+    await waitFor(() => {
+      expect(screen.getByTestId('parent-screen')).toBeTruthy();
+    });
+
+    fireEvent(screen.getByTestId('full-session-switch'), 'valueChange', true);
+
+    expect(saveProgress).toHaveBeenCalledWith({
+      lastPracticeDate: null,
+      streak: 0,
+      soundEnabled: true,
+      sessionLength: 'full',
+      practiceDates: [],
+      stickerIds: [],
+    });
   });
 });
 

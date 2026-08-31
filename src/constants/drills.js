@@ -3,7 +3,7 @@ import { toDateKey } from '../streak';
 export const COACHING_LINES = {
   HOME: "Let's practice!",
   WARM_UP: 'March in place to wake up your body, then roll the ball with your feet!',
-  CELEBRATION: 'Great job! You earned a sticker!',
+  CELEBRATION: 'Great job! You earned a sticker! See you tomorrow!',
 };
 
 export const WARM_UP = {

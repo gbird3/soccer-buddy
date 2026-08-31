@@ -24,6 +24,14 @@ describe('CelebrationScreen celebration polish', () => {
     expect(screen.getByTestId('sticker-pop-animation')).toBeTruthy();
   });
 
+  it('shows a come-back hook inviting the kid to return tomorrow', async () => {
+    await render(<CelebrationScreen onGoHome={jest.fn()} streak={3} stickerIds={['trophy']} />);
+
+    const comeBackHook = screen.getByTestId('come-back-hook');
+    expect(comeBackHook).toHaveTextContent('👋', { exact: false });
+    expect(comeBackHook).toHaveTextContent('See you tomorrow!', { exact: false });
+  });
+
   it('still shows streak and done button alongside animations', async () => {
     await render(<CelebrationScreen onGoHome={jest.fn()} streak={5} stickerIds={['star']} />);
 
